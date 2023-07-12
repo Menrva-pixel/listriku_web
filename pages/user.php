@@ -57,6 +57,7 @@ $tagihan_listrik = getTagihanListrik($user['user_id']);
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 <body>
+<div class="user-panel">
     <h1>Welcome, <?php echo $user['username']; ?></h1>
     <h3>Tagihan Listrik</h3>
     <!-- Display tagihan listrik data -->
@@ -113,6 +114,7 @@ $tagihan_listrik = getTagihanListrik($user['user_id']);
         <?php endforeach; ?>
         </tbody>
     </table>
+    </div>
 </body>
 </html>
 

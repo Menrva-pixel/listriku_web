@@ -131,18 +131,35 @@
       }
 
     /* halaman untuk user */
+    .user-panel {
+        background-color: #ffffff;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        font-size: 28px;
+        margin-bottom: 20px;
+    }
+
+    h3 {
+        font-size: 20px;
+        margin-bottom: 10px;
+    }
+
     table {
-        border-collapse: collapse;
         width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
     }
+
     th, td {
+        padding: 10px;
         text-align: left;
-        padding: 8px;
+        border-bottom: 1px solid #dddddd;
     }
-    tr:nth-child(even) {
-        background-color: #f2f2f2;
-    }
+
     th {
-        background-color: #4CAF50;
-        color: white;
+        background-color: #dddddd;
     }
