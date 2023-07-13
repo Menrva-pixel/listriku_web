@@ -1,92 +1,120 @@
-/* Global Styles */
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
+.profile-image img {
+    object-fit: cover;
+    border-radius: 50%;
 }
 
-h1, h2, h3 {
-    margin-top: 0;
+css
+
+.edit-form-button {
+background-color: #4CAF50;
+color: white;
+border: none;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+margin-top: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
 }
 
-table {
-    border-collapse: collapse;
-    width: 100%;
+.edit-form-button:hover {
+background-color: #45a049;
 }
 
-table th, table td {
-    padding: 8px;
-    text-align: left;
-    border-bottom: 1px solid #ddd;
+.cancel-button {
+background-color: #f44336;
+color: white;
+border: none;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+margin-top: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
 }
 
-/* Page Styles */
-.profile-container {
-    display: flex;
-    align-items: center;
-    margin-bottom: 20px;
+.cancel-button:hover {
+background-color: #d32f2f;
+}
+
+.update-profile-button {
+background-color: #2196F3;
+color: white;
+border: none;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+margin-top: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.update-profile-button:hover {
+background-color: #1976D2;
+}
+
+.logout-button {
+background-color: #f44336;
+color: white;
+border: none;
+padding: 8px 16px;
+text-align: center;
+text-decoration: none;
+display: inline-block;
+font-size: 14px;
+margin-top: 16px;
+cursor: pointer;
+transition: background-color 0.3s;
+}
+
+.logout-button:hover {
+background-color: #d32f2f;
+}
+
+  /* Additional custom styles can be added here */
+  .edit-form {
+    display: none;
 }
 
 .profile-image {
-    width: 150px;
-    height: 150px;
-    margin-right: 20px;
+    width: 10rem;
+    height: 10rem;
 }
 
-.profile-info {
-    flex-grow: 1;
+.profile-heading {
+    font-size: 2rem;
 }
 
-.edit-link, .delete-link {
-    margin-right: 10px;
-    color: #333;
-    text-decoration: none;
-}
-
-.edit-link:hover, .delete-link:hover {
-    text-decoration: underline;
-}
-
-#edit-form {
-    margin-bottom: 20px;
-}
-
-#edit-form label {
-    display: block;
-    margin-bottom: 5px;
+.profile-details strong {
     font-weight: bold;
 }
 
-#edit-form input[type="text"],
-#edit-form input[type="email"] {
-    width: 100%;
-    padding: 5px;
-    margin-bottom: 10px;
-}
-
-#edit-form button[type="submit"],
-#edit-form button[type="button"] {
-    padding: 5px 10px;
-    margin-right: 10px;
-}
-
-button {
-    padding: 5px 10px;
-    background-color: #333;
-    color: #fff;
+.edit-profile-button {
+    background-color: #4f46e5;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
     border: none;
-    cursor: pointer;
 }
 
-button:hover {
-    background-color: #555;
+.cancel-button {
+    background-color: #9ca3af;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    border: none;
 }
 
-/* Colors for Status Pembayaran */
-.status-belum {
-    color: red;
-}
-
-.status-sudah {
-    color: green;
+.logout-button {
+    background-color: #ff0000;
+    color: #ffffff;
+    padding: 0.75rem 1.5rem;
+    border-radius: 0.25rem;
+    border: none;
 }
