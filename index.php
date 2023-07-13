@@ -17,7 +17,7 @@
     <ul>
       <li><a href="#">Home</a></li>
       <li><a href="#">About</a></li>
-      <li><a href="pages/login.php">Login</a></li>
+      <li><a href="auth/login.php">Login</a></li>
     </ul>
   </div>
 
@@ -27,7 +27,6 @@
     <h1>Pembayaran Listrik Online</h1>
     <p>Selamat datang di layanan pembayaran listrik online yang cepat dan mudah.</p>
   </div>
-  <img src="assets/images/banner.jpg">
 </section>
 
 

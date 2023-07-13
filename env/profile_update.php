@@ -4,7 +4,7 @@ include 'config.php';
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || !isUserPage()) {
-    header('Location: ../pages/login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 

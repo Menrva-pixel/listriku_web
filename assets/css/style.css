@@ -3,6 +3,7 @@
         margin: 0;
         padding: 0;
         font-family: Arial, sans-serif;
+        background: linear-gradient(112.1deg, rgb(32, 38, 57) 11.4%, rgb(63, 76, 119) 70.2%);
       }
   
       .navbar {
@@ -33,20 +34,12 @@
       }
 
       .hero {
-        position: relative;
+        margin: auto;
       }
 
       .hero h1 {
         font-size: 36px;
         margin-bottom: 20px;
-      }
-  
-      .hero img{
-        z-index: -1;
-        position: relative;
-        background-size: cover;
-        max-height: 600px;
-        width: 100%;
       }
   
   

@@ -27,7 +27,7 @@ function getStatusPembayaran($user_id) {
 
 // Redirect to login page if not logged in or not an admin
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] !== 'Admin') {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 

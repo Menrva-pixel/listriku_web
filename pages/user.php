@@ -35,7 +35,7 @@ function getTagihanListrik($user_id) {
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || !isUserPage()) {
-    header('Location: login.php');
+    header('Location: ../auth/login.php');
     exit;
 }
 
