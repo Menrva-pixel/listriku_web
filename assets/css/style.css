@@ -130,6 +130,18 @@
         background-color: #545b62;
       }
 
+    /* halaman admin */
+    .edit-link, .delete-link {
+      text-decoration: none;
+      padding: 5px 10px;
+      background-color: #eee;
+      color: #333;
+      border-radius: 4px;
+  }
+  .edit-link:hover, .delete-link:hover {
+      background-color: #ccc;
+  } 
+
     /* halaman untuk user */
     .user-panel {
         background-color: #ffffff;
