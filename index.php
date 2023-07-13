@@ -7,37 +7,42 @@
   <title>Landing Page</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
 
 <body>
   <!-- Navbar -->
-  <nav class="navbar sticky top-0 flex items-center justify-around bg-transparent text-white p-6">
+  <nav class="navbar z-50 sticky top-0 flex items-center justify-around bg-transparent text-white p-6">
     <div class="flex items-center">
       <img src="assets/images/logo.png" alt="Brand-Logo" class="h-10 w-15 mr-2">
     </div>
     <div>
       <a href="#" class="text-white hover:text-gray-400 mx-2">Home</a>
       <a href="#" class="text-white hover:text-gray-400 mx-2">About</a>
-      <a href="#" class="text-white hover:text-gray-400 mx-2">Login</a>
+      <a href="auth/login.php" class="text-black bg-yellow-400 p-3 rounded-3xl mx-2 transform hover:scale-75">Log-in <i class="fa-solid fa-right-to-bracket"></i></a>
     </div>
   </nav>
 
   <!-- Hero section -->
-  <section class="bg-transparent h-96 m-20">
+  <section class="z-0 bg-transparent h-96 m-20" data-aos="fade-up" data-aos-duration="2000">
     <div class="container mx-auto mt-56 text-center">
       <h1 class="text-white font-bold text-5xl md:text-6xl xl:text-7xl">Selamat Datang</h1>
       <p class="mt-8 text-gray-400 dark:text-gray-300">Website kami membantu anda untuk melakukan pembayaran listrik bulanan tanpa harus keluar rumah</p>
     </div>
   </section>
 
+
   <!-- Company Information section -->
   <section class="bg-transparent py-16">
     <div class="container mx-auto">
       <div class="flex items-center justify-center">
         <div class="w-1/2">
-          <img src="assets/images/slider-dec.png" alt="Company Image" class="mb-5 h-25 w-25">
+          <img src="assets/images/slider-dec.png" alt="Company Image" class="mb-5 h-25 w-25" data-aos="fade-right" data-aos-duration="1000">
         </div>
-        <div class="w-1/2">
+        <div class="w-1/2" data-aos="fade-left" data-aos-duration="500">
           <h2 class="text-white text-4xl font-bold mb-4">LISTRIKU</h2>
           <p class="text-gray-400 text-lg mb-6 text-justify">Kami dengan bangga menyajikan platform yang menyediakan berbagai fitur untuk mempermudah Anda dalam melakukan pembayaran dan pengecekan penggunaan listrik bulanan.</p>
           <p class="text-gray-400 text-lg text-justify">Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan listrik kami. Silakan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan.</p>
@@ -45,6 +50,28 @@
       </div>
     </div>
   </section>
+
+  <!-- Additional Information section -->
+  <hr class="w-1/2 h-1 mx-auto bg-gray-400 border-0 rounded md:my-10 dark:bg-gray-700">
+  <section class="py-8 m-0 border-y border-gray-100 dark:border-gray-800 sm:flex justify-between">
+    <div class="container mx-auto">
+      <div class="grid grid-cols-3 gap-x-44 mx-auto w-1/2">
+        <div class="p-4">
+          <h2 class="text-2xl font-bold mb-4">Mudah</h2>
+          <p>User Friendly</p>
+        </div>
+        <div class="p-4">
+          <h2 class="text-2xl font-bold mb-4">Cepat</h2>
+          <p>Penanganan Cepat</p>
+        </div>
+        <div class="p-4">
+          <h2 class="text-2xl font-bold mb-4">Lengkap</h2>
+          <p>Fitur Lengkap</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <hr class="w-1/2 h-1 mx-auto bg-gray-400 border-0 rounded md:my-10 dark:bg-gray-700">
 
   <!-- Additional features section -->
   <section class="py-16">
@@ -71,41 +98,24 @@
     </div>
   </section>
 
-  <!-- Additional Information section -->
-  <hr class="w-1/2 h-1 mx-auto bg-gray-400 border-0 rounded md:my-10 dark:bg-gray-700">
-  <section class="py-8 m-0 border-y border-gray-100 dark:border-gray-800 sm:flex justify-between">
-    <div class="container mx-auto">
-      <div class="grid grid-cols-3 gap-x-44 mx-auto w-1/2">
-        <div class="p-4">
-          <h2 class="text-2xl font-bold mb-4">Mudah</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac leo pretium, pulvinar lectus a, vulputate elit.</p>
-        </div>
-        <div class="p-4">
-          <h2 class="text-2xl font-bold mb-4">Cepat</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac leo pretium, pulvinar lectus a, vulputate elit.</p>
-        </div>
-        <div class="p-4">
-          <h2 class="text-2xl font-bold mb-4">Lengkap</h2>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus ac leo pretium, pulvinar lectus a, vulputate elit.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Footer -->
   <footer class="bg-gray-900 text-white py-6">
     <div class="container mx-auto flex items-center justify-between">
       <div>
-        <img src="logo.png" alt="Logo" class="h-8 w-8 mr-2">
-        <span class="font-bold">Company Name</span>
+        <img src="assets/images/slider-dec.png" alt="Logo" class="h-20 w-auto mr-2 flex ">
+        <span class="font-bold text-center ml-1">LISTRIKU</span>
       </div>
       <div>
-        <p class="text-gray-400">Contact us: info@example.com</p>
+        <p class="text-gray-400">Contact us: bherdyanto26@gmail.com</p>
       </div>
+    </div>
+    <div class="container mx-auto px-4">
+    <div class="flex justify-center items-center">
+      <p class="text-gray-500 text-sm">&copy; 2023 Barkah Herdyanto S. All rights reserved.</p>
     </div>
   </footer>
 </body>
-
+<script>AOS.init();</script>
 <script src="assets/js/script.js"></script>
 
 </html>
