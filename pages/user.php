@@ -9,27 +9,22 @@ if (!isset($_SESSION['username']) || !isUserPage()) {
     exit;
 }
 
-// Get user data
+// GET user data
 $username = $_SESSION['username'];
 $user = getUserFromDatabase($username);
 
-// Get penggunaan listrik data
+// GET data
 $penggunaan_listrik = getPenggunaanListrik($user['user_id']);
-
-// Get tagihan listrik data
 $tagihan_listrik = getTagihanListrik($user['user_id']);
 
-// Handle form submission for updating user data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
 
-    // Update user data in the database
     $query = "UPDATE users SET alamat='$alamat', no_telp='$no_telp', email='$email' WHERE id='{$user['id']}'";
     mysqli_query($conn, $query);
 
-    // Redirect back to the user profile page
     header('Location: user.php');
     exit;
 }
@@ -66,12 +61,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="bg-white shadow">
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
-                <a href="#" class="text-2xl font-bold">Logo</a>
-                <div class="ml-4">
+                <img src="../assets/images/logo.png" class="h-10 w-auto">
+            </div>
+
+            <div class="flex items-center">
+                <div class="mr-4">
                     <i class="fas fa-bell text-gray-500"></i>
                 </div>
-            </div>
-            <div class="flex items-center">
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onclick="logout()">Logout</button>
             </div>
@@ -220,37 +216,36 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/darkmode-toggle/1.3.5/darkmode-toggle.min.js"></script>
     <script src="../assets/js/main.js"></script>
     <script>
-    var ctx = document.getElementById('chart').getContext('2d');
-    var chart = new Chart(ctx, {
-        type: 'bar',
-        data: {
-            labels: <?php echo json_encode($labels); ?>,
-            datasets: [{
-                label: 'Electricity Usage',
-                data: <?php echo json_encode($data); ?>,
-                backgroundColor: function (context) {
-                    var value = context.dataset.data[context.dataIndex];
-                    if (value >= 200) {
-                        return 'red';
-                    } else if (value >= 150) {
-                        return 'yellow';
-                    } else {
-                        return 'green';
+        var ctx = document.getElementById('chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($labels); ?>,
+                datasets: [{
+                    label: 'Electricity Usage',
+                    data: <?php echo json_encode($data); ?>,
+                    backgroundColor: function (context) {
+                        var value = context.dataset.data[context.dataIndex];
+                        if (value >= 200) {
+                            return 'red';
+                        } else if (value >= 150) {
+                            return 'yellow';
+                        } else {
+                            return 'green';
+                        }
+                    },
+                    borderColor: '#4F46E5',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
                     }
-                },
-                borderColor: '#4F46E5',
-                borderWidth: 1
-            }]
-        },
-        options: {
-            scales: {
-                y: {
-                    beginAtZero: true
                 }
             }
-        }
-    });
-
+        });
     </script>
 </body>
 
