@@ -2,6 +2,7 @@
 session_start();
 include '../env/config.php';
 include '../env/func.php';
+include '../env/get-image.php';
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || !isUserPage()) {
@@ -43,6 +44,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
         $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
     }
+    
 ?>
 
 <!DOCTYPE html>
@@ -51,14 +53,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>User Page</title>
+    <title>User Panel | Listriku</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
 </head>
 
 <body class="bg-gray-100">
-    <nav class="bg-white shadow">
+    <nav class="bg-transparent shadow">
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
                 <img src="../assets/images/logo.png" class="h-10 w-auto">
@@ -75,92 +77,97 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <div class="container mx-auto mt-8">
-        <div class="bg-white rounded-lg shadow-md p-8">
+        <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-lg shadow-md p-8">
             <div class="flex items-center">
                 <div class="w-full h-96 flex items-center justify-center">
                     <div class="w-auto flex items-center justify-between border-2 rounded-full">
                         <?php if ($user['picture']): ?>
-                        <img src="../uploads/<?php echo $user['picture']; ?>" alt="Profile Image"
-                            class="rounded-full h-32 w-32">
+                            <img src="<?php echo $user['user_id']; ?>" alt="Profile Image" class="rounded-full h-32 w-32">
                         <?php else: ?>
-                        <img src="../assets/images/default-profile.jpg" alt="Profile Image"
+                        <img src="../assets/images/profile-placeholder.png" alt="Profile Image"
                             class="rounded-full h-32 w-32">
                         <?php endif; ?>
                     </div>
                 </div>
                 <hr class="border border-black my-4">
-                <div class="w-3/4 ml-8">
-                    <h1 class="text-3xl font-semibold mb-4">Welcome, <?php echo $user['username']; ?></h1>
+                <div class="w-3/4 mr-44 text-white">
+                    <div class="flex flex-row justify-between"
+                        <h1 class="text-3xl font-semibold mb-4">Welcome, <?php echo $user['username']; ?></h1>
+                            <div class="ml-44">
+                                <button onclick="redirectToPaymentPage()"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">Bayar</button>
+                                <button type="button" onclick="showEditModal()"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">Edit Profile</button>
+                            </div>
+                        </div>
                     <div class="mt-4 text-justify">
-                        <p><strong>Username:</strong> <?php echo $user['username']; ?></p>
-                        <p><strong>Alamat:</strong> <?php echo $user['alamat']; ?></p>
-                        <p><strong>No. Telp:</strong> <?php echo $user['no_telp']; ?></p>
-                        <p><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                        <strong>Username:</strong> <p class="text-gray-400"><?php echo $user['username']; ?></p>
+                        <strong>Alamat:</strong> <p class="text-gray-400"><?php echo $user['alamat']; ?></p>
+                        <strong>No. Telp:</strong><p class="text-gray-400"><?php echo $user['no_telp']; ?></p>
+                        <strong>Email:</strong><p class="text-gray-400"><?php echo $user['email']; ?></p>
                     </div>
                     <div class="mt-8">
                         <h3 class="text-2xl">Payment Status - <?php echo date('F Y'); ?></h3>
                         <p class="text-lg">Status: <?php echo getStatusPembayaranBulanTerakhir(); ?></p>
                     </div>
-                    <div class="mt-8">
-                        <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                            onclick="showEditForm()">Edit Profile</button>
-                    </div>
                 </div>
             </div>
-            <div id="edit-form" class="mt-8 hidden">
-                <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
-                <form method="POST" action="../env/profile_update.php" class="mt-4">
-                    <div class="mb-4">
-                        <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat:</label>
-                        <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    </div>
-                    <div class="mb-4">
-                        <label for="no_telp" class="block text-sm font-medium text-gray-700">No. Telp:</label>
-                        <input type="text" id="no_telp" name="no_telp" value="<?php echo $user['no_telp']; ?>" required
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    </div>
-                    <div class="mb-4">
-                        <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
-                        <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required
-                            class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-                    </div>
-                    <div class="flex space-x-4">
-                        <button type="submit" name="update"
-                            class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
-                        <button type="button" onclick="cancelEditForm()"
-                            class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
-                    </div>
-                </form>
-                <form method="POST" action="../env/profile_update.php" enctype="multipart/form-data" class="mt-8">
-                    <div class="mb-4">
-                        <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo (JPG format, max
-                            2MB)</label>
-                        <input type="file" id="photo" name="photo" accept=".jpg" required>
-                    </div>
-                    <button type="submit"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update
-                        Profile</button>
-                </form>
+            <div id="edit-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+                <div class="bg-white w-1/2 rounded-lg p-8">
+                    <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
+                    <form method="POST" action="../env/profile_update.php" class="mt-4">
+                        <div class="mb-4">
+                            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat:</label>
+                            <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="mb-4">
+                            <label for="no_telp" class="block text-sm font-medium text-gray-700">No. Telp:</label>
+                            <input type="text" id="no_telp" name="no_telp" value="<?php echo $user['no_telp']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+                            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" name="update"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
+                            <button type="button" onclick="hideEditModal()"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                        </div>
+                    </form>
+                    <form method="POST" action="../env/upload_gambar.php" enctype="multipart/form-data" class="mt-8">
+                        <div class="mb-4">
+                            <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo (JPG format, max
+                                2MB)</label>
+                            <input type="file" id="photo" name="photo" accept=".jpg" required>
+                        </div>
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update
+                            Profile</button>
+                    </form>
+                </div>
             </div>
 
             <!-- Additional Elements and Graphics -->
             <div class="container mx-auto mt-8">
                 <div class="flex items-center justify-between gap-10">
                     <div class="w-1/2">
-                        <h3 class="text-2xl">Statistics</h3>
+                        <h3 class="text-2xl text-yellow-400">Statistics</h3>
                         <canvas id="chart" class="mt-4"></canvas>
                     </div>
                     <div class="w-1/2">
-                        <h3 class="text-2xl">Electricity Usage</h3>
-                        <table class="mt-4 w-full text-center">
+                        <h3 class="text-2xl text-yellow-400">Electricity Usage</h3>
+                        <table class="mt-4 w-full text-center text-white">
                             <thead>
-                                <tr>
-                                    <th class="px-4 py-2">#</th>
-                                    <th class="px-4 py-2">Month</th>
-                                    <th class="px-4 py-2">Year</th>
-                                    <th class="px-4 py-2">Initial Reading</th>
-                                    <th class="px-4 py-2">Final Reading</th>
+                                <tr class="bg-gray-700">
+                                    <th class="border px-4 py-2">No</th>
+                                    <th class="border px-4 py-2">Month</th>
+                                    <th class="border px-4 py-2">Year</th>
+                                    <th class="border px-4 py-2">Initial Reading</th>
+                                    <th class="border px-4 py-2">Final Reading</th>
                                 </tr>
                             </thead>
                             <tbody class="table-body-scrollable">
@@ -179,17 +186,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 </div>
 
-                <h3 class="text-2xl mt-8">Electricity Bill</h3>
-                <table class="mt-4 w-full text-center max-h-40 overflow-y-auto">
+                <h3 class="text-2xl mt-8 text-yellow-400">Electricity Bill</h3>
+                <table class="mt-4 w-full text-center max-h-40 overflow-y-auto text-white">
                     <thead>
-                        <tr>
-                            <th class="px-4 py-2">#</th>
-                            <th class="px-4 py-2">Month</th>
-                            <th class="px-4 py-2">Year</th>
-                            <th class="px-4 py-2">Meter Reading</th>
-                            <th class="px-4 py-2">Tariff per kWh</th>
-                            <th class="px-4 py-2">Total Bill</th>
-                            <th class="px-4 py-2">Status</th>
+                        <tr class="bg-gray-700">
+                            <th class="border px-4 py-2">#</th>
+                            <th class="border px-4 py-2">Month</th>
+                            <th class="border px-4 py-2">Year</th>
+                            <th class="border px-4 py-2">Meter Reading</th>
+                            <th class="border px-4 py-2">Tariff per kWh</th>
+                            <th class="border px-4 py-2">Total Bill</th>
+                            <th class="border px-4 py-2">Status</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -210,11 +217,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         </div>
     </div>
 
+    <div class="footer">
+        <div class="footer-info">
+
+        </div>
+        <div class="copyright flex justify-center items-center m-10">
+            <p class="text-gray-200 text-sm text-lg">© 2023 Barkah Herdyanto S. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.3/scrollreveal.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/darkmode-toggle/1.3.5/darkmode-toggle.min.js"></script>
-    <script src="../assets/js/main.js"></script>
+
     <script>
         var ctx = document.getElementById('chart').getContext('2d');
         var chart = new Chart(ctx, {
@@ -223,6 +240,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 labels: <?php echo json_encode($labels); ?>,
                 datasets: [{
                     label: 'Electricity Usage',
+                    type: 'line',
                     data: <?php echo json_encode($data); ?>,
                     backgroundColor: function (context) {
                         var value = context.dataset.data[context.dataIndex];
@@ -234,7 +252,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             return 'green';
                         }
                     },
-                    borderColor: '#4F46E5',
+                    borderColor: '#fff',
                     borderWidth: 1
                 }]
             },
@@ -243,9 +261,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     y: {
                         beginAtZero: true
                     }
+                },
+                animations: {
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
                 }
             }
         });
+
     </script>
 </body>
 

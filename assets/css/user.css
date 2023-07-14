@@ -1,9 +1,12 @@
+body {
+    font-family: Arial, sans-serif;
+    background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 22%, rgb(43, 63, 110) 90%);
+}
+
 .profile-image img {
     object-fit: cover;
     border-radius: 50%;
 }
-
-css
 
 .edit-form-button {
 background-color: #4CAF50;
@@ -140,7 +143,7 @@ background-color: #d32f2f;
 /* chart */
     /* Warna latar belakang dataset */
     .chart-bar-background {
-        background-color: #4F46E5;
+        background-color: #dbdbdb;
     }
 
     /* Warna latar belakang dataset saat data tinggi (merah) */
