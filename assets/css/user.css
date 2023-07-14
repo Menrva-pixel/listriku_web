@@ -129,3 +129,32 @@ background-color: #d32f2f;
 .text-center img {
     filter: drop-shadow(2px 4px 4px #333);
 }
+
+
+/* table */
+.table-body-scrollable {
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+/* chart */
+    /* Warna latar belakang dataset */
+    .chart-bar-background {
+        background-color: #4F46E5;
+    }
+
+    /* Warna latar belakang dataset saat data tinggi (merah) */
+    .chart-bar-background-high {
+        background-color: red;
+    }
+
+    /* Warna latar belakang dataset saat data sedang (kuning) */
+    .chart-bar-background-medium {
+        background-color: yellow;
+    }
+
+    /* Warna latar belakang dataset saat data rendah (hijau) */
+    .chart-bar-background-low {
+        background-color: green;
+    }
+

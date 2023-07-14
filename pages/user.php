@@ -1,40 +1,7 @@
 <?php
 session_start();
 include '../env/config.php';
-include '../env/status.php';
-
-$status_pembayaran_bulan_ini = getStatusPembayaran();
-
-function getUserFromDatabase($username) {
-    global $conn;
-
-    $query = "SELECT * FROM users WHERE username='$username'";
-    $result = mysqli_query($conn, $query);
-    if (mysqli_num_rows($result) > 0) {
-        $user = mysqli_fetch_assoc($result);
-        return $user;
-    }
-
-    return null;
-}
-
-function isUserPage() {
-    return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
-}
-
-function getPenggunaanListrik($user_id) {
-    global $conn;
-    $query = "SELECT * FROM penggunaan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function getTagihanListrik($user_id) {
-    global $conn;
-    $query = "SELECT * FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
+include '../env/func.php';
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || !isUserPage()) {
@@ -66,6 +33,21 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     header('Location: user.php');
     exit;
 }
+
+
+    // Ambil data penggunaan listrik dari database untuk chart
+    $query = "SELECT * FROM penggunaan_listrik ORDER BY tahun, FIELD(bulan, 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember')";
+    $result = mysqli_query($conn, $query);
+    $penggunaan_listrik = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // menyiapkan data untuk chart
+    $labels = [];
+    $data = [];
+
+    foreach ($penggunaan_listrik as $dataPoint) {
+        $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
+        $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
+    }
 ?>
 
 <!DOCTYPE html>
@@ -77,9 +59,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <title>User Page</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
-    <style>
-        /* Additional custom styles can be added here */
-    </style>
+    <link rel="stylesheet" href="../assets/css/user.css">
 </head>
 
 <body class="bg-gray-100">
@@ -115,11 +95,15 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <hr class="border border-black my-4">
                 <div class="w-3/4 ml-8">
                     <h1 class="text-3xl font-semibold mb-4">Welcome, <?php echo $user['username']; ?></h1>
-                    <div class="mt-4">
+                    <div class="mt-4 text-justify">
                         <p><strong>Username:</strong> <?php echo $user['username']; ?></p>
                         <p><strong>Alamat:</strong> <?php echo $user['alamat']; ?></p>
                         <p><strong>No. Telp:</strong> <?php echo $user['no_telp']; ?></p>
                         <p><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                    </div>
+                    <div class="mt-8">
+                        <h3 class="text-2xl">Payment Status - <?php echo date('F Y'); ?></h3>
+                        <p class="text-lg">Status: <?php echo getStatusPembayaranBulanTerakhir(); ?></p>
                     </div>
                     <div class="mt-8">
                         <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
@@ -166,14 +150,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             <!-- Additional Elements and Graphics -->
             <div class="container mx-auto mt-8">
-                <div class="flex items-center justify-between">
+                <div class="flex items-center justify-between gap-10">
                     <div class="w-1/2">
                         <h3 class="text-2xl">Statistics</h3>
                         <canvas id="chart" class="mt-4"></canvas>
                     </div>
                     <div class="w-1/2">
                         <h3 class="text-2xl">Electricity Usage</h3>
-                        <table class="mt-4 w-full">
+                        <table class="mt-4 w-full text-center">
                             <thead>
                                 <tr>
                                     <th class="px-4 py-2">#</th>
@@ -183,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                     <th class="px-4 py-2">Final Reading</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="table-body-scrollable">
                                 <?php foreach ($penggunaan_listrik as $index => $penggunaan): ?>
                                 <tr>
                                     <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
@@ -196,10 +180,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             </tbody>
                         </table>
                     </div>
+
                 </div>
 
                 <h3 class="text-2xl mt-8">Electricity Bill</h3>
-                <table class="mt-4 w-full">
+                <table class="mt-4 w-full text-center max-h-40 overflow-y-auto">
                     <thead>
                         <tr>
                             <th class="px-4 py-2">#</th>
@@ -225,10 +210,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <?php endforeach; ?>
                     </tbody>
                 </table>
-                <div class="mt-8">
-                    <h3 class="text-2xl">Payment Status - <?php echo date('F Y'); ?></h3>
-                    <p class="text-lg">Status: <?php echo $status_pembayaran_bulan_ini; ?></p>
-                </div>
             </div>
         </div>
     </div>
@@ -237,41 +218,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.3/scrollreveal.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.4/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/darkmode-toggle/1.3.5/darkmode-toggle.min.js"></script>
+    <script src="../assets/js/main.js"></script>
     <script>
-        function showEditForm() {
-            $('#edit-form').show();
-        }
-
-        function cancelEditForm() {
-            $('#edit-form').hide();
-        }
-
-        function logout() {
-            window.location.href = 'logout.php';
-        }
-
-        // Chart.js initialization
-        var ctx = document.getElementById('chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                datasets: [{
-                    label: 'Electricity Usage',
-                    data: [150, 200, 180, 250, 220, 190],
-                    backgroundColor: '#4F46E5',
-                    borderColor: '#4F46E5',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
+    var ctx = document.getElementById('chart').getContext('2d');
+    var chart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: <?php echo json_encode($labels); ?>,
+            datasets: [{
+                label: 'Electricity Usage',
+                data: <?php echo json_encode($data); ?>,
+                backgroundColor: function (context) {
+                    var value = context.dataset.data[context.dataIndex];
+                    if (value >= 200) {
+                        return 'red';
+                    } else if (value >= 150) {
+                        return 'yellow';
+                    } else {
+                        return 'green';
                     }
+                },
+                borderColor: '#4F46E5',
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true
                 }
             }
-        });
+        }
+    });
+
     </script>
 </body>
 
