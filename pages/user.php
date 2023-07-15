@@ -1,147 +1,232 @@
 <?php
 session_start();
 include '../env/config.php';
+include '../env/func.php';
+include '../env/get-image.php';
 
-function getUserFromDatabase($username) {
-    global $conn;
-
-    $query = "SELECT * FROM users WHERE username='$username'";
-    $result = mysqli_query($conn, $query);
-    if (mysqli_num_rows($result) > 0) {
-        $user = mysqli_fetch_assoc($result);
-        return $user;
-    }
-
-    return null;
-}
-
-function isUserPage() {
-    return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
-}
-
-function getPenggunaanListrik($user_id) {
-    global $conn;
-    $query = "SELECT * FROM penggunaan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function getTagihanListrik($user_id) {
-    global $conn;
-    $query = "SELECT * FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-// Redirect to login page if not logged in or not a user
+// Kembali ke halaman login jika sesion user tidak terdeteksi
 if (!isset($_SESSION['username']) || !isUserPage()) {
     header('Location: ../auth/login.php');
     exit;
 }
 
-// Get user data
+// GET user data
 $username = $_SESSION['username'];
 $user = getUserFromDatabase($username);
 
-// Get penggunaan listrik data
+// GET data
 $penggunaan_listrik = getPenggunaanListrik($user['user_id']);
-
-// Get tagihan listrik data
 $tagihan_listrik = getTagihanListrik($user['user_id']);
 
-// Handle form submission for updating user data
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
     $email = $_POST['email'];
 
-    // Update user data in the database
     $query = "UPDATE users SET alamat='$alamat', no_telp='$no_telp', email='$email' WHERE id='{$user['id']}'";
     mysqli_query($conn, $query);
 
-    // Redirect back to the user profile page
     header('Location: user.php');
     exit;
 }
+
+
+    // Ambil data penggunaan listrik dari database untuk chart
+    $query = "SELECT * FROM penggunaan_listrik ORDER BY tahun, FIELD(bulan, 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember')";
+    $result = mysqli_query($conn, $query);
+    $penggunaan_listrik = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+    // menyiapkan data untuk chart
+    $labels = [];
+    $data = [];
+
+    foreach ($penggunaan_listrik as $dataPoint) {
+        $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
+        $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
+    }
+
+    // notifikasi
+    $query = "SELECT * FROM tagihan_listrik WHERE status = 'Belum Bayar'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $unpaidPayments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $unpaidMonths = array_column($unpaidPayments, 'bulan');
+        $notificationCount = count($unpaidPayments);
+    } else {
+        $unpaidMonths = [];
+        $notificationCount = 0;
+        echo "Failed to fetch unpaid payments: " . mysqli_error($conn);
+    }
+    
 ?>
 
 <!DOCTYPE html>
-<html>
+<html lang="en">
 
 <head>
-    <title>User Page</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Panel | Listriku</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
-    <style>
-        /* Additional custom styles can be added here */
-    </style>
 </head>
 
-<body>
-    <div class="container mx-auto py-8">
-        <div class="bg-gray-200 p-6 rounded-lg">
-            <h1 class="profile-heading">Welcome, <?php echo $user['username']; ?></h1>
+<body class="bg-gray-100">
+    <nav class="bg-transparent shadow">
+        <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
-                <div class="w-1/4">
-                    <?php if ($user['picture']): ?>
-                        <img src="../uploads/<?php echo $user['picture']; ?>" alt="Profile Image"
-                            class="profile-image rounded-full">
-                    <?php else: ?>
-                        <img src="../assets/images/default-profile.jpg" alt="Profile Image"
-                            class="profile-image rounded-full">
-                    <?php endif; ?>
-                </div>
-                <div class="w-3/4 ml-8">
-                    <h2 class="text-2xl font-semibold">Profile</h2>
-                    <div class="profile-details">
-                        <p><strong>Username:</strong> <?php echo $user['username']; ?></p>
-                        <p><strong>Alamat:</strong> <?php echo $user['alamat']; ?></p>
-                        <p><strong>No. Telp:</strong> <?php echo $user['no_telp']; ?></p>
-                        <p><strong>Email:</strong> <?php echo $user['email']; ?></p>
+                <img src="../assets/images/logo.png" class="h-10 w-auto">
+            </div>
+            
+            <div class="flex items-center">
+            <div class="mr-4">
+                <i class="fas fa-bell text-gray-500"></i>
+                <?php if ($notificationCount > 0): ?>
+                    <span class="notification-badge"><?php echo $notificationCount; ?></span>
+                    <div id="notification-popup" class="notification-popup">
+                        <h4 class="notification-title">Notification</h4>
+                        <ul class="notification-list">
+                            <?php foreach ($unpaidMonths as $month) : ?>
+                                <li>Jangan lupa lunasi tagihan anda di bulan: <?php echo $month; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <button class="edit-profile-button" onclick="showEditForm()">Edit Profile</button>
+                <?php endif; ?>
+            </div>
+                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+                    onclick="logout()">Logout</button>
                 </div>
             </div>
-            <div id="edit-form" class="edit-form mt-8">
-                <h3 class="text-xl font-semibold">Edit Profile</h3>
-                <form method="POST" action="../env/profile_update.php" class="mt-4">
-                    <label for="alamat">Alamat:</label>
-                    <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
-                        class="w-full border border-gray-300 rounded py-2 px-4 mb-2">
-                    <label for="no_telp">No. Telp:</label>
-                    <input type="text" id="no_telp" name="no_telp" value="<?php echo $user['no_telp']; ?>" required
-                        class="w-full border border-gray-300 rounded py-2 px-4 mb-2">
-                    <label for="email">Email:</label>
-                    <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required
-                        class="w-full border border-gray-300 rounded py-2 px-4 mb-2">
-                    <div class="flex space-x-4">
-                        <button type="submit" name="update" class="update-profile-button">Update</button>
-                        <button type="button" onclick="cancelEditForm()" class="cancel-button">Cancel</button>
+        </div>
+    </nav>
+
+    <div class="container mx-auto mt-8">
+        <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-lg shadow-md p-8">
+            <div class="flex items-center">
+                <div class="w-full h-96 flex items-center justify-center">
+                    <div class="w-auto flex items-center justify-between border-2 rounded-full">
+                        <?php if ($user['picture']): ?>
+                            <img src="<?php echo $user['user_id']; ?>" alt="Profile Image" class="rounded-full h-32 w-32">
+                        <?php else: ?>
+                        <img src="../assets/images/profile-placeholder.png" alt="Profile Image"
+                            class="rounded-full h-32 w-32">
+                        <?php endif; ?>
                     </div>
-                </form>
-                <form method="POST" action="../env/profile_update.php" enctype="multipart/form-data" class="mt-4">
-                    <div class="form-group">
-                        <label for="photo">Upload Photo (JPG format, max 2MB)</label>
-                        <input type="file" id="photo" name="photo" accept=".jpg" required>
+                </div>
+                <hr class="border border-black my-4">
+                <div class="w-3/4 mr-44 text-white">
+                    <div class="flex flex-row justify-between"
+                        <h1 class="text-3xl font-semibold mb-4">Welcome, <?php echo $user['username']; ?></h1>
+                            <div class="ml-44">
+                                <button onclick="redirectToPaymentPage()"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">Bayar</button>
+                                <button type="button" onclick="showEditModal()"
+                                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded ml-4">Edit Profile</button>
+                            </div>
+                        </div>
+                    <div class="mt-4 text-justify">
+                        <strong>Username:</strong> <p class="text-gray-400"><?php echo $user['username']; ?></p>
+                        <strong>Alamat:</strong> <p class="text-gray-400"><?php echo $user['alamat']; ?></p>
+                        <strong>No. Telp:</strong><p class="text-gray-400"><?php echo $user['no_telp']; ?></p>
+                        <strong>Email:</strong><p class="text-gray-400"><?php echo $user['email']; ?></p>
                     </div>
-                    <button type="submit" class="update-profile-button">Update Profile</button>
-                </form>
+                    <div class="mt-8">
+                        <h3 class="text-2xl">Payment Status - <?php echo date('F Y'); ?></h3>
+                        <p class="text-lg">Status: <?php echo getStatusPembayaranBulanTerakhir(); ?></p>
+                    </div>
+                </div>
             </div>
-            <h3 class="text-2xl mt-8">Electricity Bill</h3>
-            <table class="mt-4 w-full">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2">#</th>
-                        <th class="px-4 py-2">Month</th>
-                        <th class="px-4 py-2">Year</th>
-                        <th class="px-4 py-2">Meter Reading</th>
-                        <th class="px-4 py-2">Tariff per kWh</th>
-                        <th class="px-4 py-2">Total Bill</th>
-                        <th class="px-4 py-2">Status</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($tagihan_listrik as $index => $tagihan): ?>
+            <div id="edit-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
+                <div class="bg-white w-1/2 rounded-lg p-8">
+                    <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
+                    <form method="POST" action="../env/profile_update.php" class="mt-4">
+                        <div class="mb-4">
+                            <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat:</label>
+                            <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="mb-4">
+                            <label for="no_telp" class="block text-sm font-medium text-gray-700">No. Telp:</label>
+                            <input type="text" id="no_telp" name="no_telp" value="<?php echo $user['no_telp']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="mb-4">
+                            <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
+                            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required
+                                class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
+                        </div>
+                        <div class="flex space-x-4">
+                            <button type="submit" name="update"
+                                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Update</button>
+                            <button type="button" onclick="hideEditModal()"
+                                class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
+                        </div>
+                    </form>
+                    <form method="POST" action="../env/upload_gambar.php" enctype="multipart/form-data" class="mt-8">
+                        <div class="mb-4">
+                            <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo (JPG format, max
+                                2MB)</label>
+                            <input type="file" id="photo" name="photo" accept=".jpg" required>
+                        </div>
+                        <button type="submit"
+                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update
+                            Profile</button>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Additional Elements and Graphics -->
+            <div class="container mx-auto mt-8">
+                <div class="flex items-center justify-between gap-10">
+                    <div class="w-1/2">
+                        <h3 class="text-2xl text-yellow-400">Statistics</h3>
+                        <canvas id="chart" class="mt-4"></canvas>
+                    </div>
+                    <div class="w-1/2">
+                        <h3 class="text-2xl text-yellow-400">Electricity Usage</h3>
+                        <table class="mt-4 w-full text-center text-white">
+                            <thead>
+                                <tr class="bg-gray-700">
+                                    <th class="border px-4 py-2">No</th>
+                                    <th class="border px-4 py-2">Month</th>
+                                    <th class="border px-4 py-2">Year</th>
+                                    <th class="border px-4 py-2">Initial Reading</th>
+                                    <th class="border px-4 py-2">Final Reading</th>
+                                </tr>
+                            </thead>
+                            <tbody class="table-body-scrollable">
+                                <?php foreach ($penggunaan_listrik as $index => $penggunaan): ?>
+                                <tr>
+                                    <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
+                                    <td class="border px-4 py-2"><?php echo $penggunaan['bulan']; ?></td>
+                                    <td class="border px-4 py-2"><?php echo $penggunaan['tahun']; ?></td>
+                                    <td class="border px-4 py-2"><?php echo $penggunaan['meter_awal']; ?></td>
+                                    <td class="border px-4 py-2"><?php echo $penggunaan['meter_akhir']; ?></td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
+
+                </div>
+
+                <h3 class="text-2xl mt-8 text-yellow-400">Electricity Bill</h3>
+                <table class="mt-4 w-full text-center max-h-40 overflow-y-auto text-white">
+                    <thead>
+                        <tr class="bg-gray-700">
+                            <th class="border px-4 py-2">#</th>
+                            <th class="border px-4 py-2">Month</th>
+                            <th class="border px-4 py-2">Year</th>
+                            <th class="border px-4 py-2">Meter Reading</th>
+                            <th class="border px-4 py-2">Tariff per kWh</th>
+                            <th class="border px-4 py-2">Total Bill</th>
+                            <th class="border px-4 py-2">Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach ($tagihan_listrik as $index => $tagihan): ?>
                         <tr>
                             <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
                             <td class="border px-4 py-2"><?php echo $tagihan['bulan']; ?></td>
@@ -151,51 +236,71 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <td class="border px-4 py-2"><?php echo $tagihan['total_tagihan']; ?></td>
                             <td class="border px-4 py-2"><?php echo $tagihan['status']; ?></td>
                         </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <h3 class="text-2xl mt-8">Electricity Usage</h3>
-            <table class="mt-4 w-full">
-                <thead>
-                    <tr>
-                        <th class="px-4 py-2">#</th>
-                        <th class="px-4 py-2">Month</th>
-                        <th class="px-4 py-2">Year</th>
-                        <th class="px-4 py-2">Initial Reading</th>
-                        <th class="px-4 py-2">Final Reading</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($penggunaan_listrik as $index => $penggunaan): ?>
-                        <tr>
-                            <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
-                            <td class="border px-4 py-2"><?php echo $penggunaan['bulan']; ?></td>
-                            <td class="border px-4 py-2"><?php echo $penggunaan['tahun']; ?></td>
-                            <td class="border px-4 py-2"><?php echo $penggunaan['meter_awal']; ?></td>
-                            <td class="border px-4 py-2"><?php echo $penggunaan['meter_akhir']; ?></td>
-                        </tr>
-                    <?php endforeach; ?>
-                </tbody>
-            </table>
-            <button class="logout-button mt-8" onclick="logout()">Logout</button>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-            <script>
-                function showEditForm() {
-                    $('#edit-form').show();
-                }
-
-                function cancelEditForm() {
-                    $('#edit-form').hide();
-                }
-
-                function logout() {
-                    window.location.href = 'logout.php';
-                }
-            </script>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
+
+    <div class="footer">
+        <div class="footer-info">
+
+        </div>
+        <div class="copyright flex justify-center items-center m-10">
+            <p class="text-gray-200 text-sm text-lg">© 2023 Barkah Herdyanto S. All rights reserved.</p>
+        </div>
+    </div>
+
+    <script src="../assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/scrollreveal/4.0.3/scrollreveal.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/darkmode-toggle/1.3.5/darkmode-toggle.min.js"></script>
+
+    <script>
+        var ctx = document.getElementById('chart').getContext('2d');
+        var chart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: <?php echo json_encode($labels); ?>,
+                datasets: [{
+                    label: 'Electricity Usage',
+                    type: 'line',
+                    data: <?php echo json_encode($data); ?>,
+                    backgroundColor: function (context) {
+                        var value = context.dataset.data[context.dataIndex];
+                        if (value >= 200) {
+                            return 'red';
+                        } else if (value >= 150) {
+                            return 'yellow';
+                        } else {
+                            return 'green';
+                        }
+                    },
+                    borderColor: '#fff',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                animations: {
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
+                }
+            }
+        });
+
+    </script>
 </body>
 
 </html>
-
-

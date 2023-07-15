@@ -1,14 +1,15 @@
 <?php
+// Koneksi ke database
 include("config.php");
 
-    $id=$_GET['id'];
-    $sql ="DELETE FROM users WHERE id='$id'";
-    $query = mysqli_query($conn, $sql);
-    // $data = mysqli_fetch_array($query);
-    // $no = 1;
-    
-    
-    echo '<script language="javascript" type="text/javascript">
-    alert("pesan berhasil di hapus!");</script>';
-    echo "<meta http-equiv='refresh' content='2; url=../admin/index'>";
+$user_id = 1; // ganti dengan user_id yang ingin dihapus
+// Buat query untuk menghapus data dari tabel users
+$sql = "DELETE FROM users WHERE user_id='$user_id'";
+$query = mysqli_query($conn, $sql);
+
+if ($query) {
+    echo '<script>alert("Data berhasil dihapus!"); window.location.href="../pages/admin.php";</script>';
+} else {
+    echo '<script>alert("Terjadi kesalahan saat menghapus data."); window.location.href="../pages/admin.php";</script>';
+}
 ?>

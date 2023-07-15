@@ -158,7 +158,7 @@ $users = getAllUsers();
                             <?php echo getStatusPembayaran($user['user_id']); ?>
                           </td>
                           <td class="border px-4 py-2"><a class="edit-link" href="../env/edit_user.php?php echo $user['user_id']; ?>">Edit</a></td>
-                          <td class="border px-4 py-2"><a class="delete-link" href="../edelete_user.php?id=<?php echo $user['user_id']; ?>">Delete</a></td>
+                          <td class="border px-4 py-2"><a class="delete-link" href="../env/delete_user.php?id=<?php echo $user['user_id']; ?>">Delete</a></td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>
