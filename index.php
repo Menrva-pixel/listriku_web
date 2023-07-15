@@ -37,10 +37,10 @@ if (isset($_SESSION['username'])) {
       <a href="#" class="text-white hover:text-gray-400 mx-2">About</a>
       <?php if (isset($username)) : ?>
         <!-- Pengguna sudah login, tampilkan nama pengguna -->
-        <a href="pages/user.php" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $username; ?></a>
+        <a href="pages/user" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $username; ?></a>
       <?php else : ?>
         <!-- Pengguna belum login, tampilkan opsi login -->
-        <a href="auth/login.php" class="text-black bg-yellow-400 p-3 rounded-3xl mx-2 transform hover:scale-75">Log-in <i class="fa-solid fa-right-to-bracket"></i></a>
+        <a href="auth/login" class="text-black bg-yellow-400 p-3 rounded-3xl mx-2 transform hover:scale-75">Log-in <i class="fa-solid fa-right-to-bracket"></i></a>
       <?php endif; ?>
     </div>
   </nav>
@@ -133,7 +133,8 @@ if (isset($_SESSION['username'])) {
       <p class="text-gray-500 text-sm">&copy; 2023 Barkah Herdyanto S. All rights reserved.</p>
     </div>
   </footer>
+  <script src="assets/js/script.js"></script>
 </body>
-<script src="assets/js/script.js"></script>
+
 
 </html>

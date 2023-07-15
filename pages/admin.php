@@ -27,7 +27,7 @@ function getStatusPembayaran($user_id) {
 
 // Redirect to login page if not logged in or not an admin
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] !== 'Admin') {
-    header('Location: ../auth/login.php');
+    header('Location: ../auth/login');
     exit;
 }
 
@@ -101,7 +101,7 @@ $users = getAllUsers();
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-          <form class="nav-link collapsed" method="GET" action="../env/logout.php">
+          <form class="nav-link collapsed" method="GET" action="../env/logout">
             <button type="submit" name="logout" class="bi bi-box-arrow-in-left">Logout</button>
           </form>
         </li><!-- End Login Page Nav -->
@@ -156,8 +156,8 @@ $users = getAllUsers();
                           <td class="border px-4 py-2 <?php echo getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar'; ?>">
                             <?php echo getStatusPembayaran($user['user_id']); ?>
                           </td>
-                          <td class="border px-4 py-2"><a class="edit-link" href="../env/edit_user.php?php echo $user['user_id']; ?>">Edit</a></td>
-                          <td class="border px-4 py-2"><a class="delete-link" href="../env/delete_user.php?id=<?php echo $user['user_id']; ?>">Delete</a></td>
+                          <td class="border px-4 py-2"><a class="edit-link" href="../env/edit_user?php echo $user['user_id']; ?>">Edit</a></td>
+                          <td class="border px-4 py-2"><a class="delete-link" href="../env/delete_user?id=<?php echo $user['user_id']; ?>">Delete</a></td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>

@@ -6,7 +6,7 @@ include '../env/get-image.php';
 
 // Kembali ke halaman login jika sesion user tidak terdeteksi
 if (!isset($_SESSION['username']) || !isUserPage()) {
-    header('Location: ../auth/login.php');
+    header('Location: ../auth/login');
     exit;
 }
 
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "UPDATE users SET alamat='$alamat', no_telp='$no_telp', email='$email' WHERE id='{$user['id']}'";
     mysqli_query($conn, $query);
 
-    header('Location: user.php');
+    header('Location: user');
     exit;
 }
 
@@ -77,7 +77,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="bg-transparent shadow">
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
-                <a href="../index.php">
+                <a href="../index">
                     <img src="../assets/images/logo.png" alt="Brand-Logo" class="h-10 w-auto">
                 </a>
             </div>
@@ -98,7 +98,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                 <?php endif; ?>
                 </div>
-                    <form method="GET" action="auth/logout.php">
+                    <form method="GET" action="../auth/logout">
                         <button type="submit" name="logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
                     </form>
                 </div>
@@ -144,7 +144,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div id="edit-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden">
                 <div class="bg-white w-1/2 rounded-lg p-8">
                     <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
-                    <form method="POST" action="../env/profile_update.php" class="mt-4">
+                    <form method="POST" action="../env/profile_update" class="mt-4">
                         <div class="mb-4">
                             <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat:</label>
                             <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
@@ -167,7 +167,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
                         </div>
                     </form>
-                    <form method="POST" action="../env/upload_gambar.php" enctype="multipart/form-data" class="mt-8">
+                    <form method="POST" action="../env/upload_gambar" enctype="multipart/form-data" class="mt-8">
                         <div class="mb-4">
                             <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo (JPG format, max
                                 2MB)</label>

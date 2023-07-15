@@ -5,6 +5,10 @@ include 'config.php';
 function getUserFromDatabase($username, $password) {
     global $conn;
 
+    if ($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = mysqli_real_escape_string($conn, $_POST["username"]);
+        $password = mysqli_real_escape_string($conn, $_POST["password"]);
+    
     // cek apakah user ada di tabel users
     $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = mysqli_query($conn, $query);
@@ -51,10 +55,10 @@ function isPelanggan() {
 
 function redirect() {
     if (isAdmin()) {
-        header('Location: ../pages/admin.php');
+        header('Location: ../pages/admin');
         exit;
     } else if (isPelanggan()) {
-        header('Location: ../pages/user.php');
+        header('Location: ../pages/user');
         exit;
     }
 }
@@ -67,4 +71,5 @@ if (login($username, $password)) {
     redirect();
 } else {
     // tampilkan pesan error
+}
 }

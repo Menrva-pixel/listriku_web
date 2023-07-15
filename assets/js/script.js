@@ -60,7 +60,7 @@ var chart = new Chart(ctx, {
 
     /* pembayaran */
     function redirectToPaymentPage() {
-        window.location.href = '../pages/payment.php';
+        window.location.href = '../pages/payment';
     }
 
     function printPaymentDetails() {
@@ -69,7 +69,7 @@ var chart = new Chart(ctx, {
     
         // Kembali ke halaman user setelah 3 detik
         setTimeout(function() {
-            window.location.href = 'user.php';
+            window.location.href = '../pages/user';
         }, 3000);
     }
 
@@ -97,6 +97,22 @@ var chart = new Chart(ctx, {
         if (!event.target.matches('.dropdown') && !event.target.matches('.dropdown *')) {
         dropdownMenu.classList.add('hidden');
         }
+    });
+
+    // Toggle form display
+    const loginForm = document.getElementById('login-form');
+    const registerForm = document.getElementById('register-form');
+    const registerBtn = document.getElementById('register-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    registerBtn.addEventListener('click', function() {
+        loginForm.classList.add('hidden');
+        registerForm.classList.remove('hidden');
+    });
+
+    cancelBtn.addEventListener('click', function() {
+        loginForm.classList.remove('hidden');
+        registerForm.classList.add('hidden');
     });
 
 

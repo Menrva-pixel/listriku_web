@@ -5,7 +5,7 @@ include '../env/func.php';
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] != 'Pelanggan') {
-    header('Location: ../auth/login.php');
+    header('Location: ../auth/login');
     exit;
 }
 
@@ -21,7 +21,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $payment_id = $_POST['payment_id'];
 
     // Redirect to payment detail page
-    header("Location: payment_detail.php?payment_id=$payment_id");
+    header("Location: payment_detail?payment_id=$payment_id");
     exit;
 }
 ?>
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 <img src="../assets/images/logo.png">
             </div>
             <div class="flex items-center">
-                <a href="user.php" class="text-white font-bold hover:text-gray-800 mr-6"><i class="fa-regular fa-user mr-2" style="color: #ffffff;"></i><?php echo $user['username']; ?></a>
+                <a href="user" class="text-white font-bold hover:text-gray-800 mr-6"><i class="fa-regular fa-user mr-2" style="color: #ffffff;"></i><?php echo $user['username']; ?></a>
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onclick="logout()">Logout</button>
             </div>

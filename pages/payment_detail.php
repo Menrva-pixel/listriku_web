@@ -5,7 +5,7 @@ include '../env/func.php';
 
 // Redirect to login page if not logged in or not a user
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] != 'Pelanggan') {
-    header('Location: ../auth/login.php');
+    header('Location: ../auth/login');
     exit;
 }
 
@@ -21,7 +21,7 @@ $payment = getPaymentById($payment_id);
 
 // Redirect to payment page if payment data not found
 if (!$payment) {
-    header('Location: pembayaran.php');
+    header('Location: pembayaran');
     exit;
 }
 
@@ -34,7 +34,7 @@ $totalBill = $payment['jumlah_meter'] * $payment['tarif_per_kwh'];
 // Update payment status if payment is completed
 if (isset($_POST['complete_payment'])) {
     completePayment($payment_id);
-    header('Location: payment.php');
+    header('Location: payment');
     exit;
 }
 ?>
@@ -102,7 +102,7 @@ if (isset($_POST['complete_payment'])) {
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Cetak</button>
         </div>
 
-        <a href="payment.php"
+        <a href="payment"
             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Kembali</a>
 
     </div>
@@ -114,7 +114,7 @@ if (isset($_POST['complete_payment'])) {
     <script src="../assets/js/script.js"></script>
     <script>
         function logout() {
-            window.location.href = '../auth/logout.php';
+            window.location.href = '../auth/logout';
         }
     </script>
 </body>
