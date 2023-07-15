@@ -18,7 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         VALUES ('$user_id', '$bulan', '$tahun', '$meter_awal', '$meter_akhir', CURDATE(), '$watt')";
 
     if ($conn->query($sql) === TRUE) {
-        // Redirect ke halaman sukses atau halaman lain yang diinginkan
+        // Redirect ke halaman user.php
         header('Location: ../pages/user.php');
         exit();
     } else {
@@ -57,7 +57,7 @@ $conn->close();
             <div class="text-center">
                 <h1 class="text-xl font-bold text-gray-800 mt-4">Register House</h1>
             </div>
-            <form class="mt-6" id="register-house-form" method="post">
+            <form class="mt-6" id="register-house-form" method="post" action="../pages/user.php">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="bulan">
                         Bulan
@@ -87,7 +87,7 @@ $conn->close();
                         class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
                         id="tahun" type="number" placeholder="Tahun" name="tahun" required>
                 </div>
-                
+
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="meter_awal">
                         Meter Awal
