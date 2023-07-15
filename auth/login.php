@@ -14,7 +14,7 @@ error_reporting(0);
     <meta charset="utf-8">
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
-    <title>Pages / Login - NiceAdmin Bootstrap Template</title>
+    <title>Login | Listriku</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
 
@@ -25,25 +25,11 @@ error_reporting(0);
     <!-- Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
-    <style>
-        .bg-blur {
-            background-size: cover;
-            backdrop-filter: blur(8px);
-        }
-
-        .logo {
-            margin-top: 40px;
-        }
-    </style>
 </head>
 
 <body>
-    <div class="bg-blur">
-        <div class="absolute inset-0 bg-black bg-opacity-50"></div>
-    </div>
-
     <main>
-        <div class="container mx-auto flex items-center justify-center h-screen">
+        <div class="container w-auto mx-auto flex items-center justify-center h-screen">
             <section class="w-full max-w-xs">
                 <div class="bg-white bg-opacity-75 shadow-md rounded px-8 pt-6 pb-8 mb-4">
                     <div class="text-center">

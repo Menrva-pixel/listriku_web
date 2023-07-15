@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+// Periksa apakah pengguna sudah login
+if (isset($_SESSION['username'])) {
+  // Pengguna sudah login, dapatkan nama pengguna dari session
+  $username = $_SESSION['username'];
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -25,7 +35,13 @@
     <div>
       <a href="#" class="text-white hover:text-gray-400 mx-2">Home</a>
       <a href="#" class="text-white hover:text-gray-400 mx-2">About</a>
-      <a href="auth/login.php" class="text-black bg-yellow-400 p-3 rounded-3xl mx-2 transform hover:scale-75">Log-in <i class="fa-solid fa-right-to-bracket"></i></a>
+      <?php if (isset($username)) : ?>
+        <!-- Pengguna sudah login, tampilkan nama pengguna -->
+        <a href="pages/user.php" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $username; ?></a>
+      <?php else : ?>
+        <!-- Pengguna belum login, tampilkan opsi login -->
+        <a href="auth/login.php" class="text-black bg-yellow-400 p-3 rounded-3xl mx-2 transform hover:scale-75">Log-in <i class="fa-solid fa-right-to-bracket"></i></a>
+      <?php endif; ?>
     </div>
   </nav>
 

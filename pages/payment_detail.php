@@ -45,7 +45,7 @@ if (isset($_POST['complete_payment'])) {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Detail</title>
+    <title>Payment Detail | Listriku</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
 </head>
@@ -102,7 +102,7 @@ if (isset($_POST['complete_payment'])) {
                 class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Cetak</button>
         </div>
 
-        <a href="<URL>"
+        <a href="payment.php"
             class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Kembali</a>
 
     </div>

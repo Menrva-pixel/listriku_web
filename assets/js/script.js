@@ -83,5 +83,21 @@ var chart = new Chart(ctx, {
         popup.style.display = 'none';
     }
 
+    //dropdown
+
+  // Toggle tampilan dropdown
+    function toggleDropdown() {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        dropdownMenu.classList.toggle('hidden');
+    }
+
+    // Menutup dropdown saat mengklik di luar dropdown
+    window.addEventListener('click', (event) => {
+        const dropdownMenu = document.getElementById('dropdownMenu');
+        if (!event.target.matches('.dropdown') && !event.target.matches('.dropdown *')) {
+        dropdownMenu.classList.add('hidden');
+        }
+    });
+
 
 /*----Barkah Herdyanto Sejati -----*/

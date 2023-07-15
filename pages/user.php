@@ -77,8 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <nav class="bg-transparent shadow">
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
-                <img src="../assets/images/logo.png" class="h-10 w-auto">
+                <a href="../index.php">
+                    <img src="../assets/images/logo.png" alt="Brand-Logo" class="h-10 w-auto">
+                </a>
             </div>
+
             
             <div class="flex items-center">
             <div class="mr-4">
@@ -94,16 +97,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         </ul>
                     </div>
                 <?php endif; ?>
-            </div>
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onclick="logout()">Logout</button>
                 </div>
-            </div>
+                    <form method="GET" action="auth/logout.php">
+                        <button type="submit" name="logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
+                    </form>
+                </div>
         </div>
     </nav>
 
     <div class="container mx-auto mt-8">
-        <div class="bg-gray-800 bg-opacity-50 backdrop-blur-sm rounded-lg shadow-md p-8">
+        <div class="backdrop-blur-md bg-gray-900 bg-opacity-80 rounded-lg shadow-md p-8">
             <div class="flex items-center">
                 <div class="w-full h-96 flex items-center justify-center">
                     <div class="w-auto flex items-center justify-between border-2 rounded-full">

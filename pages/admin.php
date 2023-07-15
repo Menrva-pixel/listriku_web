@@ -101,10 +101,9 @@ $users = getAllUsers();
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-          <a class="nav-link collapsed" href="../env/logout.php">
-            <i class="bi bi-box-arrow-in-left"></i>
-            <span>Logout</span>
-          </a>
+          <form class="nav-link collapsed" method="GET" action="../env/logout.php">
+            <button type="submit" name="logout" class="bi bi-box-arrow-in-left">Logout</button>
+          </form>
         </li><!-- End Login Page Nav -->
 
     </ul>

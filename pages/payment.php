@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment Page | Listriku</title>
+    <title>Payment | Listriku</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
@@ -43,9 +43,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
                 <img src="../assets/images/logo.png">
-                <div class="ml-4">
-                    <i class="fas fa-bell text-gray-500"></i>
-                </div>
             </div>
             <div class="flex items-center">
                 <a href="user.php" class="text-white font-bold hover:text-gray-800 mr-6"><i class="fa-regular fa-user mr-2" style="color: #ffffff;"></i><?php echo $user['username']; ?></a>
@@ -96,11 +93,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <script>
-        function logout() {
-            window.location.href = '../auth/logout.php';
-        }
-    </script>
 </body>
 
 </html>

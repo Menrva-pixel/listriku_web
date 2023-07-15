@@ -124,12 +124,6 @@ background-color: #d32f2f;
 }
 
 
-.bg-blur {
-    background-image: url('/assets/images/banner.jpg');
-    background-size: cover;
-    backdrop-filter: blur(8px);
-}
-
 .text-center img {
     filter: drop-shadow(2px 4px 4px #333);
 }
