@@ -67,49 +67,43 @@ function getTagihanListrik($user_id) {
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+    //fungsi pembayaran
+    function getPaymentById($payment_id) {
+        global $conn;
+
+        $query = "SELECT * FROM tagihan_listrik WHERE id='$payment_id'";
+        $result = mysqli_query($conn, $query);
+
+        if (mysqli_num_rows($result) > 0) {
+            $payment = mysqli_fetch_assoc($result);
+            return $payment;
+        }
+
+        return null;
+    }
+
+    // Fungsi untuk menyelesaikan proses pembayaran
+    function completePayment($payment_id) {
+        global $conn;
+
+        // Update status pembayaran menjadi "Lunas"
+        $query = "UPDATE tagihan_listrik SET status='Lunas' WHERE id='$payment_id'";
+        mysqli_query($conn, $query);
+    }
+
+    function getLastMonthUsage($user_id) {
+        global $conn;
+        $query = "SELECT * FROM penggunaan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, FIELD(bulan, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec') LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        return mysqli_fetch_assoc($result);
+    }
+    
+    function updatePaymentStatus($payment_id, $status) {
+        global $conn;
+        $query = "UPDATE tagihan_listrik SET status='$status' WHERE id='$payment_id'";
+        mysqli_query($conn, $query);
+    }
 
 ?>
 
-<script>
-     var ctx = document.getElementById('chart').getContext('2d');
-        var chart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: <?php echo json_encode($labels); ?>,
-                datasets: [{
-                    label: 'Electricity Usage',
-                    type: 'line',
-                    data: <?php echo json_encode($data); ?>,
-                    backgroundColor: function (context) {
-                        var value = context.dataset.data[context.dataIndex];
-                        if (value >= 200) {
-                            return 'red';
-                        } else if (value >= 150) {
-                            return 'yellow';
-                        } else {
-                            return 'green';
-                        }
-                    },
-                    borderColor: '#fff',
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                scales: {
-                    y: {
-                        beginAtZero: true
-                    }
-                },
 
-                animations: {
-            tension: {
-                duration: 2000,
-                easing: 'linear',
-                from: 1,
-                to: 0,
-                loop: true
-      }
-    },
-            }
-        });
-</script>

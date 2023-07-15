@@ -58,11 +58,10 @@ var chart = new Chart(ctx, {
         modal.classList.add('hidden');
     }
 
-/* pembayaran */
-function redirectToPaymentPage() {
-    // Ganti 'halaman-pembayaran' dengan URL halaman pembayaran yang sesuai
-    window.location.href = 'halaman-pembayaran.php';
-}
+    /* pembayaran */
+    function redirectToPaymentPage() {
+        window.location.href = '../pages/payment.php';
+    }
 
 
 
