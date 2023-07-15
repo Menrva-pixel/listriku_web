@@ -115,5 +115,25 @@ var chart = new Chart(ctx, {
         registerForm.classList.add('hidden');
     });
 
+    function swapCards(selectedIndex) {
+        const stackedCards = document.getElementById('stackedCards');
+        const cards = stackedCards.getElementsByClassName('card3');
+        const descriptionContainer = document.getElementById('descriptionContainer');
+      
+        if (cards.length !== 2) return; // Ensure there are exactly two cards
+      
+        // Swap the position of the clicked card in the DOM
+        stackedCards.insertBefore(cards[selectedIndex], cards[0]);
+      
+        // Update the description based on the clicked card's information
+        const selectedCard = cards[0];
+        const selectedTitle = selectedCard.querySelector('.card-title').innerText;
+        const selectedDescription = selectedCard.querySelector('.card-description').innerText;
+      
+        document.getElementById('selectedTitle').innerText = selectedTitle;
+        document.getElementById('selectedDescription').innerText = selectedDescription;
+      }
+      
+      
 
 /*----Barkah Herdyanto Sejati -----*/

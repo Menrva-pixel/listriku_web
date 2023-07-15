@@ -1,22 +1,39 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@400;600;700;800;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Dosis:wght@200;300;400;500;600;700;800&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+
 @layer base {
   html {
-    font-family: Proxima Nova, system-ui, arial;
+    font-family: 'Dosis', sans-serif;
   }
 }
     /* CSS styling untuk halaman */
     body {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif;
+        font-family: 'Dosis', sans-serif;
         background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 22%, rgb(43, 63, 110) 90%);
     }
   
     .navbar {
       transition: background-color 0.3s ease;
+      --tw-backdrop-blur: blur(8px);
+    }
+
+    .logo-img {
+      -webkit-filter: drop-shadow(0px 4px 0 #333)
+                  drop-shadow(1px 4px 0 #333);
+       filter: drop-shadow(0px 8px 0 #333) 
+          drop-shadow(-1px -1px 0 #333);
+    }
+
+
+    .nav-title {
+      font-family: 'Dosis', sans-serif;
     }
     .navbar.scrolled {
       background-color: rgba(6, 6, 15, 0.432);
@@ -42,3 +59,114 @@
     .dropdown-menu.show .fas.fa-chevron-down {
       transform: rotate(180deg);
     }
+
+    .card {
+      background-color: #1f1f1f71;
+      border: 1px solid #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      border-radius: 8px;
+      overflow: hidden;
+      transition: transform 0.2s ease-in-out;
+    }
+  
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+  
+    .image-container {
+      position: relative;
+    }
+  
+    .image-container img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  
+    .caption {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      padding: 8px;
+      background-color: rgba(0, 0, 0, 0.7);
+      color: #fff;
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+  
+    .image-container:hover .caption {
+      opacity: 1;
+    }
+
+    /*style feature 3*/
+    .container3 {
+      display: flex;
+      justify-content: center;
+    }
+    
+    .stacked-cards {
+      display: flex;
+      position: relative;
+      width: 600px; /* Set the desired width */
+      height: 300px; /* Set the desired height */
+      perspective: 1000px;
+      cursor: pointer;
+      transition: transform 0.3s;
+    }
+
+    .swapped .card:first-child {
+      transform: translate(5%, 5%) scale(1.05);
+    }
+    
+    .swapped .card:last-child {
+      transform: translate(-5%, -5%) scale(1.05);
+    }
+    
+    .card3 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #333;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      transform-origin: top center;
+      transform: translateZ(0);
+      transition: transform 0.3s;
+    }
+    
+    .card-image {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-top-left-radius: 10px;
+      border-top-right-radius: 10px;
+    }
+    
+    .card-content {
+      padding: 20px;
+    }
+    
+    .card-title {
+      color: #fff;
+      font-size: 24px;
+      font-weight: bold;
+    }
+    
+    .card-description {
+      color: #ccc;
+      font-size: 16px;
+    }
+    
+    .stacked-cards:hover .card3:last-child {
+      transform: translate(-5%, -5%) scale(1.05);
+    }
+    
+    .stacked-cards:hover .card3:first-child {
+      transform: translate(5%, 5%) scale(1.05);
+    }
+    
