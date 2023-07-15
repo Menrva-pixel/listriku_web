@@ -5,10 +5,9 @@ include 'config.php';
 function getUserFromDatabase($username, $password) {
     global $conn;
 
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $username = mysqli_real_escape_string($conn, $_POST["username"]);
-        $password = mysqli_real_escape_string($conn, $_POST["password"]);
-    
+    $username = mysqli_real_escape_string($conn, $username);
+    $password = mysqli_real_escape_string($conn, $password);
+
     // cek apakah user ada di tabel users
     $query = "SELECT * FROM users WHERE username='$username' AND password='$password'";
     $result = mysqli_query($conn, $query);
@@ -30,46 +29,57 @@ function getUserFromDatabase($username, $password) {
     return null;
 }
 
-function login($username, $password) {
-    // cek apakah username dan password benar
-    $user = getUserFromDatabase($username, $password);
-    if ($user) {
-        // jika benar, simpan informasi user ke session
-        $_SESSION['user_id'] = $user['id'];
-        $_SESSION['username'] = $user['username'];
-        $_SESSION['privilege'] = $user['privilege'];
-        return true;
+    function login($username, $password) {
+        // cek apakah username dan password benar
+        $user = getUserFromDatabase($username, $password);
+        if ($user) {
+            // jika benar, simpan informasi user ke session
+            $_SESSION['user_id'] = $user['id'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['privilege'] = $user['privilege'];
+            return true;
+        } else {
+            // jika salah, kembalikan false
+            return false;
+        }
+    }
+
+    function isAdmin() {
+        return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Admin';
+    }
+
+    function isPelanggan() {
+        return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
+    }
+
+    function redirect() {
+        if (isAdmin()) {
+            header('Location: ../pages/admin');
+            exit;
+        } else if (isPelanggan()) {
+            header('Location: ../pages/user');
+            exit;
+        }
+    }
+
+    // ambil data username dan password dari form login
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (login($username, $password)) {
+        redirect();
     } else {
-        // jika salah, kembalikan false
-        return false;
+        // tampilkan pesan error
+        echo "<script>
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Login Gagal',
+                    text: 'Username atau Password salah',
+                    showConfirmButton: false,
+                    timer: 2000
+                }).then(function () {
+                    window.location.href = '../auth/login.php';
+                });
+            </script>";
     }
-}
-
-function isAdmin() {
-    return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Admin';
-}
-
-function isPelanggan() {
-    return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
-}
-
-function redirect() {
-    if (isAdmin()) {
-        header('Location: ../pages/admin');
-        exit;
-    } else if (isPelanggan()) {
-        header('Location: ../pages/user');
-        exit;
-    }
-}
-
-// ambil data username dan password dari form login
-$username = $_POST['username'];
-$password = $_POST['password'];
-
-if (login($username, $password)) {
-    redirect();
-} else {
-    // tampilkan pesan error
-}
-}
+?>

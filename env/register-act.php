@@ -14,8 +14,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$username', '$password', '$alamat', '$no_telp', '$email', '$privilege')";
 
     if ($conn->query($sql) === TRUE) {
-        // Redirect ke halaman login.php
-        header('Location: ../auth/login.php');
+        // Ambil user_id baru yang telah terdaftar
+        $user_id = $conn->insert_id;
+
+        // Set session dengan user_id
+        session_start();
+        $_SESSION["user_id"] = $user_id;
+
+        // Redirect ke halaman form registrasi rumah
+        header('Location: ../auth/register-house.php');
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;

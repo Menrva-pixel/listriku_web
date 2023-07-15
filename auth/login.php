@@ -34,7 +34,7 @@ error_reporting(0);
                 <img class="w-24 mx-auto" src="../assets/images/slider-dec.png" alt="Logo">
                 <h1 class="text-xl font-bold text-gray-800 mt-4">LISTRIKU</h1>
             </div>
-            <form class="mt-6" id="login-form">
+            <form class="mt-6" id="login-form" action="../env/login-act.php" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
@@ -109,11 +109,12 @@ error_reporting(0);
                         id="no_telp" type="number" placeholder="Nomor Telepon" name="no_telp" required>
                 </div>
                 <div class="flex items-center justify-between">
-                    <button
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
-                        type="submit" id="register-btn" disabled>
-                        Register
-                    </button>
+                <button
+                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
+                    type="submit" id="register-btn" disabled>
+                    Register
+                </button>
+
                     <button
                         class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
                         type="button" id="cancel-btn">
