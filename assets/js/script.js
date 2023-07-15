@@ -63,8 +63,25 @@ var chart = new Chart(ctx, {
         window.location.href = '../pages/payment.php';
     }
 
+    function printPaymentDetails() {
+        // Cetak halaman
+        window.print();
+    
+        // Kembali ke halaman user setelah 3 detik
+        setTimeout(function() {
+            window.location.href = 'user.php';
+        }, 3000);
+    }
 
+    function showNotificationPopup() {
+        var popup = document.getElementById('notification-popup');
+        popup.style.display = 'block';
+    }
 
+    function hideNotificationPopup() {
+        var popup = document.getElementById('notification-popup');
+        popup.style.display = 'none';
+    }
 
 
 /*----Barkah Herdyanto Sejati -----*/

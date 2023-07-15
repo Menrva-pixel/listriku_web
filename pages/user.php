@@ -4,7 +4,7 @@ include '../env/config.php';
 include '../env/func.php';
 include '../env/get-image.php';
 
-// Redirect to login page if not logged in or not a user
+// Kembali ke halaman login jika sesion user tidak terdeteksi
 if (!isset($_SESSION['username']) || !isUserPage()) {
     header('Location: ../auth/login.php');
     exit;
@@ -44,6 +44,20 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
         $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
     }
+
+    // notifikasi
+    $query = "SELECT * FROM tagihan_listrik WHERE status = 'Belum Bayar'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $unpaidPayments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        $unpaidMonths = array_column($unpaidPayments, 'bulan');
+        $notificationCount = count($unpaidPayments);
+    } else {
+        $unpaidMonths = [];
+        $notificationCount = 0;
+        echo "Failed to fetch unpaid payments: " . mysqli_error($conn);
+    }
     
 ?>
 
@@ -65,13 +79,25 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="flex items-center">
                 <img src="../assets/images/logo.png" class="h-10 w-auto">
             </div>
-
+            
             <div class="flex items-center">
-                <div class="mr-4">
-                    <i class="fas fa-bell text-gray-500"></i>
-                </div>
+            <div class="mr-4">
+                <i class="fas fa-bell text-gray-500"></i>
+                <?php if ($notificationCount > 0): ?>
+                    <span class="notification-badge"><?php echo $notificationCount; ?></span>
+                    <div id="notification-popup" class="notification-popup">
+                        <h4 class="notification-title">Notification</h4>
+                        <ul class="notification-list">
+                            <?php foreach ($unpaidMonths as $month) : ?>
+                                <li>Jangan lupa lunasi tagihan anda di bulan: <?php echo $month; ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                <?php endif; ?>
+            </div>
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onclick="logout()">Logout</button>
+                </div>
             </div>
         </div>
     </nav>

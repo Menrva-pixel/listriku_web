@@ -33,20 +33,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Page | Listriku</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/user.css">
 </head>
 
 <body class="bg-gray-100">
-    <nav class="bg-white shadow">
+    <nav class="bg-transparent ">
         <div class="container mx-auto px-4 py-2 flex items-center justify-between">
             <div class="flex items-center">
-                <a href="#" class="text-2xl font-bold">Logo</a>
+                <img src="../assets/images/logo.png">
                 <div class="ml-4">
                     <i class="fas fa-bell text-gray-500"></i>
                 </div>
             </div>
             <div class="flex items-center">
-                <a href="user.php" class="text-gray-600 hover:text-gray-800 mr-4">User Page</a>
+                <a href="user.php" class="text-white font-bold hover:text-gray-800 mr-6"><i class="fa-regular fa-user mr-2" style="color: #ffffff;"></i><?php echo $user['username']; ?></a>
                 <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
                     onclick="logout()">Logout</button>
             </div>
@@ -54,13 +56,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     </nav>
 
     <div class="container mx-auto mt-8">
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <h1 class="text-3xl font-semibold mb-4">List Tagihan</h1>
-
-            <table class="w-full text-center">
+        <div class="p-44">
+        <div class="flex flex-column justify-between align-center">
+            <img class="w-auto h-14" src="../assets/images/logo.png">
+        </div>
+            <table class="w-full text-center text-white border-x-0 border-b-4">
                 <thead>
                     <tr>
-                        <th class="px-4 py-2">#</th>
+                        <th class="px-4 py-2">PaymentID</th>
                         <th class="px-4 py-2">Month</th>
                         <th class="px-4 py-2">Year</th>
                         <th class="px-4 py-2">Total Bill</th>

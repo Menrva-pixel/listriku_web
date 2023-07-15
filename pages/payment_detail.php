@@ -25,13 +25,16 @@ if (!$payment) {
     exit;
 }
 
+$paymentDate = isset($payment['tanggal_pembayaran']) ? $payment['tanggal_pembayaran'] : null;
+$formattedPaymentDate = $paymentDate ? date('d F Y', strtotime($paymentDate)) : '';
+
 // Calculate total bill amount
 $totalBill = $payment['jumlah_meter'] * $payment['tarif_per_kwh'];
 
 // Update payment status if payment is completed
 if (isset($_POST['complete_payment'])) {
     completePayment($payment_id);
-    header('Location: pembayaran.php');
+    header('Location: payment.php');
     exit;
 }
 ?>
@@ -44,52 +47,71 @@ if (isset($_POST['complete_payment'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Payment Detail</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tailwindcss/2.2.7/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/user.css">
 </head>
 
 <body class="bg-gray-100">
-    <nav class="bg-white shadow">
-        <div class="container mx-auto px-4 py-2 flex items-center justify-between">
-            <div class="flex items-center">
-                <a href="#" class="text-2xl font-bold">Logo</a>
-                <div class="ml-4">
-                    <i class="fas fa-bell text-gray-500"></i>
-                </div>
-            </div>
-            <div class="flex items-center">
-                <a href="user.php" class="text-gray-600 hover:text-gray-800 mr-4">User Page</a>
-                <button class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-                    onclick="logout()">Logout</button>
-            </div>
+<div class="container mx-auto py-44">
+    <div class="mx-auto w-96 bg-white bg-opacity-50 backdrop-blur-md rounded-lg shadow-md p-8">
+        <div class="flex items-center justify-around mb-8">
+            <img src="../assets/images/slider-dec.png" alt="Logo" class="w-24 h-24">
+            <h2 class="text-1xl font-semibold">Payment Details</h2>
         </div>
-    </nav>
 
-    <div class="container mx-auto mt-8">
-        <div class="bg-white rounded-lg shadow-md p-8">
-            <h1 class="text-3xl font-semibold mb-4">Payment Detail</h1>
-
-            <div class="mb-4">
-                <strong>Username:</strong> <?php echo $user['username']; ?>
+        <div class="mb-6 text-center">
+             <a class="font-semibold text-3xl text-gray-600">Total Bill:</a>
+             <p class="font-bold text-4xl"> Rp <?php echo number_format($totalBill + 2500, 0, ',', '.'); ?></p> 
+        </div>
+        <hr>
+        <div class="flex flex-col mb-6 text-xs">
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Username</strong> <a><?php echo $user['username']; ?></a>
             </div>
-            <div class="mb-4">
-                <strong>Alamat Rumah:</strong> <?php echo $user['alamat']; ?>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Alamat Rumah</strong> <?php echo $user['alamat']; ?>
             </div>
-            <div class="mb-4">
-                <strong>Pemakaian Total Listrik Bulan Terakhir:</strong>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Pemakaian Listrik</strong>
                 <?php echo $payment['jumlah_meter']; ?> kWh
             </div>
-            <div class="mb-4">
-                <strong>Total Bill:</strong> Rp <?php echo number_format($totalBill, 0, ',', '.'); ?>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Tanggal Pembayaran</strong> <?php echo $formattedPaymentDate; ?>
             </div>
-
-            <form method="POST" action="">
-                <input type="hidden" name="payment_id" value="<?php echo $payment_id; ?>">
-                <button type="submit" name="complete_payment"
-                    class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bayar</button>
-            </form>
+            <hr>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Amount</strong>
+                <p class="font-bold text-xs"> Rp <?php echo number_format($totalBill, 0, ',', '.'); ?></p> 
+            </div>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Admin Fee</strong>
+                <p class="font-bold text-xs"> Rp 2500</p> 
+            </div>
+            <hr>
+            <div class="m-2 flex flex-column justify-between">
+                <strong>Total Payment</strong>
+                <p class="font-bold text-xs"> Rp <?php echo number_format($totalBill + 2500, 0, ',', '.'); ?></p> 
+            </div>
         </div>
+
+
+        <div class="flex justify-between mb-6">
+            <button type="submit" name="complete_payment"
+                class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Bayar</button>
+
+            <button type="button" onclick="printPaymentDetails()"
+                class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Cetak</button>
+        </div>
+
+        <a href="<URL>"
+            class="bg-gray-500 hover:bg-gray-700 text-white font-bold py-2 px-4 rounded">Kembali</a>
+
     </div>
+</div>
+
+
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="../assets/js/script.js"></script>
     <script>
         function logout() {
             window.location.href = '../auth/logout.php';
