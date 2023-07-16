@@ -39,6 +39,10 @@ function isUserPage() {
     return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
 }
 
+function isAdminPage() {
+    return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Admin';
+}
+
 function chartPenggunaanListrik() {
     global $conn;
 

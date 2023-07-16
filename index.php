@@ -6,6 +6,17 @@ if (isset($_SESSION['username'])) {
   // Pengguna sudah login, dapatkan nama pengguna dari session
   $username = $_SESSION['username'];
 }
+
+function isAdminLoggedIn()
+{
+    return isset($_SESSION['username']) && $_SESSION['privilege'] === 'Admin';
+}
+
+// Function to check if the user is logged in as a normal user (Pelanggan)
+function isUserLoggedIn()
+{
+    return isset($_SESSION['username']) && $_SESSION['privilege'] === 'Pelanggan';
+}
 ?>
 
 <!DOCTYPE html>
@@ -36,26 +47,29 @@ if (isset($_SESSION['username'])) {
     <div class="mr-12 font-semibold flex flex-row items-center">
       <a href="#" class="text-white hover:text-blue-400 mx-6">Home</a>
       <a href="#" class="text-white hover:text-blue-400 mx-6">About</a>
-      <?php if (isset($username)) : ?>
-        <!-- Pengguna sudah login, tampilkan nama pengguna -->
-        <a href="pages/user" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $username; ?></a>
+      <?php if (isAdminLoggedIn()) : ?>
+    <!-- Admin is logged in -->
+    <a href="pages/admin" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i>Admin</a>
+      <?php elseif (isUserLoggedIn()) : ?>
+          <!-- User (Pelanggan) is logged in, display the username -->
+          <a href="pages/user" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $_SESSION['username']; ?></a>
       <?php else : ?>
-        <!-- Pengguna belum login, tampilkan opsi login -->
-        <a href="auth/login" class="login-icon text-white hover:text-blue-400 p-3 rounded-3xl mx-2 transform hover:scale-75"><i class="fa-solid fa-right-to-bracket"></i></a>
+          <!-- No user is logged in, display the login option -->
+          <a href="auth/login" class="login-icon text-white hover:text-blue-400 p-3 rounded-3xl mx-2 transform hover:scale-75"><i class="fa-solid fa-right-to-bracket"></i></a>
       <?php endif; ?>
       <a href="https://github.com/menrva-pixel/listriku_web" target="_blank" class=" ml-6 text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"><span class="sr-only">Tailwind CSS on GitHub</span><svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
     </div>
   </nav>
 
   <!-- Hero section -->
-  <section class="z-0 bg-transparent h-96 m-20" data-aos="fade-up" data-aos-duration="2000">
+  <section class="z-0 bg-transparent h-96 m-80" data-aos="fade-up" data-aos-duration="2000">
     <div class="container mx-auto mt-56 text-center">
       <h1 class="z-10 text-white font-black text-8xl">Selamat Datang</h1>
-      <p class="mt-8 text-gray-400 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+      <p class="mt-8 p-10 text-gray-400 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
     </div>
   </section>
 
-
+  <hr>
   <!-- Company Information section -->
   <section class="bg-transparent p-16 overflow-hidden">
     <div class="container mx-auto">
@@ -72,7 +86,8 @@ if (isset($_SESSION['username'])) {
   </section>
 
   <!-- Additional Information section -->
-  <hr class="w-96 h-1 mx-auto bg-gray-400 rounded md:my-10 dark:bg-gray-700">
+  <p class="text-center text-white text-4xl font-semibold">Performa Kami</p>
+  <hr class="w-96 h-1 mx-auto rounded md:my-10 dark:bg-gray-700">
   <section class="py-8 m-0 border-y border-gray-100 dark:border-gray-800 sm:flex justify-between">
   <div class="container mx-auto">
     <div class="grid grid-cols-3 gap-10 mx-auto w-1/2">
@@ -124,11 +139,9 @@ if (isset($_SESSION['username'])) {
   </div>
 </section>
 
-
-  <hr class="w-1/2 h-1 mx-auto bg-gray-400 border-0 rounded md:my-10 dark:bg-gray-700">
-
+  <hr>
   <!-- Additional features section -->
-  <section class="py-16">
+  <section class="feature-3 p-20">
   <div class="container3 ml-16 mx-auto">
     <div class="stacked-cards" id="stackedCards">
       <div class="card3" onclick="swapCards(0)">
@@ -157,9 +170,36 @@ if (isset($_SESSION['username'])) {
   </div>
 </section>
 
+<section class="container mx-auto p-8">
+    <h2 class="text-3xl font-bold mb-6">Proyek Saya</h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
+      <!-- Card Pertama -->
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-lg font-semibold mb-2">Proyek 1</h3>
+        <p class="text-gray-600 mb-4">Deskripsi singkat proyek pertama.</p>
+        <a href="#" class="text-blue-500">Lihat Detail</a>
+      </div>
+
+      <!-- Card Kedua -->
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-lg font-semibold mb-2">Proyek 2</h3>
+        <p class="text-gray-600 mb-4">Deskripsi singkat proyek kedua.</p>
+        <a href="#" class="text-blue-500">Lihat Detail</a>
+      </div>
+
+      <!-- Card Ketiga -->
+      <div class="bg-white rounded-lg shadow-md p-4">
+        <h3 class="text-lg font-semibold mb-2">Proyek 3</h3>
+        <p class="text-gray-600 mb-4">Deskripsi singkat proyek ketiga.</p>
+        <a href="#" class="text-blue-500">Lihat Detail</a>
+      </div>
+
+      <!-- Tambahkan card proyek selanjutnya sesuai kebutuhan -->
+    </div>
+  </section>
 
 
-
+<hr>
 
 
   <!-- Footer -->

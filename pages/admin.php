@@ -3,6 +3,11 @@ session_start();
 include '../env/config.php';
 include '../env/func.php';
 
+if (!isset($_SESSION['username']) || !isAdminPage()) {
+  header('Location: ../auth/login');
+  exit;
+}
+
 function getAllUsers() {
     global $conn;
     $query = "SELECT * FROM users";
@@ -31,130 +36,103 @@ if (!isset($_SESSION['username']) || $_SESSION['privilege'] !== 'Admin') {
     header('Location: ../auth/login');
     exit;
 }
-
-if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tagih_user'])) {
-  $user_id = $_POST['tagih_user'];
-  createTagihan($user_id);
-}
-
 // Get all users
 $users = getAllUsers();
+
+
+// Ambil data dari tabel users
+$sqlUsers = "SELECT * FROM users";
+$resultUsers = $conn->query($sqlUsers);
+
+// Inisialisasi array untuk menyimpan data users
+$usersDataJumlahPengguna = array();
+
+if ($resultUsers->num_rows > 0) {
+    while ($row = $resultUsers->fetch_assoc()) {
+        $usersDataJumlahPengguna[] = $row;
+    }
+}
+
+
+$sqlPenggunaanListrik = "SELECT * FROM penggunaan_listrik";
+$resultPenggunaanListrik = $conn->query($sqlPenggunaanListrik);
+
+// Inisialisasi array untuk menyimpan data penggunaan_listrik
+$penggunaanListrikData = array();
+
+if ($resultPenggunaanListrik->num_rows > 0) {
+    while ($row = $resultPenggunaanListrik->fetch_assoc()) {
+        $penggunaanListrikData[] = $row;
+    }
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-
-  <title>Dashboard - Messages</title>
-  <meta content="" name="description">
-  <meta content="" name="keywords">
-
-  <!-- Favicons -->
-  <link href="../assets/img/favicon.png" rel="icon">
-  <link href="../assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,300i,400,400i,600,600i,700,700i|Nunito:300,300i,400,400i,600,600i,700,700i|Poppins:300,300i,400,400i,500,500i,600,600i,700,700i"
-    rel="stylesheet">
-
-  <!-- Tailwind CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.7/dist/tailwind.min.css" rel="stylesheet">
-
-  <!-- Template Main CSS File -->
-  <link href="../assets/css/admin.css" rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard | Listriku</title>
+    <!-- Include Tailwind CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../assets/css/user.css">
 </head>
 
-<body>
-  <header id="header" class="header fixed-top flex items-center justify-between">
-
-    <div class="flex items-center">
-      <a class="logo flex items-center">
-        <img src="../assets/images/logo.png" alt="logo">
-        <span class="hidden lg:block"></span>
-      </a>
-    </div><!-- End Logo -->
-
-    <div class="search-bar">
-      <h1>Administrator Panel Listriku</h1>
-    </div>
-    </nav><!-- End Icons Navigation -->
-
-  </header><!-- End Header -->
-
-  <!-- ======= Sidebar ======= -->
-  <aside id="sidebar" class="sidebar">
-
-    <ul class="sidebar-nav" id="sidebar-nav">
-
-      <li class="nav-item">
-        <a class="nav-link " href="index.html">
-          <i class="bi bi-envelope"></i>
-          <span>Messages</span>
-        </a>
-        <!-- End Tables Nav -->
-
-
-        <li class="nav-heading">Pages</li>
-
-        <li class="nav-item">
-          <a class="nav-link collapsed" href="users-profile.html">
-            <i class="bi bi-person"></i>
-            <span>Profile</span>
+<body class="bg-gray-200">
+    <!-- Navbar -->
+    <nav>
+      <div class="flex flex-row justify-between items-center bg-gray-400">
+        <div class="ml-24">
+          <a href="../index">
+            <img class="h-12 w-24" src="../assets/images/logo.png" alt="Logo">
           </a>
-        </li><!-- End Profile Page Nav -->
+        </div>
+        <div class="mr-24">
+          <ul class="flex space-x-4">
+            <li>                   
+               <form method="GET" action="../auth/logout">
+                  <button type="submit" name="logout" class="bg-transparent border hover:bg-red-700 text-black font-bold py-2 px-4 rounded">Logout</button>
+               </form>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
-        <li class="nav-item">
-          <form class="nav-link collapsed" method="GET" action="../auth/logout">
-            <button type="submit" name="logout" class="bi bi-box-arrow-in-left">Logout</button>
-          </form>
-        </li><!-- End Login Page Nav -->
 
-    </ul>
+    <!-- Content -->
+    <div class="container mx-auto p-4 mt-4">
+        <!-- Charts -->
+        <div class="grid grid-cols-2 gap-4">
+            <!-- Chart 1: Data Penggunaan Listrik -->
+            <div class="bg-white p-4 shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Data Penggunaan Listrik</h2>
+                <canvas id="chart1"></canvas>
+            </div>
+            <!-- Chart 2: Data Jumlah Pengguna -->
+            <div class="bg-white p-4 shadow-lg">
+                <h2 class="text-xl font-bold mb-4">Data Jumlah Pengguna</h2>
+                <canvas id="chart2"></canvas>
+            </div>
+        </div>
 
-  </aside><!-- End Sidebar-->
-
-  <main id="main" class="main">
-
-    <div class="pagetitle">
-      <h1>Dashboard</h1>
-      <nav>
-        <ol class="breadcrumb">
-          <li class="breadcrumb-item"><a href="index.html">Home</a></li>
-          <li class="breadcrumb-item active">Dashboard</li>
-        </ol>
-      </nav>
-    </div><!-- End Page Title -->
-
-    <section class="section dashboard">
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-
-        <!-- Left side columns -->
-        <div class="lg:col-span-2">
-
-          <!-- Message -->
-          <div class="card">
-            <div class="card-body">
-              <h5 class="card-title">Messages</h5>
-              <div class="overflow-auto max-h-96">
-                <div class="message-box">
-                  <div class="message-widget message-scroll">
-                    <!-- Message -->
-                    <table class="table-auto">
-                      <thead>
-                        <tr>
-                          <th class="px-4 py-2">No</th>
-                          <th class="px-4 py-2">Username</th>
-                          <th class="px-4 py-2">Total Tagihan</th>
-                          <th class="px-4 py-2">Status Pembayaran</th>
-                          <th class="px-4 py-2">Edit</th>
-                          <th class="px-4 py-2">Delete</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <?php foreach ($users as $index => $user): ?>
+        <!-- Table -->
+        <div class="mt-8">
+            <h2 class="text-2xl font-bold mb-4">Data Pengguna</h2>
+            <table class="table-auto w-full">
+                <thead>
+                    <tr>
+                        <th class="px-4 py-2">No</th>
+                        <th class="px-4 py-2">Username</th>
+                        <th class="px-4 py-2">Total Tagihan</th>
+                        <th class="px-4 py-2">Status Pembayaran</th>
+                        <th class="px-4 py-2">Edit</th>
+                        <th class="px-4 py-2">Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php foreach ($users as $index => $user): ?>
                           <tr>
                             <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
                             <td class="border px-4 py-2"><?php echo $user['username']; ?></td>
@@ -163,36 +141,111 @@ $users = getAllUsers();
                                 <?php echo getStatusPembayaran($user['user_id']); ?>
                             </td>
                             <td class="border px-4 py-2">
-                                <form method="post" action="">
-                                    <input type="hidden" name="tagih_user" value="<?php echo $user['user_id']; ?>">
-                                    <button type="submit" class="tagih-link">Tagih</button>
-                                </form>
+                            <form method="post" action="">
+                                <input type="hidden" name="tagih_user" value="<?php echo $user['user_id']; ?>">
+                                <button type="submit" class="tagih-link">Tagih</button>
+                            </form>
                             </td>
                             <td class="border px-4 py-2">
                                 <a class="delete-link" href="../env/delete_user?id=<?php echo $user['user_id']; ?>">Delete</a>
                             </td>
                         </tr>
                         <?php endforeach; ?>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div><!-- End Top Selling -->
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-      </div><!-- End Left side columns -->
+    <!-- Include Chart.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Mengambil data yang diperlukan dari $penggunaanListrikData
+      const labelsPenggunaanListrik = <?php echo json_encode(array_column($penggunaanListrikData, 'bulan')); ?>;
+          const dataPenggunaanListrik = <?php echo json_encode(array_column($penggunaanListrikData, 'watt')); ?>;
 
-      <!-- Right side columns -->
-      <div class="lg:col-span-1"></div><!-- End News & Updates -->
+          // Chart configuration options (customize as needed)
+          const chartOptions = {
+              responsive: false,
+              maintainAspectRatio: false,
+              scales: {
+                  y: {
+                      beginAtZero: true,
+                  }
+              }
+          };
 
-      </div><!-- End Right side columns -->
-      </div>
-    </section>
+          // Create and render the chart
+          const ctx1 = document.getElementById('chart1').getContext('2d');
+          new Chart(ctx1, {
+              type: 'line',
+              data: {
+                  labels: labelsPenggunaanListrik,
+                  datasets: [{
+                      label: 'Penggunaan Listrik (watt)',
+                      data: dataPenggunaanListrik,
+                      backgroundColor: 'rgba(255, 99, 132, 0.5)',
+                      borderColor: 'rgba(255, 99, 132, 1)',
+                      borderWidth: 1,
+                  }]
+              },
+              options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                animations: {
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
+                }
+            }
+          });
+    </script>
 
-  </main><!-- End #main -->
+<script>
+    // Mengambil data yang diperlukan dari $usersDataJumlahPengguna
+    const labelsUsersJumlahPengguna = <?php echo json_encode(array_column($usersDataJumlahPengguna, 'username')); ?>;
+    const dataUsersJumlahPengguna = <?php echo json_encode(array_column($usersDataJumlahPengguna, 'no_telp')); ?>;
+
+    // Create and render the chart
+    const ctx2 = document.getElementById('chart2').getContext('2d');
+    new Chart(ctx2, {
+        type: 'bar',
+        data: {
+            labels: labelsUsersJumlahPengguna,
+            datasets: [{
+                label: 'Jumlah Pengguna',
+                data: dataUsersJumlahPengguna,
+                backgroundColor: 'rgba(54, 162, 235, 0.5)',
+                borderColor: 'rgba(54, 162, 235, 1)',
+                borderWidth: 1,
+            }]
+        },
+        options: {
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                animations: {
+                    tension: {
+                        duration: 2000,
+                        easing: 'linear',
+                        from: 1,
+                        to: 0,
+                        loop: true
+                    }
+                }
+            }
+    });
+</script>
 </body>
 
 </html>
+
 

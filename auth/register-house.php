@@ -2,32 +2,51 @@
 include '../env/config.php';
 session_start();
 
+if (!isset($_SESSION['user_id'])) {
+    header('Location: ../auth/login.php');
+    exit();
+}
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $user_id = $_SESSION["user_id"];
     $bulan = $_POST["bulan"];
     $tahun = $_POST["tahun"];
     $meter_awal = $_POST["meter_awal"];
     $meter_akhir = $_POST["meter_akhir"];
-    $watt = $_POST["ukuran_watt"]; // Menambahkan variabel ukuran_watt
-    
+    $watt = $_POST["ukuran_watt"];
+
     $bulan = $_POST["bulan"];
-    // Konversi nilai bulan ke format yang sesuai, misalnya uppercase
     $bulan = strtoupper($bulan);
-    // Query untuk memasukkan data registrasi rumah ke tabel rumah
-    $sql = "INSERT INTO penggunaan_listrik (user_id, bulan, tahun, meter_awal, meter_akhir, tanggal, watt)
+
+    // Insert data into penggunaan_listrik table
+    $sql_penggunaan = "INSERT INTO penggunaan_listrik (user_id, bulan, tahun, meter_awal, meter_akhir, tanggal, watt)
         VALUES ('$user_id', '$bulan', '$tahun', '$meter_awal', '$meter_akhir', CURDATE(), '$watt')";
 
-    if ($conn->query($sql) === TRUE) {
-        // Redirect ke halaman user.php
-        header('Location: ../pages/user.php');
-        exit();
+    if ($conn->query($sql_penggunaan) === TRUE) {
+        // Insert data into tagihan_listrik table with status 'Belum Bayar'
+        $jumlah_meter = $meter_akhir - $meter_awal;
+        $tarif_per_kwh = 2000; // Assuming the tariff is Rp 1,500 per kWh
+        $total_tagihan = $jumlah_meter * $tarif_per_kwh;
+        $status = 'Belum Bayar';
+
+        $sql_tagihan = "INSERT INTO tagihan_listrik (user_id, bulan, tahun, jumlah_meter, tarif_per_kwh, total_tagihan, status)
+            VALUES ('$user_id', '$bulan', '$tahun', '$jumlah_meter', '$tarif_per_kwh', '$total_tagihan', '$status')";
+
+        if ($conn->query($sql_tagihan) === TRUE) {
+            // Redirect to user.php after successful registration
+            header('Location: ../pages/user');
+            exit();
+        } else {
+            echo "Error: " . $sql_tagihan . "<br>" . $conn->error;
+        }
     } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql_penggunaan . "<br>" . $conn->error;
     }
 }
 
 $conn->close();
 ?>
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -37,8 +56,6 @@ $conn->close();
     <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
     <title>Register House | Listriku</title>
-    <meta content="" name="description">
-    <meta content="" name="keywords">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -57,7 +74,7 @@ $conn->close();
             <div class="text-center">
                 <h1 class="text-xl font-bold text-gray-800 mt-4">Register House</h1>
             </div>
-            <form class="mt-6" id="register-house-form" method="post" action="../pages/user.php">
+            <form class="mt-6" id="register-house-form" method="post" action="register-house.php">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="bulan">
                         Bulan

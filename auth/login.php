@@ -1,6 +1,34 @@
 <?php
 include '../env/config.php';
 error_reporting(0);
+
+session_start();
+
+function displayError($error) {
+    echo "<script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Login Gagal',
+                text: '$error',
+                showConfirmButton: false,
+                timer: 2000
+            });
+        </script>";
+}
+
+// Fungsi login dan lainnya tetap sama seperti sebelumnya
+
+// ambil data username dan password dari form login
+if (isset($_POST['username']) && isset($_POST['password'])) {
+    $username = $_POST['username'];
+    $password = $_POST['password'];
+
+    if (login($username, $password)) {
+        redirect();
+    } else {
+        displayError("Username atau Password salah");
+    }
+}
 ?>
 
 <!DOCTYPE html>
