@@ -189,3 +189,19 @@
       height: 1px;
       background-image: linear-gradient(to right, rgba(94, 94, 94, 0), rgba(212, 212, 212, 0.75), rgba(102, 102, 102, 0));
   }
+
+
+  .parallax {
+    height: 100%;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    opacity: 0.5; /* Sesuaikan dengan keinginan Anda */
+  }
+
+  .info-card {
+    background-image: url(../images/hero.jpg);
+    background-size: cover;
+    background-repeat: no-repeat;
+  }

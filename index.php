@@ -62,22 +62,23 @@ function isUserLoggedIn()
   </nav>
 
   <!-- Hero section -->
-  <section class="z-0 bg-transparent h-96 m-80" data-aos="fade-up" data-aos-duration="2000">
-    <div class="container mx-auto mt-56 text-center">
-      <h1 class="z-10 text-white font-black text-8xl">Selamat Datang</h1>
-      <p class="mt-8 p-10 text-gray-400 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
-    </div>
-  </section>
+  <img src="assets/images/hero.jpg" class="parallax top-0 left-0 w-full h-full absolute">
+  <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
+  <div class="absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
+    <h1 class="z-10 text-white font-black text-9xl">Selamat Datang</h1>
+    <h3 class="z-10 mt-6 text-white font-white text-4xl">Effortless Payment</h3>
+    <p class="text-gray-400 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+  </div>
+</section>
 
-  <hr>
   <!-- Company Information section -->
-  <section class="bg-transparent p-16 overflow-hidden">
+  <section class="bg-transparent p-16 mt-96 overflow-hidden">
     <div class="container mx-auto">
       <div class="flex items-center justify-center">
         <div class="w-1/2">
           <img src="assets/images/slider-dec.png" alt="Company Image" class="logo-img drop-shadow-2xl mb-5 h-25 w-25" data-aos="fade-right" data-aos-duration="1000">
         </div>
-        <div class="rounded-lg shadow-xl w-1/2 bg-gray-900 p-12 bg-opacity-80 rounded flex-auto relative block text-slate-50 overflow-auto" data-aos="fade-left" data-aos-duration="1000">
+        <div class="info-card rounded-lg shadow-xl w-1/2 bg-gray-900 p-12 bg-opacity-80 rounded flex-auto relative block text-slate-50 overflow-auto" data-aos="fade-left" data-aos-duration="1000">
           <h2 class="text-white text-4xl font-bold mb-4">Listriku</h2>
           <p class="text-gray-300 text-md text-justify">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan listrik kami. Silakan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
         </div>
@@ -145,18 +146,18 @@ function isUserLoggedIn()
   <div class="container3 ml-16 mx-auto">
     <div class="stacked-cards" id="stackedCards">
       <div class="card3" onclick="swapCards(0)">
-        <img src="assets/images/assets-2.png" class="card-image">
+        <img src="assets/images/assets-2.png" class="card-image h-22 w-22">
         <div class="card-content p-24 ml-14">
-          <h2 class="card-title">Laporan</h2>
-          <p class="card-description">Kami menyediakan layanan untuk melaporkan gangguan kelistrikan di wilayah anda, petugas akan dengan
+          <h2 class="card-title hidden">Laporan</h2>
+          <p class="card-description hidden">Kami menyediakan layanan untuk melaporkan gangguan kelistrikan di wilayah anda, petugas akan dengan
             segera datang untuk memperbaiki gangguan yang anda alami.</p>
         </div>
       </div>
       <div class="card3" onclick="swapCards(1)">
-        <img src="assets/images/assets-1.png" class="card-image">
+        <img src="assets/images/assets-1.png" class="card-image h-22 w-22">
         <div class="card-content">
-          <h2 class="card-title">Pembayaran</h2>
-          <p class="card-description">Lakukan Pembayaran dengan mudah tanpa keluar rumah! website kami membantu anda melakukan pengecekan penggunaan listrik
+          <h2 class="card-title hidden">Pembayaran</h2>
+          <p class="card-description hidden">Lakukan Pembayaran dengan mudah tanpa keluar rumah! website kami membantu anda melakukan pengecekan penggunaan listrik
             dan juga biaya bulan. Bayar mudah gak pake ribet!
           </p>
         </div>
@@ -169,7 +170,7 @@ function isUserLoggedIn()
     </div>
   </div>
 </section>
-
+<hr>
 <section class="container mx-auto p-8">
     <h2 class="text-3xl font-bold mb-6">Proyek Saya</h2>
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
