@@ -65,10 +65,12 @@ function isUserLoggedIn()
   <img src="assets/images/hero.jpg" class="parallax top-0 left-0 w-full h-full absolute">
   <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
   <div class="absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
-    <h1 class="z-10 text-white font-black text-9xl">Selamat Datang</h1>
-    <h3 class="z-10 mt-6 text-white font-white text-4xl">Effortless Payment</h3>
-    <p class="text-gray-400 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+  <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
+    <h1 class="z-10 text-white font-black text-9xl">Effortless Payment</h1>
+    <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+    <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
   </div>
+
 </section>
 
   <!-- Company Information section -->
