@@ -98,12 +98,55 @@ function getTagihanListrik($user_id) {
         return mysqli_fetch_assoc($result);
     }
     
-    function updatePaymentStatus($payment_id, $status) {
+    //tagihan
+
+    function createTagihan($user_id) {
         global $conn;
-        $query = "UPDATE tagihan_listrik SET status='$status' WHERE id='$payment_id'";
-        mysqli_query($conn, $query);
+    
+        // Ambil data terakhir tagihan untuk pengguna ini
+        $query = "SELECT * FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        $lastTagihan = mysqli_fetch_assoc($result);
+    
+        // Ambil data penggunaan listrik terakhir untuk pengguna ini
+        $query = "SELECT * FROM penggunaan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC LIMIT 1";
+        $result = mysqli_query($conn, $query);
+        $lastPenggunaan = mysqli_fetch_assoc($result);
+    
+        // Cek apakah data penggunaan listrik terakhir sudah ada
+        if (!$lastPenggunaan) {
+            // Jika tidak ada data penggunaan listrik terakhir, berikan pesan kesalahan
+            return "Data penggunaan listrik untuk pengguna ini belum tersedia. Tidak dapat melakukan tagihan otomatis.";
+        }
+    
+        // Hitung total tagihan berdasarkan pemakaian listrik terakhir dan tarif per kwh
+        $jumlah_meter = $lastPenggunaan['meter_akhir'] - $lastPenggunaan['meter_awal'];
+        $tarif_per_kwh = 2000;
+        $total_tagihan = $jumlah_meter * $tarif_per_kwh;
+    
+        // Cek apakah pengguna sudah membayar tagihan sebelumnya
+        if ($lastTagihan && $lastTagihan['status'] === 'Belum Bayar') {
+            // Jika pengguna belum membayar tagihan sebelumnya, berikan pesan kesalahan
+            return "Pengguna ini masih memiliki tagihan yang belum dibayar. Tidak dapat melakukan tagihan otomatis.";
+        }
+    
+        // Insert data tagihan listrik ke tabel
+        $bulan = date('F');
+        $tahun = date('Y');
+        $sql_insert = "INSERT INTO tagihan_listrik (user_id, bulan, tahun, jumlah_meter, tarif_per_kwh, total_tagihan, status)
+                       VALUES ('$user_id', '$bulan', '$tahun', '$jumlah_meter', '$tarif_per_kwh', '$total_tagihan', 'Belum Bayar')";
+    
+        if ($conn->query($sql_insert) === TRUE) {
+            // Berhasil membuat tagihan otomatis
+            return "Tagihan otomatis berhasil dibuat.";
+        } else {
+            // Gagal membuat tagihan otomatis
+            return "Gagal membuat tagihan otomatis: " . $conn->error;
+        }
     }
 
-?>
+    
+    ?>
+
 
 

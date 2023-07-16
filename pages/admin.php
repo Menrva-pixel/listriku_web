@@ -1,6 +1,7 @@
 <?php
 session_start();
 include '../env/config.php';
+include '../env/func.php';
 
 function getAllUsers() {
     global $conn;
@@ -29,6 +30,11 @@ function getStatusPembayaran($user_id) {
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] !== 'Admin') {
     header('Location: ../auth/login');
     exit;
+}
+
+if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['tagih_user'])) {
+  $user_id = $_POST['tagih_user'];
+  createTagihan($user_id);
 }
 
 // Get all users
@@ -101,7 +107,7 @@ $users = getAllUsers();
         </li><!-- End Profile Page Nav -->
 
         <li class="nav-item">
-          <form class="nav-link collapsed" method="GET" action="../env/logout">
+          <form class="nav-link collapsed" method="GET" action="../auth/logout">
             <button type="submit" name="logout" class="bi bi-box-arrow-in-left">Logout</button>
           </form>
         </li><!-- End Login Page Nav -->
@@ -149,15 +155,22 @@ $users = getAllUsers();
                       </thead>
                       <tbody>
                         <?php foreach ($users as $index => $user): ?>
-                        <tr>
-                          <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
-                          <td class="border px-4 py-2"><?php echo $user['username']; ?></td>
-                          <td class="border px-4 py-2"><?php echo getTagihanTotal($user['user_id']); ?></td>
-                          <td class="border px-4 py-2 <?php echo getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar'; ?>">
-                            <?php echo getStatusPembayaran($user['user_id']); ?>
-                          </td>
-                          <td class="border px-4 py-2"><a class="edit-link" href="../env/edit_user?php echo $user['user_id']; ?>">Edit</a></td>
-                          <td class="border px-4 py-2"><a class="delete-link" href="../env/delete_user?id=<?php echo $user['user_id']; ?>">Delete</a></td>
+                          <tr>
+                            <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
+                            <td class="border px-4 py-2"><?php echo $user['username']; ?></td>
+                            <td class="border px-4 py-2"><?php echo getTagihanTotal($user['user_id']); ?></td>
+                            <td class="border px-4 py-2 <?php echo getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar'; ?>">
+                                <?php echo getStatusPembayaran($user['user_id']); ?>
+                            </td>
+                            <td class="border px-4 py-2">
+                                <form method="post" action="">
+                                    <input type="hidden" name="tagih_user" value="<?php echo $user['user_id']; ?>">
+                                    <button type="submit" class="tagih-link">Tagih</button>
+                                </form>
+                            </td>
+                            <td class="border px-4 py-2">
+                                <a class="delete-link" href="../env/delete_user?id=<?php echo $user['user_id']; ?>">Delete</a>
+                            </td>
                         </tr>
                         <?php endforeach; ?>
                       </tbody>

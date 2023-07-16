@@ -18,7 +18,7 @@ function getUserFromDatabase($username, $password) {
     }
 
     // cek apakah user ada di tabel admin_users
-    $query = "SELECT * FROM admin_users WHERE username='$username' AND password='$password'";
+    $query = "SELECT * FROM admin WHERE username='$username' AND password='$password'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);

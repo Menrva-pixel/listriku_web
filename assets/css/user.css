@@ -172,41 +172,36 @@ background-color: #d32f2f;
 
     /* notification */
     .notification-badge {
-        position: absolute;
-        top: 10px;
-        right: 320px;
         background-color: red;
         color: white;
         font-size: 12px;
-        padding: 2px 6px;
+        padding: 4px 8px;
         border-radius: 50%;
-    }
-
-    .notification-popup {
+      }
+      
+      /* Notification Popup Styles */
+      .notification-popup {
         position: absolute;
         top: 35px;
-        right: 0;
-        width: 200px;
+        right: 10px;
         background-color: white;
-        border: 1px solid gray;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
         border-radius: 4px;
-        padding: 8px;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        padding: 10px;
         display: none;
-    }
-
-    .notification-title {
-        font-size: 14px;
+        z-index: 1;
+      }
+      
+      .notification-title {
         font-weight: bold;
         margin-bottom: 8px;
-    }
-
-    .notification-list {
+      }
+      
+      .notification-list {
         list-style-type: none;
         padding: 0;
-        margin: 0;
-    }
-
-    .notification-list li {
+      }
+      
+      .notification-list li {
         margin-bottom: 4px;
-    }
+      }

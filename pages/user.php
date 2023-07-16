@@ -10,6 +10,11 @@ if (!isset($_SESSION['username']) || !isUserPage()) {
     exit;
 }
 
+$user_id = $_SESSION['user_id'];
+
+$sql = "SELECT * FROM penggunaan_listrik WHERE user_id = '$user_id'";
+$result = $conn->query($sql);
+
 // GET user data
 $username = $_SESSION['username'];
 $user = getUserFromDatabase($username);
@@ -86,6 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             <div class="flex items-center">
             <div class="mr-4">
                 <i class="fas fa-bell text-gray-500"></i>
+                <div id="notification-container"></div>
                 <?php if ($notificationCount > 0): ?>
                     <span class="notification-badge"><?php echo $notificationCount; ?></span>
                     <div id="notification-popup" class="notification-popup">
@@ -102,7 +108,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                         <button type="submit" name="logout" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
                     </form>
                 </div>
-        </div>
+            </div>
     </nav>
 
     <div class="container mx-auto mt-8">
@@ -304,6 +310,46 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         });
 
     </script>
+
+    <script>
+            // Function to show notification
+            function showNotification(message, type) {
+                const notificationContainer = document.getElementById('notification-container');
+                const notificationElement = document.createElement('div');
+                notificationElement.classList.add('notification');
+                notificationElement.classList.add(type);
+                notificationElement.textContent = message;
+                notificationContainer.appendChild(notificationElement);
+
+                // Auto hide notification after 3 seconds
+                setTimeout(() => {
+                    notificationElement.style.opacity = '0';
+                    setTimeout(() => {
+                        notificationContainer.removeChild(notificationElement);
+                    }, 300);
+                }, 3000);
+            }
+
+            // Listen for notifications from the server
+            const source = new EventSource('../env/get_notification.php');
+            source.onmessage = function (event) {
+                const notificationData = JSON.parse(event.data);
+                showNotification(notificationData.message, notificationData.type);
+            };
+
+            const notificationIcon = document.querySelector('.fa-bell');
+            const notificationPopup = document.getElementById('notification-popup');
+
+            notificationIcon.addEventListener('click', () => {
+            notificationPopup.classList.toggle('show');
+            });
+
+            document.addEventListener('click', (event) => {
+            if (!notificationIcon.contains(event.target) && !notificationPopup.contains(event.target)) {
+                notificationPopup.classList.remove('show');
+            }
+            });
+        </script>
 </body>
 
 </html>
