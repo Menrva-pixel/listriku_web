@@ -1,0 +1,44 @@
+RewriteEngine On
+# Prevent directory listing
+Options -Indexes
+
+# Menghilangkan ekstensi .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^([^\.]+)$ $1.php [NC,L]
+
+# Menghilangkan ekstensi .html
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.html -f
+RewriteRule ^([^\.]+)$ $1.html [NC,L]
+
+# Protect .htaccess file
+<Files .htaccess>
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Block access to sensitive files
+<FilesMatch "(^\.env|\.gitignore|composer\.lock|\.git)">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Disable server signature
+ServerSignature Off
+
+# Protect against cross-site scripting (XSS) attacks
+<IfModule mod_headers.c>
+    Header set X-XSS-Protection "1; mode=block"
+    Header always append X-Frame-Options SAMEORIGIN
+    Header set X-Content-Type-Options nosniff
+</IfModule>
+
+# Block suspicious user agents or bots
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteCond %{HTTP_USER_AGENT} (bot1|bot2|bot3) [NC]
+    RewriteRule ^ - [F,L]
+</IfModule>
+
+RewriteRule ^pages/user/([^/]+)$ pages/user.php?user_id=$1 [L]
