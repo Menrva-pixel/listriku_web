@@ -69,17 +69,7 @@ function getUserFromDatabase($username, $password) {
     if (login($username, $password)) {
         redirect();
     } else {
-        // tampilkan pesan error
-        echo "<script>
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Login Gagal',
-                    text: 'Username atau Password salah',
-                    showConfirmButton: false,
-                    timer: 2000
-                }).then(function () {
-                    window.location.href = '../auth/login.php';
-                });
-            </script>";
+        header('Location: ../auth/login?login_status=failed');
+        exit;
     }
 ?>

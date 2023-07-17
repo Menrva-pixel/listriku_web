@@ -212,6 +212,25 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 });
             });
     </script>
+
+    <script>
+        <?php
+        if (isset($_GET['login_status']) && $_GET['login_status'] === 'failed') {
+            echo 'Swal.fire({
+                icon: "error",
+                title: "Login Gagal",
+                text: "Username atau Password salah",
+                allowOutsideClick: false,
+                timer: 5000
+            }).then(function () {
+                history.replaceState({}, document.title, window.location.href.split("?")[0]);
+                window.location.href = window.location.href.split("?")[0];
+            });
+            ';
+        }
+        ?>
+
+    </script>
 </body>
 
 
