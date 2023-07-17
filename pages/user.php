@@ -12,9 +12,6 @@ if (!isset($_SESSION['username']) || !isUserPage()) {
 
 $user_id = $_SESSION['user_id'];
 
-$sql = "SELECT * FROM penggunaan_listrik WHERE user_id = '$user_id'";
-$result = $conn->query($sql);
-
 // GET user data
 $username = $_SESSION['username'];
 $user = getUserFromDatabase($username);
@@ -36,34 +33,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 }
 
 
-    // Ambil data penggunaan listrik dari database untuk chart
-    $query = "SELECT * FROM penggunaan_listrik ORDER BY tahun, FIELD(bulan, 'Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember')";
-    $result = mysqli_query($conn, $query);
-    $penggunaan_listrik = mysqli_fetch_all($result, MYSQLI_ASSOC);
+foreach ($penggunaan_listrik as $dataPoint) {
+    $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
+    $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
+}
 
-    // menyiapkan data untuk chart
-    $labels = [];
-    $data = [];
+// notifikasi
+$query = "SELECT * FROM tagihan_listrik WHERE user_id='$user_id' AND status = 'Belum Bayar'";
+$result = mysqli_query($conn, $query);
 
-    foreach ($penggunaan_listrik as $dataPoint) {
-        $labels[] = $dataPoint['bulan'] . ' ' . $dataPoint['tahun'];
-        $data[] = $dataPoint['meter_akhir'] - $dataPoint['meter_awal']; 
-    }
-
-    // notifikasi
-    $query = "SELECT * FROM tagihan_listrik WHERE status = 'Belum Bayar'";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        $unpaidPayments = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        $unpaidMonths = array_column($unpaidPayments, 'bulan');
-        $notificationCount = count($unpaidPayments);
-    } else {
-        $unpaidMonths = [];
-        $notificationCount = 0;
-        echo "Failed to fetch unpaid payments: " . mysqli_error($conn);
-    }
-    
+if ($result) {
+    $unpaidPayments = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    $unpaidMonths = array_column($unpaidPayments, 'bulan');
+    $notificationCount = count($unpaidPayments);
+} else {
+    $unpaidMonths = [];
+    $notificationCount = 0;
+    echo "Failed to fetch unpaid payments: " . mysqli_error($conn);
+}
 ?>
 
 <!DOCTYPE html>
@@ -195,29 +182,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     </div>
                     <div class="w-1/2">
                         <h3 class="text-2xl text-yellow-400">Electricity Usage</h3>
-                        <table class="mt-4 w-full text-center text-white">
-                            <thead>
-                                <tr class="bg-gray-700">
-                                    <th class="border px-4 py-2">No</th>
-                                    <th class="border px-4 py-2">Month</th>
-                                    <th class="border px-4 py-2">Year</th>
-                                    <th class="border px-4 py-2">Initial Reading</th>
-                                    <th class="border px-4 py-2">Final Reading</th>
-                                </tr>
-                            </thead>
-                            <tbody class="table-body-scrollable">
-                                <?php foreach ($penggunaan_listrik as $index => $penggunaan): ?>
-                                <tr>
-                                    <td class="border px-4 py-2"><?php echo $index + 1; ?></td>
-                                    <td class="border px-4 py-2"><?php echo $penggunaan['bulan']; ?></td>
-                                    <td class="border px-4 py-2"><?php echo $penggunaan['tahun']; ?></td>
-                                    <td class="border px-4 py-2"><?php echo $penggunaan['meter_awal']; ?></td>
-                                    <td class="border px-4 py-2"><?php echo $penggunaan['meter_akhir']; ?></td>
-                                </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
+                        <div class="table-wrapper mt-4">
+                            <table class="w-full text-center text-white">
+                                <thead>
+                                    <tr class="bg-gray-700">
+                                        <th class="border px-4 py-2">No</th>
+                                        <th class="border px-4 py-2">Month</th>
+                                        <th class="border px-4 py-2">Year</th>
+                                        <th class="border px-4 py-2">Initial Reading</th>
+                                        <th class="border px-4 py-2">Final Reading</th>
+                                    </tr>
+                                </thead>
+                                <tbody class="table-body-scrollable">
+                                    <?php displayElectricityUsage($penggunaan_listrik); ?>
+                                </tbody>
+                            </table>
+                        </div>
                     </div>
+
 
                 </div>
 

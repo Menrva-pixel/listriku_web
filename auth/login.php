@@ -62,7 +62,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 <img class="w-24 mx-auto" src="../assets/images/slider-dec.png" alt="Logo">
                 <h1 class="text-xl font-bold text-gray-800 mt-4">LISTRIKU</h1>
             </div>
-            <form class="mt-6" id="login-form" action="../env/login-act.php" method="post">
+            <form class="mt-6" id="login-form" action="../env/login-act" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
@@ -93,7 +93,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 </div>
             </form>
 
-            <form class="mt-4 hidden" id="register-form" action="../env/register-act.php" method="post">
+            <form class="mt-4 hidden" id="register-form" action="../env/register-act" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
@@ -201,7 +201,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registrasi Berhasil!',
-                    text: 'Anda dapat melakukan login sekarang',
+                    text: 'Selanjutnya, Daftarkan Rumah anda!',
                     showConfirmButton: true, // Ubah showConfirmButton menjadi true
                     allowOutsideClick: false, // Tambahkan allowOutsideClick untuk memastikan pengguna harus mengklik tombol "OK" pada SweetAlert2
                 }).then(function (result) {

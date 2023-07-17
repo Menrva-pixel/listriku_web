@@ -134,6 +134,26 @@ var chart = new Chart(ctx, {
         document.getElementById('selectedDescription').innerText = selectedDescription;
       }
       
+      /* Hero slider */
+      const sliderImages = document.querySelectorAll('.slider-container img');
+      const intervalTime = 5000; // Change image every 5 seconds
+      let imageCounter = 0;
+  
+      function changeImage() {
+        // Hide all images
+        sliderImages.forEach((img) => {
+          img.classList.add('hidden');
+        });
+  
+        // Show the current image
+        sliderImages[imageCounter].classList.remove('hidden');
+  
+        // Increment the image counter
+        imageCounter = (imageCounter + 1) % sliderImages.length;
+      }
+  
+      // Start the slider
+      setInterval(changeImage, intervalTime);
       
 
 /*----Barkah Herdyanto Sejati -----*/

@@ -1,9 +1,7 @@
 <?php
 session_start();
 
-// Periksa apakah pengguna sudah login
 if (isset($_SESSION['username'])) {
-  // Pengguna sudah login, dapatkan nama pengguna dari session
   $username = $_SESSION['username'];
 }
 
@@ -12,7 +10,6 @@ function isAdminLoggedIn()
     return isset($_SESSION['username']) && $_SESSION['privilege'] === 'Admin';
 }
 
-// Function to check if the user is logged in as a normal user (Pelanggan)
 function isUserLoggedIn()
 {
     return isset($_SESSION['username']) && $_SESSION['privilege'] === 'Pelanggan';
@@ -29,8 +26,10 @@ function isUserLoggedIn()
   <!-- Favicons -->
   <link href="assets/img/favicon.png" rel="icon">
   <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
-  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+
+
   <link rel="stylesheet" href="assets/css/style.css">
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
  
@@ -62,19 +61,25 @@ function isUserLoggedIn()
   </nav>
 
   <!-- Hero section -->
-  <img src="assets/images/hero.jpg" class="parallax top-0 left-0 w-full h-full absolute">
-  <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
-  <div class="absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
-  <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
-    <h1 class="z-10 text-white font-black text-9xl">Effortless Payment</h1>
-    <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
-    <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
+  <div class="slider-container top-0 left-0 w-full h-full">
+    <img src="assets/images/hero1.jpg" class="parallax top-0 left-0 w-full h-full absolute">
+    <img src="assets/images/hero2.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
+    <img src="assets/images/hero3.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
   </div>
+    <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
+      <div class="absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
+        <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
+        <h1 class="z-10 text-white font-black text-9xl">Effortless Payment</h1>
+        <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+        <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
+      </div>
+    </section>
 
-</section>
+
 
   <!-- Company Information section -->
-  <section class="bg-transparent p-16 mt-96 overflow-hidden">
+  <section class="company bg-transparent p-26 overflow-hidden">
+    <h1 class="text-white text-center font-bold text-8xl mt-6">Profile Kami</h1>
     <div class="container mx-auto">
       <div class="flex items-center justify-center">
         <div class="w-1/2">

@@ -201,7 +201,17 @@
   }
 
   .info-card {
-    background-image: url(../images/hero.jpg);
+    background-image: url(../images/hero1.jpg);
     background-size: cover;
     background-repeat: no-repeat;
   }
+
+
+  .company {
+    margin-top: 570px !important; /* Adjust the value to control the gap between hero and company section */
+  }
+
+  .table-wrapper {
+    max-height: 400px;
+    overflow-y: auto;
+}

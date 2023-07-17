@@ -23,9 +23,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         VALUES ('$user_id', '$bulan', '$tahun', '$meter_awal', '$meter_akhir', CURDATE(), '$watt')";
 
     if ($conn->query($sql_penggunaan) === TRUE) {
-        // Insert data into tagihan_listrik table with status 'Belum Bayar'
         $jumlah_meter = $meter_akhir - $meter_awal;
-        $tarif_per_kwh = 2000; // Assuming the tariff is Rp 1,500 per kWh
+        $tarif_per_kwh = 2000;
         $total_tagihan = $jumlah_meter * $tarif_per_kwh;
         $status = 'Belum Bayar';
 
@@ -33,8 +32,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$user_id', '$bulan', '$tahun', '$jumlah_meter', '$tarif_per_kwh', '$total_tagihan', '$status')";
 
         if ($conn->query($sql_tagihan) === TRUE) {
-            // Redirect to user.php after successful registration
-            header('Location: ../pages/user');
+            header('Location: ../auth/login');
             exit();
         } else {
             echo "Error: " . $sql_tagihan . "<br>" . $conn->error;
@@ -66,6 +64,7 @@ $conn->close();
 
     <!-- Vendor -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-200">
@@ -142,6 +141,25 @@ $conn->close();
             </form>
         </div>
     </div>
+    <script>
+        const registerBtn = document.getElementById('register-house-btn');
+
+        registerBtn.addEventListener('click', function (e) {
+                e.preventDefault(); // Menghentikan submit form
+
+                // Menampilkan SweetAlert2
+                Swal.fire({
+                    icon: "success",
+                    title: "Selamat!",
+                    text: "Akun dan rumah Anda sudah terdaftar. Anda bisa login sekarang!",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href = "../auth/login";
+                    }
+                });
+            });
+
+    </script>
 </body>
 
 </html>
