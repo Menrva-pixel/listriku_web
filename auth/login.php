@@ -41,6 +41,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <title>Login | Listriku</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="../assets/icons/favicon.ico" rel="icon">
+    <link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">

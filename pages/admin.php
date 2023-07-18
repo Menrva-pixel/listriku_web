@@ -77,6 +77,8 @@ if ($resultPenggunaanListrik->num_rows > 0) {
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/user.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-200">
@@ -147,7 +149,7 @@ if ($resultPenggunaanListrik->num_rows > 0) {
                             </form>
                             </td>
                             <td class="border px-4 py-2">
-                                <a class="delete-link" href="../env/delete_user?user_id=<?php echo $user['user_id']; ?>">Delete</a>
+                                <a class="delete-link" href="#" data-userid="<?php echo $user['user_id']; ?>">Delete</a>
                             </td>
 
                         </tr>
@@ -243,6 +245,56 @@ if ($resultPenggunaanListrik->num_rows > 0) {
                     }
                 }
             }
+    });
+</script>
+
+<script>
+    const deleteLinks = document.querySelectorAll('.delete-link');
+
+    deleteLinks.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const userId = this.dataset.userid;
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Apakah Anda yakin?',
+                text: 'Data user akan dihapus permanen!',
+                showCancelButton: true,
+                confirmButtonText: 'Ya, hapus!',
+                cancelButtonText: 'Batal',
+                reverseButtons: true,
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    fetch(`../env/delete_user.php?id=${userId}`)
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.status === 'success') {
+                                Swal.fire({
+                                    icon: 'success',
+                                    title: 'Berhasil',
+                                    text: 'Data berhasil dihapus!',
+                                }).then(() => {
+                                    window.location.href = '../pages/admin';
+                                });
+                            } else {
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Gagal',
+                                    text: data.message,
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Gagal',
+                                text: 'Terjadi kesalahan saat menghapus data.',
+                            });
+                        });
+                }
+            });
+        });
     });
 </script>
 </body>

@@ -22,10 +22,10 @@ function isUserLoggedIn()
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listriku</title>
+  <title>Listriku | Landing Page</title>
   <!-- Favicons -->
-  <link href="assets/img/favicon.png" rel="icon">
-  <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="assets/icons/favicon.ico" rel="icon">
+  <link href="assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
 
 
   <link rel="stylesheet" href="assets/css/style.css">
