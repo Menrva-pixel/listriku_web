@@ -104,11 +104,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         required>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 " for="email">
                         Email
                     </label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
                         id="email" type="email" placeholder="Email" name="email" required>
                 </div>
                 <div class="mb-4">
@@ -125,7 +125,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         Alamat
                     </label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
                         id="alamat" type="text" placeholder="Alamat" name="alamat" required>
                 </div>
                 <div class="mb-4">

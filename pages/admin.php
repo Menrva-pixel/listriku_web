@@ -147,8 +147,9 @@ if ($resultPenggunaanListrik->num_rows > 0) {
                             </form>
                             </td>
                             <td class="border px-4 py-2">
-                                <a class="delete-link" href="../env/delete_user?id=<?php echo $user['user_id']; ?>">Delete</a>
+                                <a class="delete-link" href="../env/delete_user?user_id=<?php echo $user['user_id']; ?>">Delete</a>
                             </td>
+
                         </tr>
                         <?php endforeach; ?>
                 </tbody>
