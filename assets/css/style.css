@@ -85,6 +85,7 @@
     }
   
     .caption {
+      text-align: center;
       position: absolute;
       bottom: 0;
       left: 0;
@@ -152,9 +153,13 @@
     }
     
     .card-title {
-      color: #fff;
+      color: rgb(15, 15, 15);
       font-size: 24px;
       font-weight: bold;
+    }
+
+    .card-title h2 {
+      color: #333;
     }
     
     .card-description {
@@ -179,8 +184,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 50px 120px;
-      margin-left: 300px;
+      padding: 50px 250px;
     }
 
 
@@ -200,18 +204,85 @@
     opacity: 0.5; /* Sesuaikan dengan keinginan Anda */
   }
 
-  .info-card {
-    background-image: url(../images/hero1.jpg);
+  .company-info {
+    margin-top: 500px !important;
+    padding: 26px;
+    overflow: hidden;
     background-size: cover;
-    background-repeat: no-repeat;
-  }
-
-
-  .company {
-    margin-top: 570px !important; /* Adjust the value to control the gap between hero and company section */
+    backdrop-filter: blur(5px);
   }
 
   .table-wrapper {
     max-height: 400px;
     overflow-y: auto;
+}
+
+.performa {
+  background-image: url(../images/service-1.jpg);
+  background-size:cover;
+  margin-bottom: 20px ;
+  width: 100%;
+}
+
+.card-1, .card-2, .card-3 {
+  height: 380px;
+  width: 70%;
+  background-color: #333;
+  align-items: center;
+}
+
+.card-1 img, .card-2 img, .card-3 img {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+}
+
+.container {
+  padding: 10rem;
+}
+
+/*Footer styling*/
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-left {
+  display: flex;
+  align-items: center;
+}
+
+.footer-logo {
+  height: 40px; 
+  width: auto;
+  margin-right: 8px;
+}
+
+.footer-middle {
+  display: flex;
+  align-items: center;
+}
+
+.footer-link {
+  color: white;
+  text-decoration: none;
+  margin-right: 20px;
+}
+
+.footer-right {
+  display: flex;
+  align-items: center;
+}
+
+.sponsor-logo {
+  height: 20px; 
+  width: auto;
+  margin-left: 10px;
+}
+
+.copyright-container {
+  text-align: center;
+  padding: 10px;
+  background-color: rgba(0, 0, 0, 0.8); 
 }

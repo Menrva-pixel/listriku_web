@@ -62,7 +62,7 @@ function isUserLoggedIn()
 
   <!-- Hero section -->
   <div class="slider-container top-0 left-0 w-full h-full">
-    <img src="assets/images/hero1.jpg" class="parallax top-0 left-0 w-full h-full absolute">
+    <img src="assets/images/hero1.webp" class="parallax top-0 left-0 w-full h-full absolute blur">
     <img src="assets/images/hero2.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
     <img src="assets/images/hero3.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
   </div>
@@ -78,40 +78,50 @@ function isUserLoggedIn()
 
 
   <!-- Company Information section -->
-  <section class="company bg-transparent p-26 overflow-hidden">
-    <h1 class="text-white text-center font-bold text-8xl mt-6">Profile Kami</h1>
+  <section class="company-info bg-transparent p-26 overflow-hidden">
+    <h1 class="text-white drop-shadow-sm text-center font-bold text-6xl mt-6">Profile Kami</h1>
     <div class="container mx-auto">
       <div class="flex items-center justify-center">
         <div class="w-1/2">
           <img src="assets/images/slider-dec.png" alt="Company Image" class="logo-img drop-shadow-2xl mb-5 h-25 w-25" data-aos="fade-right" data-aos-duration="1000">
         </div>
-        <div class="info-card rounded-lg shadow-xl w-1/2 bg-gray-900 p-12 bg-opacity-80 rounded flex-auto relative block text-slate-50 overflow-auto" data-aos="fade-left" data-aos-duration="1000">
+        <div class="info-card rounded-lg shadow-xl w-1/2 bg-blue-600 p-12 bg-opacity-40 rounded flex-auto relative block text-slate-50 overflow-auto" data-aos="fade-left" data-aos-duration="1000">
           <h2 class="text-white text-4xl font-bold mb-4">Listriku</h2>
-          <p class="text-gray-300 text-md text-justify">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan listrik kami. Silakan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
+          <p class="text-gray-300 text-md text-justify">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
+          <div class="flex flex-column items-center justify-between">
+            <img class="w-auto h-24 mt-4" src="assets/images/dev-logo.png">
+            <img class="w-auto h-12 mt-4" src="assets/images/logo-bumn.png">
+          </div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Additional Information section -->
-  <p class="text-center text-white text-4xl font-semibold">Performa Kami</p>
-  <hr class="w-96 h-1 mx-auto rounded md:my-10 dark:bg-gray-700">
-  <section class="py-8 m-0 border-y border-gray-100 dark:border-gray-800 sm:flex justify-between">
+  <section class="performa py-24 text-white">
   <div class="container mx-auto">
-    <div class="grid grid-cols-3 gap-10 mx-auto w-1/2">
-      <div class="card">
-        <div class="image-container">
-        <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <p class="text-4xl font-bold">Performa Kami</p>
+    <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
+    <div class="grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
+      <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
+        <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+          <div class="image-container">
+            <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="10" cy="6" r="4" stroke="#fff" stroke-width="1.5"/>
           <path d="M18.0429 12.3656L18.4865 11.7609L18.4865 11.7609L18.0429 12.3656ZM19 8.69135L18.4813 9.23307C18.7713 9.51077 19.2287 9.51077 19.5187 9.23307L19 8.69135ZM19.9571 12.3656L19.5135 11.7609L19.5135 11.7609L19.9571 12.3656ZM19 12.8276L19 13.5776H19L19 12.8276ZM18.4865 11.7609C18.0686 11.4542 17.6081 11.0712 17.2595 10.6681C16.8912 10.2423 16.75 9.91131 16.75 9.69673H15.25C15.25 10.4666 15.6912 11.1479 16.1249 11.6493C16.5782 12.1735 17.1391 12.6327 17.5992 12.9703L18.4865 11.7609ZM16.75 9.69673C16.75 9.12068 17.0126 8.87002 17.2419 8.78964C17.4922 8.70189 17.9558 8.72986 18.4813 9.23307L19.5187 8.14963C18.6943 7.36028 17.6579 7.05432 16.7457 7.3741C15.8125 7.70123 15.25 8.59955 15.25 9.69673H16.75ZM20.4008 12.9703C20.8609 12.6327 21.4218 12.1735 21.8751 11.6493C22.3088 11.1479 22.75 10.4666 22.75 9.69672H21.25C21.25 9.91132 21.1088 10.2424 20.7405 10.6681C20.3919 11.0713 19.9314 11.4542 19.5135 11.7609L20.4008 12.9703ZM22.75 9.69672C22.75 8.59954 22.1875 7.70123 21.2543 7.37409C20.3421 7.05432 19.3057 7.36028 18.4813 8.14963L19.5187 9.23307C20.0442 8.72986 20.5078 8.70189 20.7581 8.78964C20.9874 8.87002 21.25 9.12068 21.25 9.69672H22.75ZM17.5992 12.9703C17.9678 13.2407 18.3816 13.5776 19 13.5776L19 12.0776C18.9756 12.0776 18.9605 12.0775 18.9061 12.0488C18.8202 12.0034 18.7128 11.9269 18.4865 11.7609L17.5992 12.9703ZM19.5135 11.7609C19.2872 11.9269 19.1798 12.0034 19.0939 12.0488C19.0395 12.0775 19.0244 12.0776 19 12.0776L19 13.5776C19.6184 13.5776 20.0322 13.2407 20.4008 12.9703L19.5135 11.7609Z" fill="#fff"/>
           <path d="M17.9975 18C18 17.8358 18 17.669 18 17.5C18 15.0147 14.4183 13 10 13C5.58172 13 2 15.0147 2 17.5C2 19.9853 2 22 10 22C12.231 22 13.8398 21.8433 15 21.5634" stroke="#fff" stroke-width="1.5" stroke-linecap="round"/>
           </svg>
-          <div class="caption">User Friendly</div>
+            </svg>
+            <div class="caption">User Friendly</div>
+          </div>
         </div>
       </div>
-      <div class="card">
-        <div class="image-container">
-        <svg class="p-4" fill="#000000" height="auto" width="auto" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+
+      <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
+      <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+          <div class="image-container">
+            <svg class="p-4" fill="#000000" height="auto" width="auto" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	    viewBox="0 0 289.939 289.939" xml:space="preserve">
       <g>
         <path fill="#fff" id="circle8953" d="M144.969,20.485c-37.119,0-74.239,14.145-102.531,42.438c-56.584,56.584-56.584,148.478,0,205.063
@@ -131,25 +141,31 @@ function isUserLoggedIn()
           C145.017,152.953,144.993,152.953,144.969,152.954z"/>
       </g>
       </svg>
-          <div class="caption">Penanganan Cepat</div>
+            </svg>
+            <div class="caption">Performa</div>
+          </div>
         </div>
       </div>
-      <div class="card shadow-xl">
-        <div class="image-container">
-        <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
+      <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
+      <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+          <div class="image-container">
+            <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4933 6.93502C15.8053 7.20743 15.8374 7.68122 15.565 7.99325L7.70786 16.9933C7.56543 17.1564 7.35943 17.25 7.14287 17.25C6.9263 17.25 6.72031 17.1564 6.57788 16.9933L3.43502 13.3933C3.16261 13.0812 3.19473 12.6074 3.50677 12.335C3.8188 12.0626 4.29259 12.0947 4.565 12.4068L7.14287 15.3596L14.435 7.00677C14.7074 6.69473 15.1812 6.66261 15.4933 6.93502Z" fill="#fff"/>
         <path fill-rule="evenodd" clip-rule="evenodd" d="M20.5175 7.01946C20.8174 7.30513 20.829 7.77986 20.5433 8.07981L11.9716 17.0798C11.8201 17.2389 11.6065 17.3235 11.3872 17.3114C11.1679 17.2993 10.9649 17.1917 10.8318 17.0169L10.4035 16.4544C10.1526 16.1249 10.2163 15.6543 10.5458 15.4034C10.8289 15.1878 11.2161 15.2044 11.4787 15.4223L19.4571 7.04531C19.7428 6.74537 20.2175 6.73379 20.5175 7.01946Z" fill="#fff"/>
         </svg>
-          <div class="caption">Fitur Lengkap</div>
+            </svg>
+            <div class="caption">Fitur lengkap</div>
+          </div>
         </div>
       </div>
     </div>
   </div>
 </section>
 
+
   <hr>
   <!-- Additional features section -->
-  <section class="feature-3 p-20">
+  <section class="feature-3 bg-gray-200 bg-opacity-20">
   <div class="container3 ml-16 mx-auto">
     <div class="stacked-cards" id="stackedCards">
       <div class="card3" onclick="swapCards(0)">
@@ -178,54 +194,74 @@ function isUserLoggedIn()
   </div>
 </section>
 <hr>
-<section class="container mx-auto p-8">
-    <h2 class="text-3xl font-bold mb-6">Proyek Saya</h2>
-    <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-      <!-- Card Pertama -->
-      <div class="bg-white rounded-lg shadow-md p-4">
-        <h3 class="text-lg font-semibold mb-2">Proyek 1</h3>
-        <p class="text-gray-600 mb-4">Deskripsi singkat proyek pertama.</p>
-        <a href="#" class="text-blue-500">Lihat Detail</a>
-      </div>
-
-      <!-- Card Kedua -->
-      <div class="bg-white rounded-lg shadow-md p-4">
-        <h3 class="text-lg font-semibold mb-2">Proyek 2</h3>
-        <p class="text-gray-600 mb-4">Deskripsi singkat proyek kedua.</p>
-        <a href="#" class="text-blue-500">Lihat Detail</a>
-      </div>
-
-      <!-- Card Ketiga -->
-      <div class="bg-white rounded-lg shadow-md p-4">
-        <h3 class="text-lg font-semibold mb-2">Proyek 3</h3>
-        <p class="text-gray-600 mb-4">Deskripsi singkat proyek ketiga.</p>
-        <a href="#" class="text-blue-500">Lihat Detail</a>
-      </div>
-
-      <!-- Tambahkan card proyek selanjutnya sesuai kebutuhan -->
+<section class="container mx-auto justify-center">
+  <h2 class="text-3xl font-bold mb-6">Proyek Kami</h2>
+  <div class="proyek grid grid-cols-3 justify-center gap-2">
+    <!-- Card Pertama -->
+    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
+      <img src="assets/images/hero2.jpg">
+      <h3 class="text-white text-lg font-semibold p-4">Widera Project</h3>
+      <p class="text-gray-600 p-4">Proyek jangkauan listrik ke seluruh pelosok indonesia, merata hingga ke pelosok negri.</p>
+      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
     </div>
-  </section>
+
+    <!-- Card Kedua -->
+    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
+      <img src="assets/images/proyek-2.jpg">
+      <h3 class="text-white text-lg font-semibold p-4">Kincira Project</h3>
+      <p class="text-gray-600 p-4">Proyek Kincira (Kincir Angin) adalah proyek yang di targetkan untuk meningkatkan effisiensi dan daya listrik negara.</p>
+      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+    </div>
+
+    <!-- Card Ketiga -->
+    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
+      <img src="assets/images/hero2.jpg">
+      <h3 class="text-lg font-semibold p-4">Proyek Jangkauan</h3>
+      <p class="text-gray-600 p-4">Proyek jangkauan listrik ke seluruh pelosok indonesia, merata hingga ke pelosok negri.</p>
+      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+    </div>
+  </div>
+</section>
+
 
 
 <hr>
 
 
   <!-- Footer -->
-  <footer class="bg-gray-900 text-white py-6">
-    <div class="container mx-auto flex items-center justify-between">
+  <footer class="bg-gray-900 text-white px-24 py-12">
+  <div class="footer-container mx-auto flex items-center justify-between">
+    <div>
+      <img src="assets/images/dev-logo.png" alt="Logo" class="h-20 w-auto mr-2 flex">
+    </div>
+    <div class="flex flex-col items-center">
       <div>
-        <img src="assets/images/slider-dec.png" alt="Logo" class="h-20 w-auto mr-2 flex ">
-        <span class="font-bold text-center ml-1">LISTRIKU</span>
+        <img class="h-44 w-44" src="assets/images/slider-dec.png">
       </div>
-      <div>
-        <p class="text-gray-400">Contact us: bherdyanto26@gmail.com</p>
+      <div class="links">
+        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">About Us</a>
+        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">Services</a>
+        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">Contact</a>
       </div>
     </div>
-    <div class="container mx-auto px-4">
-    <div class="flex justify-center items-center">
-      <p class="text-gray-500 text-sm">&copy; 2023 Barkah Herdyanto S. All rights reserved.</p>
+    <div class="flex flex-col items-center gap-10">
+      <div>
+        <h3> sponsored by </h3>
+      </div>
+      <div class="flex flex-row gap-10">
+        <img src="assets/images/logo-ubsi.png" alt="Sponsor 1" class="h-8 w-auto mr-2">
+        <img src="assets/images/logo-bumn.png" alt="Sponsor 2" class="h-8 w-auto mr-2">
+      </div>
     </div>
-  </footer>
+  </div>
+</footer>
+
+<div class="copyright-container py-6">
+    <div class="flex justify-start ml-4">
+      <p class="text-gray-500 text-sm">&copy; 2023 Hefestus Tech. All rights reserved.</p>
+    </div>
+  </div>
+
   <script src="assets/js/script.js"></script>
 </body>
 
