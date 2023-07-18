@@ -78,33 +78,36 @@ function isUserLoggedIn()
 
 
   <!-- Company Information section -->
-  <section class="company-info bg-transparent p-26 overflow-hidden">
-    <h1 class="text-white drop-shadow-sm text-center font-bold text-6xl mt-6">Profile Kami</h1>
-    <div class="container mx-auto">
-      <div class="flex items-center justify-center">
-        <div class="w-1/2">
-          <img src="assets/images/slider-dec.png" alt="Company Image" class="logo-img drop-shadow-2xl mb-5 h-25 w-25" data-aos="fade-right" data-aos-duration="1000">
+  <section id="about" class="bg-transparent mt-96 py-4" data-aos="fade-up" data-aos-duration="2000">
+  <h2 class="text-4xl font-bold mt-16 text-white text-center">Tentang Kami</h2>
+    <div class="container mx-auto px-6">
+      <div class="flex flex-row items-center md:grid-cols-2 gap-8">
+        <div>
+          <img src="assets/images/slider-dec.png" alt="About Us" class="rounded-lg shadow-md h-full">
         </div>
-        <div class="info-card rounded-lg shadow-xl w-1/2 bg-blue-600 p-12 bg-opacity-40 rounded flex-auto relative block text-slate-50 overflow-auto" data-aos="fade-left" data-aos-duration="1000">
-          <h2 class="text-white text-4xl font-bold mb-4">Listriku</h2>
-          <p class="text-gray-300 text-md text-justify">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
-          <div class="flex flex-column items-center justify-between">
-            <img class="w-auto h-24 mt-4" src="assets/images/dev-logo.png">
-            <img class="w-auto h-12 mt-4" src="assets/images/logo-bumn.png">
+        <div class="flex flex-col"> 
+          <div>
+            <p class="text-xl mb-2 px-14 text-white">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau 
+              hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
           </div>
-        </div>
+          <div class="about flex flex-row justify-end mt-28 gap-4">
+            <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png">
+            <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png">
+            <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png">
+          </div>
+      </div> 
       </div>
     </div>
   </section>
-
+  <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
   <!-- Additional Information section -->
   <section class="performa py-24 text-white">
   <div class="container mx-auto">
-    <p class="text-4xl font-bold">Performa Kami</p>
+    <p class="text-4xl font-bold" data-aos="fade-up" data-aos-duration="2000">PERFORMA KAMI</p>
     <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
     <div class="grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
-      <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
-        <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+      <div class="card-container">
+        <div class="card p-4 rounded-full border-4 border-white transition-all duration-300" data-aos="fade-right" data-aos-duration="3000">
           <div class="image-container">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -146,7 +149,7 @@ function isUserLoggedIn()
           </div>
         </div>
       </div>
-      <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
+      <div class="card-container" data-aos="fade-right" data-aos-duration="1000">
       <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
           <div class="image-container">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
@@ -165,63 +168,40 @@ function isUserLoggedIn()
 
   <hr>
   <!-- Additional features section -->
-  <section class="feature-3 bg-gray-200 bg-opacity-20">
-  <div class="container3 ml-16 mx-auto">
-    <div class="stacked-cards" id="stackedCards">
-      <div class="card3" onclick="swapCards(0)">
-        <img src="assets/images/assets-2.png" class="card-image h-22 w-22">
-        <div class="card-content p-24 ml-14">
-          <h2 class="card-title hidden">Laporan</h2>
-          <p class="card-description hidden">Kami menyediakan layanan untuk melaporkan gangguan kelistrikan di wilayah anda, petugas akan dengan
-            segera datang untuk memperbaiki gangguan yang anda alami.</p>
-        </div>
+  <section class="bg-transparent py-2">
+  <div class="container mx-auto px-2">
+    <h2 class="text-4xl font-bold mb-8 text-center text-white" data-aos="fade-right" data-aos-duration="1000">Proyek Kami</h2>
+    <hr class="w-96 h-1 mx-auto rounded my-2 dark:bg-gray-700">
+    <div class="proyek grid grid-cols-3 justify-center gap-2">
+      <!-- Card Pertama -->
+      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="1000">
+        <img src="assets/images/hero2.jpg" alt="proyek-1">
+        <h3 class="text-white text-lg font-semibold p-4">Widera Project</h3>
+        <p class="text-gray-600 p-4 max-h-24">Proyek jangkauan listrik ke seluruh pelosok Indonesia, merata hingga ke pelosok negeri.</p>
+        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
       </div>
-      <div class="card3" onclick="swapCards(1)">
-        <img src="assets/images/assets-1.png" class="card-image h-22 w-22">
-        <div class="card-content">
-          <h2 class="card-title hidden">Pembayaran</h2>
-          <p class="card-description hidden">Lakukan Pembayaran dengan mudah tanpa keluar rumah! website kami membantu anda melakukan pengecekan penggunaan listrik
-            dan juga biaya bulan. Bayar mudah gak pake ribet!
-          </p>
-        </div>
+
+      <!-- Card Kedua -->
+      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="2000">
+        <img src="assets/images/proyek-2.jpg" alt="proyek-2">
+        <h3 class="text-white text-lg font-semibold p-4">Kincira Project</h3>
+        <p class="text-gray-600 p-4 max-h-24">Proyek Kincira (Kincir Angin) adalah proyek yang ditargetkan untuk meningkatkan efisiensi dan daya listrik negara.</p>
+        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
       </div>
-    </div>
-    <div class="description-container ml-24 text-white m-auto" id="descriptionContainer">
-      <h2 id="selectedTitle" class="text-3xl mb-4 font-2xl">Laporan</h2>
-      <p id="selectedDescription">Kami menyediakan layanan untuk melaporkan gangguan kelistrikan di wilayah anda, petugas akan dengan
-        segera datang untuk memperbaiki gangguan yang anda alami.</p>
+
+      <!-- Card Ketiga -->
+      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="3000">
+        <img src="assets/images/proyek-3.webp" alt="proyek-3">
+        <h3 class="text-lg font-semibold p-4">Solaris Project</h3>
+        <p class="text-gray-600 p-4 max-h-24">Proyek Solar panel untuk meningkatkan effisiensi penggunaan listrik di siang hari.</p>
+        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+      </div>
     </div>
   </div>
 </section>
+
 <hr>
-<section class="container mx-auto justify-center">
-  <h2 class="text-3xl font-bold mb-6">Proyek Kami</h2>
-  <div class="proyek grid grid-cols-3 justify-center gap-2">
-    <!-- Card Pertama -->
-    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
-      <img src="assets/images/hero2.jpg">
-      <h3 class="text-white text-lg font-semibold p-4">Widera Project</h3>
-      <p class="text-gray-600 p-4">Proyek jangkauan listrik ke seluruh pelosok indonesia, merata hingga ke pelosok negri.</p>
-      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
-    </div>
 
-    <!-- Card Kedua -->
-    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
-      <img src="assets/images/proyek-2.jpg">
-      <h3 class="text-white text-lg font-semibold p-4">Kincira Project</h3>
-      <p class="text-gray-600 p-4">Proyek Kincira (Kincir Angin) adalah proyek yang di targetkan untuk meningkatkan effisiensi dan daya listrik negara.</p>
-      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
-    </div>
-
-    <!-- Card Ketiga -->
-    <div class="card-1 rounded-lg shadow-md w-80 md:w-96">
-      <img src="assets/images/hero2.jpg">
-      <h3 class="text-lg font-semibold p-4">Proyek Jangkauan</h3>
-      <p class="text-gray-600 p-4">Proyek jangkauan listrik ke seluruh pelosok indonesia, merata hingga ke pelosok negri.</p>
-      <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
-    </div>
-  </div>
-</section>
 
 
 
@@ -248,8 +228,8 @@ function isUserLoggedIn()
       <div>
         <h3> sponsored by </h3>
       </div>
-      <div class="flex flex-row gap-10">
-        <img src="assets/images/logo-ubsi.png" alt="Sponsor 1" class="h-8 w-auto mr-2">
+      <div class="flex flex-row h-8 gap-10">
+        <img src="assets/images/logo-ubsi.png" alt="Sponsor 1" class="h-12 w-auto mr-2">
         <img src="assets/images/logo-bumn.png" alt="Sponsor 2" class="h-8 w-auto mr-2">
       </div>
     </div>
@@ -258,7 +238,7 @@ function isUserLoggedIn()
 
 <div class="copyright-container py-6">
     <div class="flex justify-start ml-4">
-      <p class="text-gray-500 text-sm">&copy; 2023 Hefestus Tech. All rights reserved.</p>
+      <p class="text-gray-500 text-sm">&copy; 2023 Listriku. All rights reserved.</p>
     </div>
   </div>
 

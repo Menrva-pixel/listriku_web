@@ -156,4 +156,21 @@ var chart = new Chart(ctx, {
       setInterval(changeImage, intervalTime);
       
 
+          // JavaScript code to handle automatic image slider
+    const images = document.querySelectorAll('.slider-container img');
+    let currentImageIndex = 0;
+
+    function showNextImage() {
+      images[currentImageIndex].classList.remove('active-slide');
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      images[currentImageIndex].classList.add('active-slide');
+    }
+
+    // Change image every 3 seconds (adjust the duration as needed)
+    setInterval(showNextImage, 3000);
+
+
+    function redirectToLogin() {
+        window.location.href = "../auth/login";
+      }
 /*----Barkah Herdyanto Sejati -----*/
