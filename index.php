@@ -44,10 +44,9 @@ function isUserLoggedIn()
       <a class="nav-title font-bold text-2xl ">Listriku</a>
     </div>
     <div class="mr-12 font-semibold flex flex-row items-center">
-      <a href="#" class="text-white hover:text-blue-400 mx-6">Home</a>
+      <a href="#" class="home text-white hover:text-blue-400 mx-6">Home</a>
       <a href="#" class="text-white hover:text-blue-400 mx-6">About</a>
       <?php if (isAdminLoggedIn()) : ?>
-    <!-- Admin is logged in -->
     <a href="pages/admin" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i>Admin</a>
       <?php elseif (isUserLoggedIn()) : ?>
           <!-- User (Pelanggan) is logged in, display the username -->
@@ -63,11 +62,9 @@ function isUserLoggedIn()
   <!-- Hero section -->
   <div class="slider-container top-0 left-0 w-full h-full">
     <img src="assets/images/hero1.webp" class="parallax top-0 left-0 w-full h-full absolute blur">
-    <img src="assets/images/hero2.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
-    <img src="assets/images/hero3.jpg" class="parallax top-0 left-0 w-full h-full absolute hidden">
   </div>
     <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
-      <div class="absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
+      <div class="hero absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
         <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
         <h1 class="z-10 text-white font-black text-9xl">Effortless Payment</h1>
         <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
@@ -80,10 +77,10 @@ function isUserLoggedIn()
   <!-- Company Information section -->
   <section id="about" class="bg-transparent mt-96 py-4" data-aos="fade-up" data-aos-duration="2000">
   <h2 class="text-4xl font-bold mt-16 text-white text-center">Tentang Kami</h2>
-    <div class="container mx-auto px-6">
-      <div class="flex flex-row items-center md:grid-cols-2 gap-8">
+    <div class="about-container mx-auto px-6">
+      <div class="about-card flex flex-row items-center md:grid-cols-2 gap-8">
         <div>
-          <img src="assets/images/slider-dec.png" alt="About Us" class="rounded-lg shadow-md h-full">
+          <img src="assets/images/slider-dec.png" alt="About Us" class="rounded-lg h-full">
         </div>
         <div class="flex flex-col"> 
           <div>
@@ -102,10 +99,10 @@ function isUserLoggedIn()
   <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
   <!-- Additional Information section -->
   <section class="performa py-24 text-white">
-  <div class="container mx-auto">
+  <div class="performa-container mx-auto">
     <p class="text-4xl font-bold" data-aos="fade-up" data-aos-duration="2000">PERFORMA KAMI</p>
     <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
-    <div class="grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
+    <div class="performa-card grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
       <div class="card-container">
         <div class="card p-4 rounded-full border-4 border-white transition-all duration-300" data-aos="fade-right" data-aos-duration="3000">
           <div class="image-container">
@@ -169,7 +166,7 @@ function isUserLoggedIn()
   <hr>
   <!-- Additional features section -->
   <section class="bg-transparent py-2">
-  <div class="container mx-auto px-2">
+  <div class="proyek-container mx-auto px-2">
     <h2 class="text-4xl font-bold mb-8 text-center text-white" data-aos="fade-right" data-aos-duration="1000">Proyek Kami</h2>
     <hr class="w-96 h-1 mx-auto rounded my-2 dark:bg-gray-700">
     <div class="proyek grid grid-cols-3 justify-center gap-2">

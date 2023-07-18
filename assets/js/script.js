@@ -173,4 +173,11 @@ var chart = new Chart(ctx, {
     function redirectToLogin() {
         window.location.href = "../auth/login";
       }
+
+      const hamburgerMenu = document.getElementById('hamburger-menu');
+const navbar = document.getElementById('navbar');
+
+hamburgerMenu.addEventListener('click', function() {
+  navbar.classList.toggle('menu-open');
+});
 /*----Barkah Herdyanto Sejati -----*/
