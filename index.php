@@ -203,7 +203,6 @@ function isUserLoggedIn()
 </section>
 
 <hr>
-<button id="install-btn">Install App</button>
   <!-- Footer -->
   <footer class="bg-gray-900 text-white px-24 py-12">
   <div class="footer-container mx-auto flex items-center justify-between">
@@ -252,32 +251,6 @@ function isUserLoggedIn()
         });
     });
   }
-</script>
-
-<script>
-  const installButton = document.getElementById('install-btn');
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault();
-  let deferredPrompt = e;
-  installButton.style.display = 'block';
-  
-  installButton.addEventListener('click', () => {
-    deferredPrompt.prompt();
-    
-    deferredPrompt.userChoice.then((choiceResult) => {
-      if (choiceResult.outcome === 'accepted') {
-        console.log('User accepted the install prompt.');
-      } else {
-        console.log('User dismissed the install prompt.');
-      }
-      
-      deferredPrompt = null;
-      
-      installButton.style.display = 'none';
-    });
-  });
-});
 </script>
 
 </body>
