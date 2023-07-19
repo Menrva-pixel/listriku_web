@@ -22,7 +22,12 @@ function isUserLoggedIn()
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Listriku | Landing Page</title>
+  <meta name="description" content="Selamat datang di Listriku - Aplikasi Pelayanan Listrik Terbaik. Nikmati kemudahan dalam mengelola penggunaan listrik Anda dan pantau tagihan secara efisien. Daftarkan rumah Anda dan rasakan kenyamanan layanan yang maksimal. Hemat energi, hemat waktu, dan nikmati kenyamanan dalam satu platform. Bergabunglah dengan ribuan pengguna puas di Listriku sekarang!">
+  <meta name="keywords" content="Listriku, pelayanan listrik, aplikasi listrik, penggunaan listrik, tagihan listrik, hemat energi, manajemen listrik">
+  <meta name="author" content="Listriku Team">
+  <meta name="robots" content="index, follow">
+
+  <title>Listriku | Website Latihan</title>
   <!-- Favicons -->
   <link href="assets/icons/favicon.ico" rel="icon">
   <link href="assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
@@ -63,11 +68,11 @@ function isUserLoggedIn()
 
   <!-- Hero section -->
   <div class="slider-container top-0 left-0 w-full h-full">
-    <img src="assets/images/hero1.webp" class="parallax top-0 left-0 w-full h-full absolute blur">
+    <img src="assets/images/hero1.webp" alt="hero-image" class="parallax top-0 left-0 w-full h-full absolute blur">
   </div>
     <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
       <div class="hero absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
-        <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
+        <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png" alt="logo">Listriku</h3>
         <h1 class="z-10 text-white font-black text-9xl md:text-6xl">Effortless Payment</h1>
         <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300 md:text-1xl">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
         <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
@@ -90,9 +95,9 @@ function isUserLoggedIn()
                 hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
             </div>
             <div class="about flex flex-row justify-end mt-28 gap-4">
-              <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png">
-              <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png">
-              <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png">
+              <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png" alt="icon-1">
+              <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png" alt="icon-2">
+              <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png" alt="icon-3">
             </div>
           </div> 
       </div>
@@ -198,22 +203,16 @@ function isUserLoggedIn()
 </section>
 
 <hr>
-
-
-
-
-<hr>
-
-
+<button id="install-btn">Install App</button>
   <!-- Footer -->
   <footer class="bg-gray-900 text-white px-24 py-12">
   <div class="footer-container mx-auto flex items-center justify-between">
     <div>
-      <img src="assets/images/dev-logo.png" alt="Logo" class="h-20 w-auto mr-2 flex">
+      <img src="assets/images/dev-logo.png" alt="dev-logo" class="h-20 w-auto mr-2 flex">
     </div>
     <div class="flex flex-col items-center">
       <div>
-        <img class="h-44 w-44" src="assets/images/slider-dec.png">
+        <img class="h-44 w-44" src="assets/images/slider-dec.png" alt="logo">
       </div>
       <div class="links">
         <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">About Us</a>
@@ -253,6 +252,32 @@ function isUserLoggedIn()
         });
     });
   }
+</script>
+
+<script>
+  const installButton = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  let deferredPrompt = e;
+  installButton.style.display = 'block';
+  
+  installButton.addEventListener('click', () => {
+    deferredPrompt.prompt();
+    
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt.');
+      } else {
+        console.log('User dismissed the install prompt.');
+      }
+      
+      deferredPrompt = null;
+      
+      installButton.style.display = 'none';
+    });
+  });
+});
 </script>
 
 </body>
