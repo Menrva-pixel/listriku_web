@@ -29,6 +29,8 @@ function isUserLoggedIn()
 
 
   <link rel="stylesheet" href="assets/css/style.css">
+  <link rel="stylesheet" href="assets/css/responsive.css">
+
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
@@ -66,8 +68,8 @@ function isUserLoggedIn()
     <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
       <div class="hero absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
         <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png">Listriku</h3>
-        <h1 class="z-10 text-white font-black text-9xl">Effortless Payment</h1>
-        <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
+        <h1 class="z-10 text-white font-black text-9xl md:text-6xl">Effortless Payment</h1>
+        <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300 md:text-1xl">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
         <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
       </div>
     </section>
@@ -75,36 +77,37 @@ function isUserLoggedIn()
 
 
   <!-- Company Information section -->
-  <section id="about" class="bg-transparent mt-96 py-4" data-aos="fade-up" data-aos-duration="2000">
-  <h2 class="text-4xl font-bold mt-16 text-white text-center">Tentang Kami</h2>
+  <section id="about" class="company-info-container bg-transparent mt-96 pt-56 md:pt-24 relative" data-aos="fade-up" data-aos-duration="2000">
+    <h2 class="text-4xl font-bold mt-18 text-white text-center drop-shadow-xl ">Tentang Kami</h2>
     <div class="about-container mx-auto px-6">
       <div class="about-card flex flex-row items-center md:grid-cols-2 gap-8">
         <div>
           <img src="assets/images/slider-dec.png" alt="About Us" class="rounded-lg h-full">
         </div>
-        <div class="flex flex-col"> 
-          <div>
-            <p class="text-xl mb-2 px-14 text-white">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau 
-              hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
-          </div>
-          <div class="about flex flex-row justify-end mt-28 gap-4">
-            <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png">
-            <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png">
-            <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png">
-          </div>
-      </div> 
+          <div class="flex flex-col"> 
+            <div>
+              <p class="text-xl mb-2 px-14 text-white">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau 
+                hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
+            </div>
+            <div class="about flex flex-row justify-end mt-28 gap-4">
+              <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png">
+              <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png">
+              <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png">
+            </div>
+          </div> 
       </div>
     </div>
   </section>
   <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
-  <!-- Additional Information section -->
+
+  <!-- Performance Section -->
   <section class="performa py-24 text-white">
   <div class="performa-container mx-auto">
-    <p class="text-4xl font-bold" data-aos="fade-up" data-aos-duration="2000">PERFORMA KAMI</p>
+    <p class="text-4xl font-bold ml-28" data-aos="fade-up" data-aos-duration="2000">PERFORMA KAMI</p>
     <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
     <div class="performa-card grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
       <div class="card-container">
-        <div class="card p-4 rounded-full border-4 border-white transition-all duration-300" data-aos="fade-right" data-aos-duration="3000">
+        <div class="card p-4 h-36 w-36 ml-24 rounded-full border-4 border-white transition-all duration-300" data-aos="fade-right" data-aos-duration="3000">
           <div class="image-container">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -119,7 +122,7 @@ function isUserLoggedIn()
       </div>
 
       <div class="card-container" data-aos="fade-right" data-aos-duration="2000">
-      <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+      <div class="card p-4 h-36 w-36 ml-24 rounded-full border-4 border-white transition-all duration-300">
           <div class="image-container">
             <svg class="p-4" fill="#000000" height="auto" width="auto" version="1.1" id="Capa_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	    viewBox="0 0 289.939 289.939" xml:space="preserve">
@@ -142,12 +145,12 @@ function isUserLoggedIn()
       </g>
       </svg>
             </svg>
-            <div class="caption">Performa</div>
+            <div class="caption">Respon Cepat</div>
           </div>
         </div>
       </div>
       <div class="card-container" data-aos="fade-right" data-aos-duration="1000">
-      <div class="card p-4 rounded-full border-4 border-white transition-all duration-300">
+      <div class="card p-4 h-36 w-36 ml-24 rounded-full border-4 border-white transition-all duration-300">
           <div class="image-container">
             <svg class="p-4" width="auto" height="auto" viewBox="0 0 24 24" fill="#fff" xmlns="http://www.w3.org/2000/svg">
         <path fill-rule="evenodd" clip-rule="evenodd" d="M15.4933 6.93502C15.8053 7.20743 15.8374 7.68122 15.565 7.99325L7.70786 16.9933C7.56543 17.1564 7.35943 17.25 7.14287 17.25C6.9263 17.25 6.72031 17.1564 6.57788 16.9933L3.43502 13.3933C3.16261 13.0812 3.19473 12.6074 3.50677 12.335C3.8188 12.0626 4.29259 12.0947 4.565 12.4068L7.14287 15.3596L14.435 7.00677C14.7074 6.69473 15.1812 6.66261 15.4933 6.93502Z" fill="#fff"/>
@@ -162,17 +165,14 @@ function isUserLoggedIn()
   </div>
 </section>
 
-
-  <hr>
-  <!-- Additional features section -->
-  <section class="bg-transparent py-2">
+  <!-- Project section -->
+  <section class="bg-transparent py-24">
   <div class="proyek-container mx-auto px-2">
     <h2 class="text-4xl font-bold mb-8 text-center text-white" data-aos="fade-right" data-aos-duration="1000">Proyek Kami</h2>
-    <hr class="w-96 h-1 mx-auto rounded my-2 dark:bg-gray-700">
-    <div class="proyek grid grid-cols-3 justify-center gap-2">
+    <div class="proyek flex flex-center gap-12 justify-center gap-2">
       <!-- Card Pertama -->
       <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="1000">
-        <img src="assets/images/hero2.jpg" alt="proyek-1">
+        <img src="assets/images/hero2.webp" alt="proyek-1">
         <h3 class="text-white text-lg font-semibold p-4">Widera Project</h3>
         <p class="text-gray-600 p-4 max-h-24">Proyek jangkauan listrik ke seluruh pelosok Indonesia, merata hingga ke pelosok negeri.</p>
         <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
@@ -180,7 +180,7 @@ function isUserLoggedIn()
 
       <!-- Card Kedua -->
       <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="2000">
-        <img src="assets/images/proyek-2.jpg" alt="proyek-2">
+        <img src="assets/images/proyek-2.webp" alt="proyek-2">
         <h3 class="text-white text-lg font-semibold p-4">Kincira Project</h3>
         <p class="text-gray-600 p-4 max-h-24">Proyek Kincira (Kincir Angin) adalah proyek yang ditargetkan untuk meningkatkan efisiensi dan daya listrik negara.</p>
         <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
@@ -240,6 +240,21 @@ function isUserLoggedIn()
   </div>
 
   <script src="assets/js/script.js"></script>
+  <script src="assets/js/service-worker.js"></script>
+  <script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('assets/js/service-worker.js')
+        .then(registration => {
+          console.log('Service Worker registered:', registration);
+        })
+        .catch(error => {
+          console.error('Service Worker registration failed:', error);
+        });
+    });
+  }
+</script>
+
 </body>
 
 
