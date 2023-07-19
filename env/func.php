@@ -57,6 +57,23 @@ function chartPenggunaanListrik() {
     return [];
 }
 
+function displayElectricityUsage($penggunaan_listrik) {
+    if (empty($penggunaan_listrik)) {
+        echo '<tr><td colspan="5">No data available</td></tr>';
+    } else {
+        foreach ($penggunaan_listrik as $index => $penggunaan) {
+            echo '<tr>';
+            echo '<td class="border px-4 py-2">' . ($index + 1) . '</td>';
+            echo '<td class="border px-4 py-2">' . $penggunaan['bulan'] . '</td>';
+            echo '<td class="border px-4 py-2">' . $penggunaan['tahun'] . '</td>';
+            echo '<td class="border px-4 py-2">' . $penggunaan['meter_awal'] . '</td>';
+            echo '<td class="border px-4 py-2">' . $penggunaan['meter_akhir'] . '</td>';
+            echo '</tr>';
+        }
+    }
+}
+
+//fungsi untuk mengambil data penggunaan listrik
 function getPenggunaanListrik($user_id) {
     global $conn;
     $query = "SELECT * FROM penggunaan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, FIELD(bulan, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')";
@@ -64,6 +81,7 @@ function getPenggunaanListrik($user_id) {
     return mysqli_fetch_all($result, MYSQLI_ASSOC);
 }
 
+//fungsi untuk mengambil data tagihan listrik berdasarkan user_id
 function getTagihanListrik($user_id) {
     global $conn;
     $query = "SELECT * FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, FIELD(bulan, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec')";
@@ -91,7 +109,7 @@ function getTagihanListrik($user_id) {
         global $conn;
 
         // Update status pembayaran menjadi "Lunas"
-        $query = "UPDATE tagihan_listrik SET status='Lunas' WHERE id='$payment_id'";
+        $query = "UPDATE tagihan_listrik SET status='Sudah Bayar' WHERE id='$payment_id'";
         mysqli_query($conn, $query);
     }
 

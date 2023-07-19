@@ -66,6 +66,7 @@ $conn->close();
 
     <!-- Vendor -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-200">
@@ -142,6 +143,27 @@ $conn->close();
             </form>
         </div>
     </div>
+
+    <script>
+        const registerBtn = document.getElementById('register-house-btn');
+
+        registerBtn.addEventListener('click', function (e) {
+            e.preventDefault(); 
+
+            Swal.fire({
+                icon: "success",
+                title: "Selamat!",
+                text: "Akun dan rumah Anda sudah terdaftar. Anda bisa login sekarang!",
+                showCancelButton: false,
+                confirmButtonText: "Ok",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.getElementById('register-house-form').submit();
+                }
+            });
+        });
+
+    </script>
 </body>
 
 </html>

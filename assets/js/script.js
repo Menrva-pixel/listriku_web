@@ -134,6 +134,76 @@ var chart = new Chart(ctx, {
         document.getElementById('selectedDescription').innerText = selectedDescription;
       }
       
+      /* Hero slider */
+      const sliderImages = document.querySelectorAll('.slider-container img');
+      const intervalTime = 5000; // Change image every 5 seconds
+      let imageCounter = 0;
+  
+      function changeImage() {
+        // Hide all images
+        sliderImages.forEach((img) => {
+          img.classList.add('hidden');
+        });
+  
+        // Show the current image
+        sliderImages[imageCounter].classList.remove('hidden');
+  
+        // Increment the image counter
+        imageCounter = (imageCounter + 1) % sliderImages.length;
+      }
+  
+      // Start the slider
+      setInterval(changeImage, intervalTime);
       
 
+          // JavaScript code to handle automatic image slider
+    const images = document.querySelectorAll('.slider-container img');
+    let currentImageIndex = 0;
+
+    function showNextImage() {
+      images[currentImageIndex].classList.remove('active-slide');
+      currentImageIndex = (currentImageIndex + 1) % images.length;
+      images[currentImageIndex].classList.add('active-slide');
+    }
+
+    // Change image every 3 seconds (adjust the duration as needed)
+    setInterval(showNextImage, 3000);
+
+
+    function redirectToLogin() {
+        window.location.href = "../auth/login";
+      }
+
+      const hamburgerMenu = document.getElementById('hamburger-menu');
+const navbar = document.getElementById('navbar');
+
+hamburgerMenu.addEventListener('click', function() {
+  navbar.classList.toggle('menu-open');
+});
+
+
+/* PWA */
+const installButton = document.getElementById('install-btn');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+
+  let deferredPrompt = e;
+
+  installButton.style.display = 'block';
+  
+  installButton.addEventListener('click', () => {
+    deferredPrompt.prompt();
+    
+    deferredPrompt.userChoice.then((choiceResult) => {
+      if (choiceResult.outcome === 'accepted') {
+        console.log('User accepted the install prompt.');
+      } else {
+        console.log('User dismissed the install prompt.');
+      }  
+      deferredPrompt = null;
+      installButton.style.display = 'none';
+    });
+  });
+});
 /*----Barkah Herdyanto Sejati -----*/

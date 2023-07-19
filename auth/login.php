@@ -41,6 +41,9 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <title>Login | Listriku</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <!-- Favicons -->
+    <link href="../assets/icons/favicon.ico" rel="icon">
+    <link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
 
     <!-- Favicons -->
     <link href="assets/img/favicon.png" rel="icon">
@@ -62,7 +65,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 <img class="w-24 mx-auto" src="../assets/images/slider-dec.png" alt="Logo">
                 <h1 class="text-xl font-bold text-gray-800 mt-4">LISTRIKU</h1>
             </div>
-            <form class="mt-6" id="login-form" action="../env/login-act.php" method="post">
+            <form class="mt-6" id="login-form" action="../env/login-act" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
@@ -93,7 +96,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 </div>
             </form>
 
-            <form class="mt-4 hidden" id="register-form" action="../env/register-act.php" method="post">
+            <form class="mt-4 hidden" id="register-form" action="../env/register-act" method="post">
                 <div class="mb-4">
                     <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
                         Username
@@ -104,11 +107,11 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         required>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email">
+                    <label class="block text-gray-700 text-sm font-bold mb-2 " for="email">
                         Email
                     </label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
                         id="email" type="email" placeholder="Email" name="email" required>
                 </div>
                 <div class="mb-4">
@@ -125,7 +128,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                         Alamat
                     </label>
                     <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
                         id="alamat" type="text" placeholder="Alamat" name="alamat" required>
                 </div>
                 <div class="mb-4">
@@ -201,7 +204,7 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                 Swal.fire({
                     icon: 'success',
                     title: 'Registrasi Berhasil!',
-                    text: 'Anda dapat melakukan login sekarang',
+                    text: 'Selanjutnya, Daftarkan Rumah anda!',
                     showConfirmButton: true, // Ubah showConfirmButton menjadi true
                     allowOutsideClick: false, // Tambahkan allowOutsideClick untuk memastikan pengguna harus mengklik tombol "OK" pada SweetAlert2
                 }).then(function (result) {
@@ -211,6 +214,25 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
                     }
                 });
             });
+    </script>
+
+    <script>
+        <?php
+        if (isset($_GET['login_status']) && $_GET['login_status'] === 'failed') {
+            echo 'Swal.fire({
+                icon: "error",
+                title: "Login Gagal",
+                text: "Username atau Password salah",
+                allowOutsideClick: false,
+                timer: 5000
+            }).then(function () {
+                history.replaceState({}, document.title, window.location.href.split("?")[0]);
+                window.location.href = window.location.href.split("?")[0];
+            });
+            ';
+        }
+        ?>
+
     </script>
 </body>
 

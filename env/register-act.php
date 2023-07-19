@@ -20,7 +20,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         session_start();
         $_SESSION["user_id"] = $user_id;
         
-        header('Location: ../auth/register-house.php');
+        header('Location: ../auth/register-house');
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
