@@ -1,11 +1,12 @@
 # ![logo](https://i.ibb.co/wg92jTD/logo.png)
-![undercons](https://github.com/Menrva-pixel/listriku_web/blob/main/underc.png)
+
+<div align="center">
+
+![undercons](https://i.ibb.co/THFq3SK/slider-dec.png)
 
 Website sedang dalam tahap development
 --------------------------------------
 Website Under Construction
-
-<div align="center">
   
 ## Tech :
 ![php](https://img.shields.io/badge/PHP-777BB4?style=for-the-badge&logo=php&logoColor=white)
@@ -18,4 +19,5 @@ Website Under Construction
 
 ### Website ini dibuat untuk latihan back-end menggunakan PHP dan juga di tunjukan untuk memenuhi tugas LSP Analisis Sistem
 ![badge](http://ForTheBadge.com/images/badges/built-by-developers.svg)
+
 </div>
