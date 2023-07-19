@@ -16,7 +16,8 @@
         margin: 0;
         padding: 0;
         font-family: 'Dosis', sans-serif;
-        background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 22%, rgb(43, 63, 110) 90%);
+        background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+        background-blend-mode: multiply;
     }
 
       .blur-layer {
@@ -28,7 +29,6 @@
         background-color: rgba(0, 0, 0, 0.527);
         filter:brightness(0.5);
         z-index: 10;
-        backdrop-filter: blur(2.2px);
       }
   
     .navbar {
@@ -46,10 +46,6 @@
 
     .nav-title {
       font-family: 'Dosis', sans-serif;
-    }
-    .navbar.scrolled {
-      background-color: rgba(6, 6, 15, 0.432);
-      backdrop-filter: blur(2.5px);
     }
 
     .dropdown-menu {
@@ -327,7 +323,7 @@
 .copyright-container {
   text-align: center;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.8); 
+  background-color: rgba(0, 0, 0, 0); 
 }
 
 .about img {
