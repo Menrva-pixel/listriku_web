@@ -45,21 +45,19 @@ function isUserLoggedIn()
 
 <body>
   <!-- Navbar -->
-  <nav class="mx-4 lg:mx-0 navbar z-50 sticky top-0 flex items-center justify-between bg-transparent text-white drop-shadow-md p-2 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10">
+  <nav class="mx-4 lg:mx-0 navbar z-50 top-0 flex items-center justify-between bg-lightblue-200 text-white drop-shadow-md p-2 border-b border-slate-900/10 lg:px-8 lg:border-0 dark:border-slate-300/10">
     <div class="flex flex-row items-center">
     <img src="assets/images/slider-dec.png" alt="Brand-Logo" class="h-12 w-15 ml-12">
       <a class="nav-title font-bold text-2xl ">Listriku</a>
     </div>
     <div class="mr-12 font-semibold flex flex-row items-center">
       <a href="#" class="home text-white hover:text-blue-400 mx-6">Home</a>
-      <a href="#" class="text-white hover:text-blue-400 mx-6">About</a>
+      <a href="pages/about" class="text-white hover:text-blue-400 mx-6">About</a>
       <?php if (isAdminLoggedIn()) : ?>
     <a href="pages/admin" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i>Admin</a>
       <?php elseif (isUserLoggedIn()) : ?>
-          <!-- User (Pelanggan) is logged in, display the username -->
           <a href="pages/user" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i><?php echo $_SESSION['username']; ?></a>
       <?php else : ?>
-          <!-- No user is logged in, display the login option -->
           <a href="auth/login" class="login-icon text-white hover:text-blue-400 p-3 rounded-3xl mx-2 transform hover:scale-75"><i class="fa-solid fa-right-to-bracket"></i></a>
       <?php endif; ?>
       <a href="https://github.com/menrva-pixel/listriku_web" target="_blank" class=" ml-6 text-slate-400 hover:text-slate-500 dark:hover:text-slate-300"><span class="sr-only">Tailwind CSS on GitHub</span><svg viewBox="0 0 16 16" class="w-5 h-5" fill="currentColor" aria-hidden="true"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg></a>
@@ -67,50 +65,43 @@ function isUserLoggedIn()
   </nav>
 
   <!-- Hero section -->
-  <div class="slider-container top-0 left-0 w-full h-full">
-    <img src="assets/images/hero1.webp" alt="hero-image" class="parallax top-0 left-0 w-full h-full absolute blur">
+  <section class="dark:bg-gray-900 relative">
+  <div class="blur-layer bg-fixed" style="background-image: url('assets/images/hero6.jpg'); background-size: cover; padding-top: 100px; z-index: -1;"></div>
+  <div class="z-99 grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
+    <div class="rounded-md p-4 mr-auto place-self-center lg:col-span-7" data-aos="fade-up" data-aos-duration="2000">
+      <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight text-yellow-300 stroke-black leading-none md:text-5xl xl:text-6xl dark:text-white">Effortless Payment</h1>
+      <p class="max-w-2xl mb-6 font-semibold text-gray-300 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Kami membantu anda untuk melakukan pembayaran listrik bulanan tanpa harus keluar rumah.</p>
+      <a href="#" class="inline-flex items-center justify-center px-5 py-3 mr-3 text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
+        Get started
+        <svg class="w-5 h-5 ml-2 -mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+      </a>
+      <a href="auth/login" class="inline-flex items-center justify-center px-5 py-3 text-base font-medium text-center text-gray-200 border border-gray-300 rounded-lg hover:bg-gray-100 hover:text-black focus:ring-4 focus:ring-gray-100 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 dark:focus:ring-gray-800">
+        Daftar
+      </a> 
+    </div>
+    <div class="hidden lg:mt-0 lg:col-span-5 lg:flex" data-aos="fade-up" data-aos-duration="2000">
+      <img src="assets/images/slider-dec.png" alt="brand-logo">
+    </div>                
   </div>
-    <section class="z-0 bg-transparent h-96 relative" data-aos="fade-up" data-aos-duration="2000">
-      <div class="hero absolute mt-52 mr-28 inset-0 flex flex-col items-end justify-center">
-        <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-5xl"><img class="h-auto w-14" src="assets/images/slider-dec.png" alt="logo">Listriku</h3>
-        <h1 class="z-10 text-white font-black text-9xl md:text-6xl">Effortless Payment</h1>
-        <p class="text-gray-400 mt-4 text-2xl dark:text-gray-300 md:text-1xl">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-400">listrik </a>bulanan tanpa harus keluar rumah</p>
-        <button class="bg-transparent text-yellow-400 p-2 mt-6 text-3xl focus:border-blue-400"><i class="fa-solid fa-arrow-left"></i></button>
-      </div>
-    </section>
-
-
+</section>
 
   <!-- Company Information section -->
-  <section id="about" class="company-info-container bg-transparent mt-96 pt-56 md:pt-24 relative" data-aos="fade-up" data-aos-duration="2000">
-    <h2 class="text-4xl font-bold mt-18 text-white text-center drop-shadow-xl ">Tentang Kami</h2>
-    <div class="about-container mx-auto px-6">
-      <div class="about-card flex flex-row items-center md:grid-cols-2 gap-8">
-        <div>
-          <img src="assets/images/slider-dec.png" alt="About Us" class="rounded-lg h-full">
+  <section class="bg-transparent dark:bg-gray-900">
+    <div class="gap-8 items-center py-8 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
+        <img class="w-full dark:hidden" data-aos="fade-right" data-aos-duration="2000" src="assets/images/img-1.jpg" alt="dashboard image">
+        <img class="w-full hidden dark:block" src="assets/images/img-1.jpg" alt="dashboard image">
+        <div class="mt-4 md:mt-0" data-aos="fade-left" data-aos-duration="2000">
+            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-yellow-300 dark:text-white">Selamat Datang Di Website Kami</h2>
+            <p class="mb-6 font-light text-gray-300 md:text-lg dark:text-gray-400">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
         </div>
-          <div class="flex flex-col"> 
-            <div>
-              <p class="text-xl mb-2 px-14 text-white">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau 
-                hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
-            </div>
-            <div class="about flex flex-row justify-end mt-28 gap-4">
-              <img data-aos="fade-up" data-aos-duration="1000" class="p-2" src="https://img.icons8.com/external-vitaliy-gorbachev-lineal-vitaly-gorbachev/60/null/external-coding-online-learning-vitaliy-gorbachev-lineal-vitaly-gorbachev.png" alt="icon-1">
-              <img data-aos="fade-up" data-aos-duration="2000" class="p-2" src="https://img.icons8.com/ios/50/null/rocket--v1.png" alt="icon-2">
-              <img data-aos="fade-up" data-aos-duration="3000" class="p-2" src="https://img.icons8.com/dotty/80/geography.png" alt="icon-3">
-            </div>
-          </div> 
-      </div>
     </div>
-  </section>
-  <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
+</section>
 
   <!-- Performance Section -->
-  <section class="performa py-24 text-white">
-  <div class="performa-container mx-auto">
-    <p class="text-4xl font-bold ml-28" data-aos="fade-up" data-aos-duration="2000">PERFORMA KAMI</p>
-    <hr class="w-96 h-1 mx-auto rounded my-10 dark:bg-gray-700">
-    <div class="performa-card grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
+  <section class="bg-fixed py-36 dark:bg-gray-900 relative">
+  <div class="blur-layer bg-fixed" style="background-image: url('assets/images/hero6.jpg'); background-size: cover; padding-top: 100px; z-index: -1;"></div>
+  <div class="performa-container relative mx-auto">
+    <div class="performa-card mx-auto grid grid-cols-1 md:grid-cols-3 w-1/2 h-auto gap-8">
       <div class="card-container">
         <div class="card p-4 h-36 w-36 ml-24 rounded-full border-4 border-white transition-all duration-300" data-aos="fade-right" data-aos-duration="3000">
           <div class="image-container">
@@ -171,65 +162,140 @@ function isUserLoggedIn()
 </section>
 
   <!-- Project section -->
-  <section class="bg-transparent py-24">
-  <div class="proyek-container mx-auto px-2">
-    <h2 class="text-4xl font-bold mb-8 text-center text-white" data-aos="fade-right" data-aos-duration="1000">Proyek Kami</h2>
-    <div class="proyek flex flex-center gap-12 justify-center gap-2">
-      <!-- Card Pertama -->
-      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="1000">
-        <img src="assets/images/hero2.webp" alt="proyek-1">
-        <h3 class="text-white text-lg font-semibold p-4">Widera Project</h3>
-        <p class="text-gray-600 p-4 max-h-24">Proyek jangkauan listrik ke seluruh pelosok Indonesia, merata hingga ke pelosok negeri.</p>
-        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+  <section class="bg-transparent dark:bg-gray-900 antialiased">
+  <div class="max-w-screen-xl px-4 py-8 mx-auto lg:px-6 sm:py-16 lg:py-24">
+    <div class="max-w-2xl mx-auto text-center">
+      <h2 class="text-3xl font-extrabold leading-tight tracking-tight text-yellow-400 sm:text-4xl dark:text-white">
+        Our work
+      </h2>
+      <p class="mt-4 text-base font-normal text-gray-100 sm:text-xl dark:text-gray-400">
+        Proyek yang sedang kami kembangkan
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 mt-12 text-center sm:mt-16 gap-x-20 gap-y-12 sm:grid-cols-2 lg:grid-cols-3" data-aos="fade-up" data-aos-duration="1000">
+      <div class="space-y-4 bg-gray-400 rounded-md">
+        <img src="assets/images/proyek-2.webp" alt="proyek-1">
+        <h3 class="text-2xl font-bold leading-tight text-gray-900 dark:text-white">
+          Kincira Project
+        </h3>
+        <p class="text-lg font-normal text-gray-700 dark:text-gray-400">
+        Proyek Kincira (Kincir Angin) adalah proyek yang ditargetkan untuk meningkatkan efisiensi dan daya listrik negara.
+        </p>
+        <a href="#" title=""
+          class="text-white bg-primary-700 justify-center hover:bg-primary-800 inline-flex items-center  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          role="button">
+          Lihat detail
+          <svg aria-hidden="true" class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
       </div>
 
-      <!-- Card Kedua -->
-      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="2000">
-        <img src="assets/images/proyek-2.webp" alt="proyek-2">
-        <h3 class="text-white text-lg font-semibold p-4">Kincira Project</h3>
-        <p class="text-gray-600 p-4 max-h-24">Proyek Kincira (Kincir Angin) adalah proyek yang ditargetkan untuk meningkatkan efisiensi dan daya listrik negara.</p>
-        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+      <div class="space-y-4 bg-gray-400 rounded-md" data-aos="fade-up" data-aos-duration="2000">
+        <img src="assets/images/hero2.webp" alt="proyek-2">
+        <h3 class="text-2xl font-bold leading-tight text-gray-900 dark:text-white">
+          Widera Project
+        </h3>
+        <p class="text-lg font-normal text-gray-700 dark:text-gray-400">
+        Proyek jangkauan listrik ke seluruh pelosok Indonesia, merata hingga ke pelosok negeri.
+        </p>
+        <a href="#" title=""
+          class="text-white bg-primary-700 justify-center hover:bg-primary-800 inline-flex items-center  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          role="button">
+          Lihat detail
+          <svg aria-hidden="true" class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
       </div>
 
-      <!-- Card Ketiga -->
-      <div class="card-1 rounded-lg shadow-md w-80 md:w-96" data-aos="fade-up" data-aos-duration="3000">
+      <div class="space-y-4 bg-gray-400 rounded-md" data-aos="fade-up" data-aos-duration="3000">
         <img src="assets/images/proyek-3.webp" alt="proyek-3">
-        <h3 class="text-lg font-semibold p-4">Solaris Project</h3>
-        <p class="text-gray-600 p-4 max-h-24">Proyek Solar panel untuk meningkatkan effisiensi penggunaan listrik di siang hari.</p>
-        <a href="#" class="text-blue-500 p-4">Lihat Detail</a>
+        <h3 class="text-2xl font-bold leading-tight text-gray-900 dark:text-white">
+          Solaris Project
+        </h3>
+        <p class="text-lg font-normal text-gray-700 dark:text-gray-400">
+        Proyek Solar panel untuk meningkatkan effisiensi penggunaan listrik di siang hari.
+        </p>
+        <a href="#" title=""
+          class="text-white bg-primary-700 justify-center hover:bg-primary-800 inline-flex items-center  focus:ring-4 focus:outline-none focus:ring-primary-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-primary-600 dark:hover:bg-primary-700 dark:focus:ring-primary-800"
+          role="button">
+          Lihat detail
+          <svg aria-hidden="true" class="w-5 h-5 ml-2 -mr-1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"
+            fill="currentColor">
+            <path fill-rule="evenodd"
+              d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z"
+              clip-rule="evenodd" />
+          </svg>
+        </a>
       </div>
     </div>
   </div>
 </section>
 
+<section class="dark:bg-gray-900 relative">
+<div class="blur-layer bg-fixed" style="background-image: url('assets/images/hero6.jpg'); background-size: cover; padding-top: 100px; z-index: -1;"></div>
+  <div class="max-w-screen-xl px-4 py-8 mx-auto text-center lg:py-16 lg:px-6">
+      <figure class="max-w-screen-md mx-auto">
+          <svg class="h-12 mx-auto mb-3 text-gray-400 dark:text-gray-600" viewBox="0 0 24 27" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14.017 18L14.017 10.609C14.017 4.905 17.748 1.039 23 0L23.995 2.151C21.563 3.068 20 5.789 20 8H24V18H14.017ZM0 18V10.609C0 4.905 3.748 1.038 9 0L9.996 2.151C7.563 3.068 6 5.789 6 8H9.983L9.983 18L0 18Z" fill="currentColor"/>
+          </svg> 
+          <blockquote>
+              <p class="text-2xl font-medium text-gray-200 dark:text-white">"Wow! Layanan dari website listrik ini sangat memuaskan. Pelayanan pelanggan yang cepat dan responsif, serta produk yang berkualitas tinggi. Saya sangat puas dengan pengalaman berbelanja di sini. Tidak perlu mencari tempat lain, website ini sudah menjadi pilihan terbaik untuk semua kebutuhan listrik saya. Terima kasih atas layanan yang luar biasa!"</p>
+          </blockquote>
+          <figcaption class="flex items-center justify-center mt-6 space-x-3">
+              <img class="w-6 h-6 rounded-full" src="https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80" alt="profile picture">
+              <div class="flex items-center divide-x-2 divide-gray-500 dark:divide-gray-700">
+                  <div class="pr-3 font-medium text-yellow-400 dark:text-white">Aqshal Maulana</div>
+                  <div class="pl-3 text-sm font-light text-gray-200 dark:text-gray-400">Cyber Security at BCP</div>
+              </div>
+          </figcaption>
+      </figure>
+  </div>
+</section>
+
 <hr>
   <!-- Footer -->
-  <footer class="bg-gray-900 text-white px-24 py-12">
-  <div class="footer-container mx-auto flex items-center justify-between">
-    <div>
-      <img src="assets/images/dev-logo.png" alt="dev-logo" class="h-20 w-auto mr-2 flex">
-    </div>
-    <div class="flex flex-col items-center">
-      <div>
-        <img class="h-44 w-44" src="assets/images/slider-dec.png" alt="logo">
-      </div>
-      <div class="links">
-        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">About Us</a>
-        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">Services</a>
-        <a href="#" class="text-gray-400 mx-4 hover:text-gray-200">Contact</a>
-      </div>
-    </div>
-    <div class="flex flex-col items-center gap-10">
-      <div>
-        <h3> sponsored by </h3>
-      </div>
-      <div class="flex flex-row h-8 gap-10">
-        <img src="assets/images/logo-ubsi.png" alt="Sponsor 1" class="h-12 w-auto mr-2">
-        <img src="assets/images/logo-bumn.png" alt="Sponsor 2" class="h-8 w-auto mr-2">
-      </div>
-    </div>
+  <footer class="p-4 bg-transparent md:p-8 lg:p-10 dark:bg-gray-800">
+  <div class="mx-auto max-w-screen-xl text-center">
+      <a href="#" class="flex justify-center items-center text-2xl font-bold text-gray-900 dark:text-white">
+        <img class="mr-2 h-8" src="assets/images/slider-dec.png">
+          Listriku   
+      </a>
+      <p class="my-6 text-gray-500 dark:text-gray-400">Memberikan kemudahan bagi anda dalam mendaftar, melapor, dan membayar tagihan listrik rumah.</p>
+      <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Premium</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Blog</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Affiliate Program</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">FAQs</a>
+          </li>
+          <li>
+              <a href="#" class="mr-4 hover:underline md:mr-6">Contact</a>
+          </li>
+      </ul>
   </div>
 </footer>
+
 
 <div class="copyright-container py-6">
     <div class="flex justify-start ml-4">
@@ -251,7 +317,27 @@ function isUserLoggedIn()
         });
     });
   }
-</script>
+        const images = document.querySelectorAll('.absolute.transition-opacity');
+        let currentImageIndex = 0;
+
+        function fadeInImage(imageIndex) {
+            images.forEach((image, index) => {
+                if (index === imageIndex) {
+                    image.style.opacity = '1';
+                } else {
+                    image.style.opacity = '0';
+                }
+            });
+        }
+
+        function slideImages() {
+            currentImageIndex = (currentImageIndex + 1) % images.length;
+            fadeInImage(currentImageIndex);
+        }
+
+        // Auto slide images every 5 seconds (5000 milliseconds)
+        setInterval(slideImages, 5000);
+    </script>
 
 </body>
 
