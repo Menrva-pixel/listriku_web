@@ -7,6 +7,7 @@ const urlsToCache = [
   '../images/hero1.webp',
   '../images/hero2.webp',
   '../images/hero3.webp',
+  '../images/hero6.webp',
   '../images/proyek-2.webp',
   '../images/proyek-3.webp',
   '../images/service-1.webp',

@@ -167,6 +167,23 @@ function getTagihanListrik($user_id) {
         }
     }
 
+    // fungsi filtering berdasarkan status pembayaran
+    function getFilteredUsers($status)
+{
+    global $users;
+
+    if ($status === 'Sudah Bayar') {
+        return array_filter($users, function ($user) {
+            return getStatusPembayaran($user['user_id']) === 'Sudah Bayar';
+        });
+    } elseif ($status === 'Belum Bayar') {
+        return array_filter($users, function ($user) {
+            return getStatusPembayaran($user['user_id']) === 'Belum Bayar';
+        });
+    }
+
+    return $users; // Return all users by default
+}
     
     ?>
 
