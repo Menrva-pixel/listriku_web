@@ -69,12 +69,12 @@ function isUserLoggedIn()
   <section class="dark:bg-gray-900 relative">
   <div class="blur-layer bg-fixed" style="background-image: url('assets/images/hero1.webp'); background-size: cover; z-index: -1;"></div>
   <div class="z-99 grid max-w-screen-xl px-4 py-8 mx-auto lg:gap-8 xl:gap-0 lg:py-16 lg:grid-cols-12">
-    <div class="rounded-md p-4 mr-auto place-self-center lg:col-span-7" data-aos="fade-up" data-aos-duration="2000">
-    <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-3xl"><img class="h-auto w-14" src="assets/images/slider-dec.png" alt="logo">Listriku</h3>
-      <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight text-yellow-300 stroke-black leading-none md:text-5xl xl:text-7xl dark:text-white">Effortless Payment</h1>
-      <p class="max-w-2xl mb-6 font-md text-gray-300 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-300">listrik</a> bulanan tanpa harus keluar rumah.</p>
+    <div class="rounded-md p-4 mr-auto place-self-center lg:col-span-7">
+    <h3 class="z-10 mt-6 text-yellow-400 flex flex-row items-center text-3xl" data-aos="fade-right" data-aos-duration="2000"><img class="h-auto w-14" src="assets/images/slider-dec.png" alt="logo" data-aos="fade-right" data-aos-duration="2000">Listriku</h3>
+      <h1 class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight text-yellow-300 stroke-black leading-none md:text-5xl xl:text-7xl dark:text-white"  data-aos="fade-up" data-aos-duration="2000">Effortless Payment</h1>
+      <p class="max-w-2xl mb-6 font-md text-gray-300 lg:mb-8 md:text-lg lg:text-xl dark:text-gray-400" data-aos="fade-up" data-aos-duration="2000">Kami membantu anda untuk melakukan pembayaran <a class="text-yellow-300">listrik</a> bulanan tanpa harus keluar rumah.</p>
       <a href="auth/login" class="inline-flex items-center justify-center text-base font-medium text-center text-white rounded-lg bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 dark:focus:ring-primary-900">
-        <svg class="w-8 h-8 ml-2 -mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
+        <svg data-aos="fade-right" data-aos-duration="2000" class="w-8 h-8 ml-2 -mr-1 text-yellow-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10.293 3.293a1 1 0 011.414 0l6 6a1 1 0 010 1.414l-6 6a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-4.293-4.293a1 1 0 010-1.414z" clip-rule="evenodd"></path></svg>
       </a>
     </div>
     <div class="hidden lg:mt-0 lg:col-span-5 lg:flex" data-aos="fade-up" data-aos-duration="2000">
@@ -84,12 +84,12 @@ function isUserLoggedIn()
 </section>
 
   <!-- Company Information section -->
-  <section class="pt-20 bg-transparent dark:bg-gray-900 pt-42">
+  <section class="bg-transparent dark:bg-gray-900 pt-20 mt-44">
     <div class="gap-8 items-center py-32 px-4 mx-auto max-w-screen-xl xl:gap-16 md:grid md:grid-cols-2 sm:py-16 lg:px-6">
         <img class="w-full dark:hidden" data-aos="fade-right" data-aos-duration="2000" src="assets/images/slider-dec.png" alt="dashboard image">
         <img class="w-full hidden dark:block" src="assets/images/slider-dec.png" alt="dashboard image">
         <div class="mt-4 md:mt-0" data-aos="fade-left" data-aos-duration="2000">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-yellow-300 dark:text-white">Selamat Datang Di Website Kami</h2>
+            <h2 class="mb-4 text-6xl tracking-tight font-extrabold text-yellow-300 dark:text-white">Listriku </h2>
             <p class="mb-6 font-light text-gray-300 md:text-lg dark:text-gray-400">"Kami berkomitmen untuk memberikan pengalaman yang nyaman dan mudah bagi Anda dalam menggunakan layanan website kami. Silahkan kunjungi platform kami atau hubungi layanan pelanggan kami untuk menikmati berbagai fitur dan kemudahan yang kami tawarkan."</p>
         </div>
     </div>
@@ -225,14 +225,14 @@ function isUserLoggedIn()
   <!-- Footer -->
   <footer class="p-4 bg-transparent md:p-8 lg:p-10 dark:bg-gray-800">
   <div class="mx-auto max-w-screen-xl text-center">
-      <a href="#" class="flex justify-center items-center text-2xl font-bold text-gray-900 dark:text-white">
-        <img class="mr-2 h-8" src="assets/images/slider-dec.png">
+      <a href="#" class="flex justify-center items-center text-4xl font-bold text-yellow-300 dark:text-white">
+        <img class="mr-2 h-12" src="assets/images/slider-dec.png">
           Listriku   
       </a>
       <p class="my-6 text-gray-500 dark:text-gray-400">Memberikan kemudahan bagi anda dalam mendaftar, melapor, dan membayar tagihan listrik rumah.</p>
-      <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-900 dark:text-white">
+      <ul class="flex flex-wrap justify-center items-center mb-6 text-gray-300 dark:text-white">
           <li>
-              <a href="#" class="mr-4 hover:underline md:mr-6 ">About</a>
+              <a href="pages/about" class="mr-4 hover:underline md:mr-6 ">About</a>
           </li>
           <li>
               <a href="#" class="mr-4 hover:underline md:mr-6 ">Campaigns</a>
