@@ -4,6 +4,7 @@ include("config.php");
 
 
 <?php
+//fungsi untuk mendapatkan status pemabayarn bulan terakhir
 function getStatusPembayaranBulanTerakhir() {
     global $conn;
 
@@ -21,7 +22,7 @@ function getStatusPembayaranBulanTerakhir() {
         return "Belum ada data pembayaran bulan terakhir";
     }
 }
-
+//fungsi untuk mengambil user dari database
 function getUserFromDatabase($username) {
     global $conn;
 
@@ -34,7 +35,7 @@ function getUserFromDatabase($username) {
 
     return null;
 }
-
+//fungsi untuk mengidentifikasi login berdasarkan privilege 'Admin' dan 'Pengguna'
 function isUserPage() {
     return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
 }
@@ -43,6 +44,7 @@ function isAdminPage() {
     return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Admin';
 }
 
+//fungsi untuk membuat chart penggunaan listrik
 function chartPenggunaanListrik() {
     global $conn;
 
@@ -57,6 +59,7 @@ function chartPenggunaanListrik() {
     return [];
 }
 
+ //fungsi untuk menampilkan penggunaan listrik
 function displayElectricityUsage($penggunaan_listrik) {
     if (empty($penggunaan_listrik)) {
         echo '<tr><td colspan="5">No data available</td></tr>';
@@ -120,7 +123,7 @@ function getTagihanListrik($user_id) {
         return mysqli_fetch_assoc($result);
     }
     
-    //tagihan
+    //fungsi untuk membuat tagihan tagihan
 
     function createTagihan($user_id) {
         global $conn;
