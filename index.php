@@ -1,3 +1,5 @@
+<!--Listriku Web App | made by Barkah Herdyanto Sejati-->
+<!--Github | Menrva-pixel-->
 <?php
 session_start();
 
@@ -53,6 +55,7 @@ function isUserLoggedIn()
     </div>
     <div class="mr-12 font-semibold flex flex-row items-center">
       <a href="#" class="home text-white hover:text-blue-400 mx-6">Home</a>
+      <a href="pages/blog" class="home text-white hover:text-blue-400 mx-6">Blog</a>
       <a href="pages/about" class="text-white hover:text-blue-400 mx-6">About</a>
       <?php if (isAdminLoggedIn()) : ?>
     <a href="pages/admin" class="text-yellow-400 font-bold mx-2"><i class="fa-regular fa-user yellow-400 mr-2"></i>Admin</a>

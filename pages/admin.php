@@ -93,6 +93,8 @@ foreach ($users as $user) {
         'total_penggunaan' => $total_penggunaan,
     );
 }
+
+$posts = getBlogPostsFromDatabase();
 ?>
 
 <!DOCTYPE html>
@@ -105,140 +107,112 @@ foreach ($users as $user) {
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css">
-
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="bg-gray-200">
     <!-- Navbar -->
-    <nav>
-      <div class="flex flex-row justify-between items-center bg-transparent">
-        <div class="ml-24">
-          <a href="../index">
-            <img class="h-12 w-24" src="../assets/images/logo.png" alt="Logo">
-          </a>
+    <nav class="bg-blue-500 py-4 px-8">
+        <div class="container mx-auto flex items-center justify-between">
+            <a href="../index">
+                <img class="h-12 w-24" src="../assets/images/logo.png" alt="Logo">
+            </a>
+            <form method="GET" action="../auth/logout">
+                <button type="submit" name="logout" class="bg-transparent border hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
+            </form>
         </div>
-        <div class="mr-24">
-          <ul class="flex space-x-4">
-            <li>                   
-               <form method="GET" action="../auth/logout">
-                  <button type="submit" name="logout" class="bg-transparent border hover:bg-red-700 text-gray-200 font-bold py-2 px-4 rounded">Logout</button>
-               </form>
-            </li>
-          </ul>
-        </div>
-      </div>
     </nav>
 
-
     <!-- Content -->
-    <div class="container mx-auto p-4 mt-4 flex flex-row items-start">
-        <!-- Charts -->
-        <div class="flex flex-col justify-center md:grid-cols-2 gap-4 h-full w-full">
+    <div class="container mx-auto p-4 mt-4">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
             <!-- Chart 1: Data Penggunaan Listrik -->
-            <div class=" p-4 border rounded-md shadow-lg">
-                <h2 class="text-xl font-bold mb-4 text-gray-300">Data Penggunaan Listrik</h2>
+            <div class="p-4 border rounded-md shadow-lg bg-white">
+                <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
                 <canvas id="chart1"></canvas>
             </div>
+
             <!-- Chart 2: Data Jumlah Pengguna -->
-            <div class="border rounded-md p-4 shadow-lg">
-                <h2 class="text-xl font-bold mb-4 text-gray-300">Data Pemakaian listrik</h2>
+            <div class="p-4 border rounded-md shadow-lg bg-white">
+                <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
                 <canvas id="chart2"></canvas>
             </div>
         </div>
 
-        <!-- Table -->
-            <section class="bg-transparent p-3 sm:p-5 mt-1">
-            <h1 class="text-center text-gray-200 m-4 text-4xl">TABLE PENGGUNA</h1>
-            <div class="mx-auto max-w-screen-xl px-4 lg:px-12">
-                <div class="bg-gray-800 dark:bg-gray-800 relative shadow-md sm:rounded-lg">
-                    <div class="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                        <div class="w-full md:w-1/2">
-                            <form class="flex items-center">
-                                <label for="simple-search" class="sr-only">Search</label>
-                                <div class="relative w-full">
-                                    <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                        <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
-                                            <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
-                                        </svg>
-                                    </div>
-                                    <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Search" required="">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
-                            <div class="flex items-center space-x-3 w-full md:w-auto">
-                                <button id="actionsDropdownButton" data-dropdown-toggle="actionsDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-200 focus:outline-none  rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button">
-                                    <svg class="-ml-1 mr-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                    </svg>
-                                    Actions
-                                </button>
-                                <div id="actionsDropdown" class="hidden z-10 w-44  rounded divide-y divide-gray-100 shadow dark:bg-gray-700 dark:divide-gray-600">
-                                    <ul class="py-1 text-sm text-gray-700 dark:text-gray-200" aria-labelledby="actionsDropdownButton">
-                                        <li>
-                                            <a href="#" class="block py-2 px-4 hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white">Mass Edit</a>
-                                        </li>
-                                    </ul>
-                                    <div class="py-1">
-                                        <a href="#" class="block py-2 px-4 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Delete all</a>
-                                    </div>
-                                </div>
-                                <button id="filterDropdownButton" data-dropdown-toggle="filterDropdown" class="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-200 focus:outline-none  rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700" type="button" data-filter="">
-                                    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" class="h-4 w-4 mr-2 text-gray-400" viewbox="0 0 20 20" fill="currentColor">
-                                        <path fill-rule="evenodd" d="M3 3a1 1 0 011-1h12a1 1 0 011 1v3a1 1 0 01-.293.707L12 11.414V15a1 1 0 01-.293.707l-2 2A1 1 0 018 17v-5.586L3.293 6.707A1 1 0 013 6V3z" clip-rule="evenodd" />
-                                    </svg>
-                                    Filter
-                                    <svg class="-mr-1 ml-1.5 w-5 h-5" fill="currentColor" viewbox="0 0 20 20" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                                        <path clip-rule="evenodd" fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" />
-                                    </svg>
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="">
-                        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
-                            <thead class="text-xs text-gray-400 font-semibold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
-                            <tr>
-                                <th scope="col" class="px-4 py-3">No.</th>
-                                <th scope="col" class="px-4 py-3">Username</th>
-                                <th scope="col" class="px-4 py-3">Total Tagihan</th>
-                                <th scope="col" class="px-4 py-3" data-sortable>Status Pembayaran</th>
-                                <th scope="col" class="px-4 py-3">Edit</th>
-                                <th scope="col" class="px-4 py-3">Delete</th>
-                                <th scope="col" class="px-4 py-3">
-                                <span class="sr-only">Actions</span>
-                                </th>
-                            </tr>
-                            </thead>
-                            <tbody id="table-body" class="text-center max-h-2 overflow-y-scroll">
-                                <?php foreach ($users as $index => $user): ?>
-                                    <tr class="dark:border-gray-700 overflow-y-scroll">
-                                        <td class="px-4 py-3"><?php echo $index + 1; ?></td>
-                                        <td class="px-4 py-3"><?php echo $user['username']; ?></td>
-                                        <td class="px-4 py-3"><?php echo getTagihanTotal($user['user_id']); ?></td>
-                                        <td class="px-4 py-3 <?php echo getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar'; ?>">
-                                            <?php echo getStatusPembayaran($user['user_id']); ?>
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <form method="post" action="">
-                                                <input type="hidden" name="tagih_user" value="<?php echo $user['user_id']; ?>">
-                                                <button type="submit" class="tagih-link hover:text-green-400">Tagih</button>
-                                            </form>
-                                        </td>
-                                        <td class="px-4 py-2">
-                                            <a class="delete-link hover:text-red-400" href="#" data-userid="<?php echo $user['user_id']; ?>">Delete</a>
-                                        </td>
-                                    </tr>
-                                <?php endforeach; ?>
-                            </tbody>
-                        </table>
-                        </div>
-                </div>
-            </div>
-            </section>
+        <div class="mt-4">
+            <a href="create_post.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buat Postingan Blog</a>
         </div>
+
+        <!-- Table: Pengguna -->
+        <section class="bg-white p-4 mt-4 rounded-md shadow-lg">
+    <h1 class="text-center text-gray-700 m-4 text-4xl">Table Pengguna</h1>
+    <div class="table-container mx-auto max-w-screen-xl px-4 lg:px-12">
+        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
+            <thead class="text-xs text-gray-400 font-semibold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
+                <tr>
+                    <th scope="col" class="px-4 py-3">No.</th>
+                    <th scope="col" class="px-4 py-3">Username</th>
+                    <th scope="col" class="px-4 py-3">Total Tagihan</th>
+                    <th scope="col" class="px-4 py-3" data-sortable>Status Pembayaran</th>
+                    <th scope="col" class="px-4 py-3">Edit</th>
+                    <th scope="col" class="px-4 py-3">Delete</th>
+                    <th scope="col" class="px-4 py-3">
+                        <span class="sr-only">Actions</span>
+                    </th>
+                </tr>
+            </thead>
+            <tbody id="table-body" class="text-center max-h-2 overflow-y-scroll">
+                <!-- Replace this with PHP code to generate the table rows dynamically -->
+                <?php
+                foreach ($users as $index => $user) {
+                    echo '<tr class="dark:border-gray-700 overflow-y-scroll">';
+                    echo '<td class="px-4 py-3">' . ($index + 1) . '</td>';
+                    echo '<td class="px-4 py-3">' . $user['username'] . '</td>';
+                    echo '<td class="px-4 py-3">' . getTagihanTotal($user['user_id']) . '</td>';
+                    echo '<td class="px-4 py-3 ' . (getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar') . '">';
+                    echo getStatusPembayaran($user['user_id']);
+                    echo '</td>';
+                    echo '<td class="px-4 py-2">';
+                    echo '<form method="post" action="">';
+                    echo '<input type="hidden" name="tagih_user" value="' . $user['user_id'] . '">';
+                    echo '<button type="submit" class="tagih-link hover:text-green-400">Tagih</button>';
+                    echo '</form>';
+                    echo '</td>';
+                    echo '<td class="px-4 py-2">';
+                    echo '<a class="delete-link hover:text-red-400" href="#" data-userid="' . $user['user_id'] . '">Delete</a>';
+                    echo '</td>';
+                    echo '</tr>';
+                }
+                ?>
+            </tbody>
+        </table>
+    </div>
+</section>
+        <!-- Blog Posts -->
+        <div class="mt-4">
+            <h1 class="text-center text-gray-700 m-4 text-4xl">Blog Posts</h1>
+            <div class="blog-posts">
+                <!-- Replace this with PHP code to generate the blog posts dynamically -->
+                <?php
+                foreach ($posts as $post) {
+                    echo '<div class="blog-post border rounded p-4 mb-4">';
+                    echo '<h2 class="text-2xl font-semibold">' . $post['title'] . '</h2>';
+                    echo '<p class="text-gray-600 mb-2">Posted by ' . $post['author'] . ' on ' . $post['created_at'] . '</p>';
+                    echo '<p>' . $post['content'] . '</p>';
+                    echo '<div class="mt-2">';
+                    echo '<a href="edit_post.php?id=' . $post['id'] . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>';
+                    echo '<a href="delete_post.php?id=' . $post['id'] . '" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>';
+                    echo '</div>';
+                    echo '</div>';
+                }
+                ?>
+            </div>
+                  <!-- Button to create a new blog post -->
+            <div class="flex justify-center">
+                <a href="create_post.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Buat Postingan Baru</a>
+            </div>
+        </div>
+
     </div>
 
     <footer class="p-4 bg-gray-800 md:p-8 lg:p-10 dark:bg-gray-800">

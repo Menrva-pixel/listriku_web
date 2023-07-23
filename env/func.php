@@ -187,7 +187,37 @@ function getTagihanListrik($user_id) {
 
     return $users; // Return all users by default
 }
+
+
+//untuk fetch post
+function getPostsFromDatabase() {
+    global $conn; // Assuming you already have a database connection
+
+    $query = "SELECT * FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if (!$result) {
+        die("Error fetching blog posts: " . mysqli_error($conn));
+    }
+
+    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $posts;
+}
     
+
+function getBlogPostsFromDatabase() {
+    global $conn;
+    $query = "SELECT * FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo "Failed to fetch blog posts: " . mysqli_error($conn);
+        return [];
+    }
+}
+
     ?>
 
 
