@@ -42,7 +42,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "UPDATE blog_posts SET title='$title', content='$content', category='$category', image_blob='$base64Image' WHERE id='$post_id'";
     mysqli_query($conn, $query);
 
-    header('Location: blog_detail.php?id=' . $post_id); // Redirect back to the blog detail page
+    header('Location: ../pages/blog_detail.php?id=' . $post_id); // Redirect back to the blog detail page
     exit;
 }
 
@@ -66,13 +66,14 @@ if (isset($_GET['id'])) {
     <title>Edit Post</title>
     <!-- Tambahkan link stylesheet Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.css">
     <link rel="stylesheet" href="../assets/css/style.css">
 </head>
 
 <body>
     <div class="container mx-auto mt-8">
         <h1 class="text-3xl font-semibold mb-6">Edit Post</h1>
-        <form method="post" action="edit_post.php" enctype="multipart/form-data">
+        <form method="post" action="edit_post.php" enctype="multipart/form-data" onsubmit="showSuccessMessage()">
             <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
             <label for="title">Judul Postingan:</label>
             <input type="text" name="title" id="title" value="<?php echo $post['title']; ?>" required>
@@ -93,5 +94,25 @@ if (isset($_GET['id'])) {
             <button type="submit" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Simpan Perubahan</button>
         </form>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.20/dist/sweetalert2.min.js"></script>
+    <script>
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent form submission
+        Swal.fire({
+            title: 'Success!',
+            text: 'Postingan telah berhasil di edit.',
+            icon: 'success',
+            confirmButtonColor: '#3085d6',
+            confirmButtonText: 'OK'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Submit the form after "OK" is clicked on the Swal
+                form.submit();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
