@@ -2,40 +2,6 @@
 include '../env/config.php';
 include '../env/func.php';
 
-// Fungsi untuk mendapatkan data postingan dari database berdasarkan ID
-function getBlogPostById($post_id) {
-    global $conn;
-    $query = "SELECT * FROM blog_posts WHERE id='$post_id'";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        return mysqli_fetch_assoc($result);
-    } else {
-        echo "Failed to fetch blog post: " . mysqli_error($conn);
-        return null;
-    }
-}
-
-// Fungsi untuk mendapatkan daftar postingan berdasarkan bulan dari database
-function getBlogPostsByMonth() {
-    global $conn;
-    $query = "SELECT id, title, created_at FROM blog_posts ORDER BY created_at DESC";
-    $result = mysqli_query($conn, $query);
-
-    if ($result) {
-        $blogPostsByMonth = array();
-        while ($row = mysqli_fetch_assoc($result)) {
-            $date = date_create($row['created_at']);
-            $monthYear = date_format($date, 'F Y');
-            $blogPostsByMonth[$monthYear][] = $row;
-        }
-        return $blogPostsByMonth;
-    } else {
-        echo "Failed to fetch blog posts: " . mysqli_error($conn);
-        return [];
-    }
-}
-
 // Cek apakah parameter post_id tersedia dalam URL
 if (isset($_GET['id'])) {
     $post_id = $_GET['id'];
@@ -53,48 +19,56 @@ $blogPostsByMonth = getBlogPostsByMonth();
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo $post['title']; ?></title>
     <!-- Tambahkan link stylesheet Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/blog.css">
 </head>
+<header>
+    <?php
+include('../include/navbar.php');
+?>
+</header>
 
-<body>
-    <!-- Header dengan gambar besar -->
+<body class="bg-gray-100">
     <div class="header">
-        <!-- Ganti img src dengan path ke gambar yang disimpan di direktori ../assets/images/blog -->
-        <img src="<?php echo '../assets/images/blog/' . basename($post['image_blob']); ?>" alt="Header Image">
-        <h1><?php echo $post['title']; ?></h1>
-        <p>Penulis: <?php echo $post['author']; ?></p>
-        <p>Tanggal: <?php echo $post['created_at']; ?></p>
+        <img src="../assets/images/blog/<?php echo basename($post['image_blob']); ?>" alt="Header Image">
     </div>
-
-    <!-- Sidebar dengan list postingan berdasarkan bulan -->
-    <div class="sidebar">
-        <h3>Postingan Berdasarkan Bulan</h3>
-        <ul>
-            <?php
-            // Tampilkan daftar postingan berdasarkan bulan
-            foreach ($blogPostsByMonth as $monthYear => $posts) {
-                echo '<li><strong>' . $monthYear . '</strong>';
-                echo '<ul>';
-                foreach ($posts as $postItem) {
-                    echo '<li><a href="blog_detail.php?id=' . $postItem['id'] . '">' . $postItem['title'] . '</a></li>';
-                }
-                echo '</ul>';
-                echo '</li>';
-            }
-            ?>
-        </ul>
+    <div class="blog-content flex flex-row">
+        <aside class="bg-gray-200 px-4 py-6 rounded-lg sidebar">
+            <h3 class="text-xl font-bold mb-4">Postingan Berdasarkan Bulan</h3>
+            <ul>
+                <?php foreach ($blogPostsByMonth as $monthYear => $posts): ?>
+                <li>
+                    <strong class="text-lg"><?php echo $monthYear; ?></strong>
+                    <ul class="list-disc list-inside">
+                        <?php foreach ($posts as $postItem): ?>
+                        <li>
+                            <a href="blog_detail.php?id=<?php echo $postItem['id']; ?>"
+                                class="text-blue-500 hover:underline">
+                                <?php echo $postItem['title']; ?>
+                            </a>
+                        </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </li>
+                <?php endforeach; ?>
+            </ul>
+        </aside>
+        <div class="flex flex-row px-24">
+            <div class="mx-auto my-8 px-4 content">
+                <h2 class="text-5xl  font-bold mb-8"><?php echo $post['title']; ?></h2>
+                <div class="text-gray-600 leading-relaxed text-2xl"><?php echo $post['content']; ?></div>
+                <p class="text-gray-600">Penulis: <?php echo $post['author']; ?></p>
+                <p class="text-gray-600">Tanggal: <?php echo $post['created_at']; ?></p>
+            </div>
+        </div>
     </div>
-
-    <!-- Isi konten postingan -->
-    <div class="content">
-        <h2><?php echo $post['title']; ?></h2>
-        <?php echo $post['content']; ?>
-    </div>
+    <footer><?php include('../include/footer.php');?></footer>
 </body>
+
 </html>

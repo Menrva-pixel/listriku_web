@@ -218,6 +218,40 @@ function getBlogPostsFromDatabase() {
     }
 }
 
+//BLOG SECTION
+// Fungsi untuk mendapatkan data postingan dari database berdasarkan ID
+function getBlogPostById($post_id) {
+    global $conn;
+    $query = "SELECT * FROM blog_posts WHERE id='$post_id'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        echo "Failed to fetch blog post: " . mysqli_error($conn);
+        return null;
+    }
+}
+
+// Fungsi untuk mendapatkan daftar postingan berdasarkan bulan dari database
+function getBlogPostsByMonth() {
+    global $conn;
+    $query = "SELECT id, title, created_at FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $blogPostsByMonth = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $date = date_create($row['created_at']);
+            $monthYear = date_format($date, 'F Y');
+            $blogPostsByMonth[$monthYear][] = $row;
+        }
+        return $blogPostsByMonth;
+    } else {
+        echo "Failed to fetch blog posts: " . mysqli_error($conn);
+        return [];
+    }
+}
     ?>
 
 
