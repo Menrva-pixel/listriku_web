@@ -200,8 +200,8 @@ $posts = getBlogPostsFromDatabase();
                     echo '<p class="text-gray-600 mb-2">Posted by ' . $post['author'] . ' on ' . $post['created_at'] . '</p>';
                     echo '<p>' . $post['content'] . '</p>';
                     echo '<div class="mt-2">';
-                    echo '<a href="edit_post.php?id=' . $post['id'] . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>';
-                    echo '<a href="delete_post.php?id=' . $post['id'] . '" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>';
+                    echo '<a href="../env/edit_post.php?id=' . $post['id'] . '" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-2">Edit</a>';
+                    echo '<a href="../env/delete_post.php?id=' . $post['id'] . '" class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Delete</a>';
                     echo '</div>';
                     echo '</div>';
                 }

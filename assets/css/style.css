@@ -344,3 +344,71 @@ header {
 .content-container {
   margin-top: 600px;
 }
+
+/* blog detail */
+        /* Style untuk header gambar besar */
+        .header {
+          position: relative;
+      }
+      .header img {
+          width: 100%;
+          height: 400px;
+          object-fit: cover;
+      }
+      .header h1 {
+          position: absolute;
+          bottom: 1rem;
+          left: 1rem;
+          font-size: 2.5rem;
+          color: white;
+      }
+      .header p {
+          position: absolute;
+          bottom: 0.5rem;
+          left: 1rem;
+          font-size: 1.2rem;
+          color: white;
+      }
+
+      /* Style untuk sidebar */
+      .sidebar {
+          width: 300px;
+          padding: 1rem;
+          background-color: #f0f0f0;
+      }
+      .sidebar h3 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+      }
+      .sidebar ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+      }
+      .sidebar li {
+          margin-bottom: 0.5rem;
+      }
+      .sidebar a {
+          color: #333;
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+      .sidebar a:hover {
+          color: #4CAF50;
+      }
+
+      /* Style untuk konten postingan */
+      .content {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
+      }
+      .content h2 {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+      }
+      .content p {
+          line-height: 1.6;
+      }
