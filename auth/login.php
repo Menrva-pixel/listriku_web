@@ -58,43 +58,42 @@ if (isset($_POST['username']) && isset($_POST['password'])) {
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
-<body class="bg-gray-200">
-    <div class="flex items-center justify-center min-h-screen">
-        <div class="w-full max-w-sm bg-white rounded-lg shadow-md p-6 animate__animated animate__fadeIn">
-            <div class="text-center">
-                <img class="w-24 mx-auto" src="../assets/images/slider-dec.png" alt="Logo">
-                <h1 class="text-xl font-bold text-gray-800 mt-4">LISTRIKU</h1>
-            </div>
-            <form class="mt-6" id="login-form" action="../env/login-act" method="post">
-                <div class="mb-4">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
-                        Username
-                    </label>
-                    <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
-                        id="username" type="text" placeholder="Username" name="username" pattern="[A-Za-z0-9]+">
+    <body class="bg-gray-200">
+        <div class="flex items-center justify-center min-h-screen backdrop-blur-sm">
+            <div class="w-full max-w-sm border-md bg-gray-200 rounded-lg shadow-md p-6 animate__animated animate__fadeIn">
+                <div class="text-center animate__bounce">
+                    <img class="w-24 mx-auto" src="../assets/images/slider-dec.png" alt="Logo">
+                    <h1 class="text-xl font-bold text-gray-800 mt-4">LISTRIKU</h1>
                 </div>
-                <div class="mb-6">
-                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
-                        Password
-                    </label>
-                    <input
-                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
-                        id="password" type="password" placeholder="Password" name="password" pattern="[A-Za-z0-9!@#$%^&*()_+=\-]+">
+                <div class="blur-card mt-6 px-14 p-8">
+                    <form id="login-form" action="../env/login-act" method="post">
+                        <div class="mb-4">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                                Username
+                            </label>
+                            <input class="shadow caret-blue-400  appearance-none border border-gray-700 rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:border-blue-500 animate__animated animate__fadeInUp"
+                                id="username" type="text" placeholder="Username" name="username" pattern="[A-Za-z0-9]+">
+                        </div>
+                        <div class="mb-6">
+                            <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                                Password
+                            </label>
+                            <input class="shadow appearance-none border border-gray-700 rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:border-blue-500 animate__animated animate__fadeInUp"
+                                id="password" type="password" placeholder="Password" name="password" pattern="[A-Za-z0-9!@#$%^&*()_+=\-]+">
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
+                                type="submit">
+                                Login
+                            </button>
+                            <button class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
+                                type="button" id="to-register-btn">
+                                Register
+                            </button>
+                        </div>
+                    </form>
                 </div>
-                <div class="flex items-center justify-between">
-                    <button
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
-                        type="submit">
-                        Login
-                    </button>
-                    <button
-                        class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline animate__animated animate__fadeInUp"
-                        type="button" id="to-register-btn">
-                        Register
-                    </button>
-                </div>
-            </form>
+
 
             <form class="mt-4 hidden" id="register-form" action="../env/register-act" method="post">
                 <div class="mb-4">

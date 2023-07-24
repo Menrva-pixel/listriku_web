@@ -8,28 +8,6 @@ if (!isset($_SESSION['username']) || !isAdminPage()) {
   exit;
 }
 
-function getAllUsers() {
-    global $conn;
-    $query = "SELECT * FROM users";
-    $result = mysqli_query($conn, $query);
-    return mysqli_fetch_all($result, MYSQLI_ASSOC);
-}
-
-function getTagihanTotal($user_id) {
-    global $conn;
-    $query = "SELECT SUM(total_tagihan) AS total FROM tagihan_listrik WHERE user_id='$user_id'";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row['total'];
-}
-
-function getStatusPembayaran($user_id) {
-    global $conn;
-    $query = "SELECT status FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC LIMIT 1";
-    $result = mysqli_query($conn, $query);
-    $row = mysqli_fetch_assoc($result);
-    return $row['status'];
-}
 
 // Redirect to login page if not logged in or not an admin
 if (!isset($_SESSION['username']) || $_SESSION['privilege'] !== 'Admin') {
@@ -94,6 +72,13 @@ foreach ($users as $user) {
     );
 }
 
+$usersPerPage = 10;
+$totalUsers = count($users);
+$totalPages = ceil($totalUsers / $usersPerPage);
+$current_page = isset($_GET['page']) ? max(1, intval($_GET['page'])) : 1;
+$start_index = ($current_page - 1) * $usersPerPage;
+$end_index = min($start_index + $usersPerPage, $totalUsers);
+
 $posts = getBlogPostsFromDatabase();
 ?>
 
@@ -107,6 +92,7 @@ $posts = getBlogPostsFromDatabase();
     <!-- Include Tailwind CSS -->
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css">
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
@@ -123,50 +109,77 @@ $posts = getBlogPostsFromDatabase();
         </div>
     </nav>
 
-    <!-- Content -->
-    <div class="container mx-auto p-4 mt-4">
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-            <!-- Chart 1: Data Penggunaan Listrik -->
-            <div class="p-4 border rounded-md shadow-lg bg-white">
-                <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
-                <canvas id="chart1"></canvas>
-            </div>
+    <div class="section-body flex flex-row">
+    <!-- Sidebar -->
+    <div class="bg-gray-800 h-screen w-1/6 p-4">
+    <h2 class="text-2xl font-bold text-white mb-6">Administrator Panel</h2>
+    <div class="flex flex-col space-y-4">
+            <button onclick="showTab('mainContent')" class="bg-yellow-400 hover:bg-blue-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
+                Statistics
+            </button>
+            <button onclick="showTab('userMng')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
+                User Management
+            </button>
+            <button onclick="showTab('blogPosts')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
+                Blog Posts
+            </button>
+        </div>
+    </div>
 
-            <!-- Chart 2: Data Jumlah Pengguna -->
-            <div class="p-4 border rounded-md shadow-lg bg-white">
-                <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
-                <canvas id="chart2"></canvas>
+
+
+     <!-- Main content area -->
+     <div class="container mt-8">
+            <div id="mainContentTab" class="tab">
+                <section class="p-4 my-6 rounded-md border-md">
+                    <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
+
+                    <!-- Chart -->
+            <div class="container mx-auto p-4 mt-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Chart 1: Data Penggunaan Listrik -->
+                    <div class="p-4 border rounded-md shadow-lg">
+                        <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
+                        <canvas id="chart1"></canvas>
+                    </div>
+
+                    <!-- Chart 2: Data Jumlah Pengguna -->
+                    <div class="p-4 border rounded-md shadow-lg">
+                        <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
+                        <canvas id="chart2"></canvas>
+                    </div>
+                </div>
             </div>
         </div>
+    </section>
 
-        <div class="mt-4">
-            <a href="create_post.php" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Buat Postingan Blog</a>
-        </div>
 
-        <!-- Table: Pengguna -->
-        <section class="bg-white p-4 mt-4 rounded-md shadow-lg">
-    <h1 class="text-center text-gray-700 m-4 text-4xl">Table Pengguna</h1>
-    <div class="table-container mx-auto max-w-screen-xl px-4 lg:px-12">
-        <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
-            <thead class="text-xs text-gray-400 font-semibold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
-                <tr>
-                    <th scope="col" class="px-4 py-3">No.</th>
-                    <th scope="col" class="px-4 py-3">Username</th>
-                    <th scope="col" class="px-4 py-3">Total Tagihan</th>
-                    <th scope="col" class="px-4 py-3" data-sortable>Status Pembayaran</th>
-                    <th scope="col" class="px-4 py-3">Edit</th>
-                    <th scope="col" class="px-4 py-3">Delete</th>
-                    <th scope="col" class="px-4 py-3">
-                        <span class="sr-only">Actions</span>
-                    </th>
-                </tr>
-            </thead>
-            <tbody id="table-body" class="text-center max-h-2 overflow-y-scroll">
-                <!-- Replace this with PHP code to generate the table rows dynamically -->
+        <!--Tab: User Table-->
+        <div id="userMngTab" class="hidden tab">
+            <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
+            <section class="p-4 my-6 rounded-md border-md">
+            <h1 class="text-center text-gray-700 m-4 text-4xl">Table Pengguna</h1>
+            <div class="table-container mx-auto max-w-screen-xl px-4 lg:px-12">
+                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
+                    <thead class="text-xs text-gray-400 font-semibold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
+                        <tr>
+                            <th scope="col" class="px-4 py-3">No.</th>
+                            <th scope="col" class="px-4 py-3">Username</th>
+                            <th scope="col" class="px-4 py-3">Total Tagihan</th>
+                            <th scope="col" class="px-4 py-3" data-sortable>Status Pembayaran</th>
+                            <th scope="col" class="px-4 py-3">Edit</th>
+                            <th scope="col" class="px-4 py-3">Delete</th>
+                            <th scope="col" class="px-4 py-3">
+                                <span class="sr-only">Actions</span>
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="table-body" class="text-center max-h-2 overflow-y-scroll">
                 <?php
-                foreach ($users as $index => $user) {
+                for ($i = $start_index; $i < $end_index; $i++) {
+                    $user = $users[$i];
                     echo '<tr class="dark:border-gray-700 overflow-y-scroll">';
-                    echo '<td class="px-4 py-3">' . ($index + 1) . '</td>';
+                    echo '<td class="px-4 py-3">' . ($i + 1) . '</td>';
                     echo '<td class="px-4 py-3">' . $user['username'] . '</td>';
                     echo '<td class="px-4 py-3">' . getTagihanTotal($user['user_id']) . '</td>';
                     echo '<td class="px-4 py-3 ' . (getStatusPembayaran($user['user_id']) === 'Belum Bayar' ? 'status-belum-bayar' : 'status-sudah-bayar') . '">';
@@ -185,14 +198,32 @@ $posts = getBlogPostsFromDatabase();
                 }
                 ?>
             </tbody>
-        </table>
+                </table>
+             <!-- Pagination links -->
+            <div class="my-6 text-center">
+                <?php if ($current_page > 1): ?>
+                    <a href="?page=<?php echo $current_page - 1; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Previous</a>
+                <?php endif; ?>
+
+                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                    <?php if ($i === $current_page): ?>
+                        <span class="bg-blue-500 text-white font-bold py-2 px-4 rounded"><?php echo $i; ?></span>
+                    <?php else: ?>
+                        <a href="?page=<?php echo $i; ?>" class="bg-blue-200 text-blue-700 hover:bg-blue-300 font-bold py-2 px-4 rounded"><?php echo $i; ?></a>
+                    <?php endif; ?>
+                <?php endfor; ?>
+
+                <?php if ($current_page < $totalPages): ?>
+                    <a href="?page=<?php echo $current_page + 1; ?>" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Next</a>
+                <?php endif; ?>
+            </div>
+        </div>
     </div>
-</section>
-        <!-- Blog Posts -->
-        <div class="mt-4">
+        <!-- Tab: Blog Posts -->
+        <div id="blogPostsTab" class="hidden tab">
+            <div class="mt-4">
             <h1 class="text-center text-gray-700 m-4 text-4xl">Blog Posts</h1>
             <div class="blog-posts">
-                <!-- Replace this with PHP code to generate the blog posts dynamically -->
                 <?php
                 foreach ($posts as $post) {
                     echo '<div class="blog-post border rounded p-4 mb-4">';
@@ -207,15 +238,16 @@ $posts = getBlogPostsFromDatabase();
                 }
                 ?>
             </div>
-                  <!-- Button to create a new blog post -->
+                  <!-- Tombol untuk membuat postingan baru -->
             <div class="flex justify-center">
                 <a href="create_post.php" class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Buat Postingan Baru</a>
             </div>
         </div>
-
+        </div>
     </div>
-
-    <footer class="p-4 bg-gray-800 md:p-8 lg:p-10 dark:bg-gray-800">
+</div>
+</div>
+<footer class="p-4 bg-gray-800 md:p-8 lg:p-10 dark:bg-gray-800">
         <div class="mx-auto max-w-screen-xl text-center">
             <a href="#" class="flex justify-center items-center text-4xl font-bold text-yellow-300 dark:text-white">
                 <img class="mr-2 h-12" src="../assets/images/slider-dec.png">
@@ -229,7 +261,6 @@ $posts = getBlogPostsFromDatabase();
             <p class="text-gray-400 font-semibold text-sm">&copy; 2023 Listriku. All rights reserved.</p>
             </div>
         </div>
-
     <!-- Include Chart.js library -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script type="module" src="../assets/js/script.js"></script>
@@ -461,6 +492,19 @@ $posts = getBlogPostsFromDatabase();
             filterTableRows(newFilter);
         });
     });
+
+        // fungsi untuk merubah tab
+        function showTab(tabName) {
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => {
+                if (tab.id === `${tabName}Tab`) {
+                    tab.style.display = 'block';
+                } else {
+                    tab.style.display = 'none';
+                }
+            });
+        }
+
 </script>
 </body>
 

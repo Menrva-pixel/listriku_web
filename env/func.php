@@ -252,6 +252,30 @@ function getBlogPostsByMonth() {
         return [];
     }
 }
+
+//HALAMAN ADMIN
+function getAllUsers() {
+    global $conn;
+    $query = "SELECT * FROM users";
+    $result = mysqli_query($conn, $query);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function getTagihanTotal($user_id) {
+    global $conn;
+    $query = "SELECT SUM(total_tagihan) AS total FROM tagihan_listrik WHERE user_id='$user_id'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total'];
+}
+
+function getStatusPembayaran($user_id) {
+    global $conn;
+    $query = "SELECT status FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['status'];
+}
     ?>
 
 
