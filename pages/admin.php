@@ -135,22 +135,22 @@ $posts = getBlogPostsFromDatabase();
                 <section class="p-4 my-6 rounded-md border-md">
                     <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
 
-                    <!-- Chart -->
-            <div class="container mx-auto p-4 mt-4">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                    <!-- Chart 1: Data Penggunaan Listrik -->
-                    <div class="p-4 border rounded-md shadow-lg">
-                        <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
-                        <canvas id="chart1"></canvas>
-                    </div>
+                <!-- Chart -->
+                <div class="container mx-auto p-4 mt-4">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <!-- Chart 1: Data Penggunaan Listrik -->
+                <div class="p-4 border rounded-md shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
+                    <canvas id="chart1" class="chart-canvas"></canvas>
+                </div>
 
-                    <!-- Chart 2: Data Jumlah Pengguna -->
-                    <div class="p-4 border rounded-md shadow-lg">
-                        <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
-                        <canvas id="chart2"></canvas>
+                <!-- Chart 2: Data Jumlah Pengguna -->
+                <div class="p-4 border rounded-md shadow-lg">
+                    <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
+                    <canvas id="chart2" class="chart-canvas"></canvas>
+                </div>
                     </div>
                 </div>
-            </div>
         </div>
     </section>
 

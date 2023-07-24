@@ -27,3 +27,86 @@ body {
     overflow-y: scroll;
 }
   
+
+/* chart js style */
+/* Gaya khusus untuk chart 1 */
+#chart1.chart-canvas {
+  background-color: #f0f4f8;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gaya khusus untuk chart 2 */
+#chart2.chart-canvas {
+  background-color: #f8f0f0;
+  border: 1px solid #d5d1d1;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Gaya untuk judul chart */
+.p-4 h2 {
+  font-size: 1.5rem;
+  color: #374151;
+}
+
+/* Gaya untuk label dan angka di sumbu-x dan sumbu-y */
+.chartjs-size-monitor, .chartjs-size-monitor-expand, .chartjs-size-monitor-shrink {
+  position: absolute;
+  direction: ltr;
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  overflow: hidden;
+  pointer-events: none;
+  visibility: hidden;
+  z-index: -1;
+}
+
+/* Gaya untuk legenda chart */
+.chartjs-legend {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.chartjs-legend li {
+  display: flex;
+  align-items: center;
+  margin-right: 15px;
+}
+
+.chartjs-legend li span {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  margin-right: 5px;
+}
+
+/* Gaya untuk garis grid */
+.chartjs-grid-line {
+  stroke: #e5e7eb;
+  stroke-width: 1px;
+  stroke-dasharray: 4;
+}
+
+/* Gaya untuk garis pada chart line */
+.chartjs-line {
+  border: 2px solid rgba(55, 81, 161, 0.7);
+  border-radius: 5px;
+}
+
+/* Gaya untuk titik pada chart line */
+.chartjs-point {
+  background-color: #374151;
+  border: 2px solid rgba(55, 81, 161, 0.7);
+  border-radius: 50%;
+  width: 6px;
+  height: 6px;
+}
