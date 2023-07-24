@@ -17,6 +17,9 @@
           </li>
       </ul>
   </div>
+  <div class="credit">
+    <a  href="https://icons8.com/icon/54680/blog">Blog</a> icon by <a href="https://icons8.com">Icons8</a>
+  </div>
 </footer>
 
 

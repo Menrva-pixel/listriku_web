@@ -4,7 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About Us</title>
+  <title>About Us | Listriku</title>
+  <link href="../assets/icons/favicon.ico" rel="icon">
+  <link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
   <link rel="stylesheet" href="../assets/css/style.css">
 </head>

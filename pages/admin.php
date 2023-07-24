@@ -89,7 +89,8 @@ $posts = getBlogPostsFromDatabase();
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard | Listriku</title>
-    <!-- Include Tailwind CSS -->
+    <link href="../assets/icons/favicon.ico" rel="icon">
+    <link href="../assets/icons/apple-touch-icon.png" rel="apple-touch-icon">
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.15/dist/tailwind.min.css" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/admin.css">
 
@@ -98,14 +99,11 @@ $posts = getBlogPostsFromDatabase();
 
 <body class="bg-gray-200">
     <!-- Navbar -->
-    <nav class="bg-blue-500 py-4 px-8">
+    <nav class="bg-gray-800 py-2 px-2">
         <div class="container mx-auto flex items-center justify-between">
             <a href="../index">
                 <img class="h-12 w-24" src="../assets/images/logo.png" alt="Logo">
             </a>
-            <form method="GET" action="../auth/logout">
-                <button type="submit" name="logout" class="bg-transparent border hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Logout</button>
-            </form>
         </div>
     </nav>
 
@@ -113,17 +111,20 @@ $posts = getBlogPostsFromDatabase();
     <!-- Sidebar -->
     <div class="bg-gray-800 h-screen w-1/6 p-4">
         <img class="my-12" src="../assets/images/slider-dec.png" alt="logo">
-    <h2 class="text-2xl font-bold text-white mb-6 text-center my-6">Administrator Panel</h2>
-    <div class="flex flex-col space-y-4">
-            <button onclick="showTab('userMng')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
-                User Management
+    <h2 class="text-2xl font-bold text-gray-200 mb-6 text-center my-6">Administrator Panel</h2>
+    <div class="flex flex-col justify-items-start space-y-4">
+            <button onclick="showTab('userMng')" class="flex flex-row gap-2 border-b hover:bg-green-600 text-gray-200 font-bold py-2 px-4 transition-colors duration-300 focus:outline-none">
+            <img class="filter invert" width="24" height="24" src="https://img.icons8.com/ios-filled/50/group-foreground-selected.png" alt="group-foreground-selected"/>User Management
                 </button>
-            <button onclick="showTab('mainContent')" class="bg-yellow-400 hover:bg-blue-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
-                Statistics
+            <button onclick="showTab('mainContent')" class="flex flex-row gap-2 border-b hover:bg-blue-600 text-gray-200 font-bold py-2 px-4 transition-colors duration-300 focus:outline-none">
+            <img class="filter invert" width="24" height="24" src="https://img.icons8.com/external-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto/64/external-statistic-marketing-and-seo-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto.png" alt="external-statistic-marketing-and-seo-yogi-aprelliyanto-basic-outline-yogi-aprelliyanto"/>Statistics
             </button>
-            <button onclick="showTab('blogPosts')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
-                Blog Posts
+            <button onclick="showTab('blogPosts')" class="flex flex-row gap-2 border-b hover:bg-green-600 text-gray-200 font-bold py-2 px-4 transition-colors duration-300 focus:outline-none">
+            <img class="filter invert" width="24" height="24" src="https://img.icons8.com/wired/64/google-blog-search.png" alt="google-blog-search"/>Blog Posts
             </button>
+            <form method="GET" action="../auth/logout">
+                <button type="submit" name="logout" class="flex flex-row gap-2 border-b mt-44 hover:bg-green-600 text-gray-200 font-bold py-2 px-4 transition-colors duration-300 focus:outline-none">Logout</button>
+            </form>
         </div>
     </div>
 
@@ -133,33 +134,32 @@ $posts = getBlogPostsFromDatabase();
      <div class="container mt-8">
             <div id="mainContentTab" class="hidden tab">
                 <section class="p-4 my-6 rounded-md border-md">
-                    <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
+                        <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
 
-                <!-- Chart -->
-                <div class="container mx-auto p-4 mt-4">
-                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Chart 1: Data Penggunaan Listrik -->
-                <div class="p-4 border rounded-md shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
-                    <canvas id="chart1" class="chart-canvas"></canvas>
-                </div>
+                        <!-- Chart -->
+                        <div class="container mx-auto p-4 mt-4">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Chart 1: Data Penggunaan Listrik -->
+                        <div class="p-4 border rounded-md shadow-lg">
+                            <h2 class="text-xl font-bold mb-4 text-gray-700">Data Penggunaan Listrik</h2>
+                            <canvas id="chart1" class="chart-canvas"></canvas>
+                        </div>
 
-                <!-- Chart 2: Data Jumlah Pengguna -->
-                <div class="p-4 border rounded-md shadow-lg">
-                    <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
-                    <canvas id="chart2" class="chart-canvas"></canvas>
-                </div>
+                        <!-- Chart 2: Data Jumlah Pengguna -->
+                        <div class="p-4 border rounded-md shadow-lg">
+                            <h2 class="text-xl font-bold mb-4 text-gray-700">Data Pemakaian Listrik</h2>
+                            <canvas id="chart2" class="chart-canvas"></canvas>
+                        </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-        </div>
-    </section>
+                </section>
 
 
         <!--Tab: User Table-->
         <div id="userMngTab" class="tab">
             <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Management</h1>
             <section class="p-4 my-6 rounded-md border-md">
-            <h1 class="text-center text-gray-700 m-4 text-4xl">Daftar Pengguna</h1>
             <div class="table-container mx-auto  px-4 lg:px-12">
                 <table class="bg-gray-800 max-w-screen w-full text-sm text-center text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
                     <thead class="text-xs text-gray-300 font-bold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
