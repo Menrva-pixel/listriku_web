@@ -112,13 +112,14 @@ $posts = getBlogPostsFromDatabase();
     <div class="section-body flex flex-row">
     <!-- Sidebar -->
     <div class="bg-gray-800 h-screen w-1/6 p-4">
-    <h2 class="text-2xl font-bold text-white mb-6">Administrator Panel</h2>
+        <img class="my-12" src="../assets/images/slider-dec.png" alt="logo">
+    <h2 class="text-2xl font-bold text-white mb-6 text-center my-6">Administrator Panel</h2>
     <div class="flex flex-col space-y-4">
-            <button onclick="showTab('mainContent')" class="bg-yellow-400 hover:bg-blue-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
-                Statistics
-            </button>
             <button onclick="showTab('userMng')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
                 User Management
+                </button>
+            <button onclick="showTab('mainContent')" class="bg-yellow-400 hover:bg-blue-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
+                Statistics
             </button>
             <button onclick="showTab('blogPosts')" class="bg-yellow-400 hover:bg-green-600 text-gray-700 font-bold py-2 px-4 rounded transition-colors duration-300 focus:outline-none">
                 Blog Posts
@@ -130,7 +131,7 @@ $posts = getBlogPostsFromDatabase();
 
      <!-- Main content area -->
      <div class="container mt-8">
-            <div id="mainContentTab" class="tab">
+            <div id="mainContentTab" class="hidden tab">
                 <section class="p-4 my-6 rounded-md border-md">
                     <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
 
@@ -155,13 +156,13 @@ $posts = getBlogPostsFromDatabase();
 
 
         <!--Tab: User Table-->
-        <div id="userMngTab" class="hidden tab">
-            <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Statistics</h1>
+        <div id="userMngTab" class="tab">
+            <h1 class="text-4xl font-bold mb-6 text-gray-300 text-center">User Management</h1>
             <section class="p-4 my-6 rounded-md border-md">
-            <h1 class="text-center text-gray-700 m-4 text-4xl">Table Pengguna</h1>
-            <div class="table-container mx-auto max-w-screen-xl px-4 lg:px-12">
-                <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
-                    <thead class="text-xs text-gray-400 font-semibold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
+            <h1 class="text-center text-gray-700 m-4 text-4xl">Daftar Pengguna</h1>
+            <div class="table-container mx-auto  px-4 lg:px-12">
+                <table class="bg-gray-800 max-w-screen w-full text-sm text-center text-gray-500 dark:text-gray-400" data-sort="status" data-order="asc" id="user-table">
+                    <thead class="text-xs text-gray-300 font-bold uppercase bg-gray-600 dark:bg-gray-700 dark:text-gray-400 text-center">
                         <tr>
                             <th scope="col" class="px-4 py-3">No.</th>
                             <th scope="col" class="px-4 py-3">Username</th>
@@ -174,11 +175,11 @@ $posts = getBlogPostsFromDatabase();
                             </th>
                         </tr>
                     </thead>
-                    <tbody id="table-body" class="text-center max-h-2 overflow-y-scroll">
+                    <tbody id="table-body" class="border border-gray-400 text-center max-h-2 overflow-y-scroll">
                 <?php
                 for ($i = $start_index; $i < $end_index; $i++) {
                     $user = $users[$i];
-                    echo '<tr class="dark:border-gray-700 overflow-y-scroll">';
+                    echo '<tr class="dark:border-gray-700 overflow-y-scroll border border-gray-700">';
                     echo '<td class="px-4 py-3">' . ($i + 1) . '</td>';
                     echo '<td class="px-4 py-3">' . $user['username'] . '</td>';
                     echo '<td class="px-4 py-3">' . getTagihanTotal($user['user_id']) . '</td>';
