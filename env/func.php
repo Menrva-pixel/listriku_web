@@ -4,6 +4,7 @@ include("config.php");
 
 
 <?php
+//fungsi untuk mendapatkan status pemabayarn bulan terakhir
 function getStatusPembayaranBulanTerakhir() {
     global $conn;
 
@@ -21,7 +22,7 @@ function getStatusPembayaranBulanTerakhir() {
         return "Belum ada data pembayaran bulan terakhir";
     }
 }
-
+//fungsi untuk mengambil user dari database
 function getUserFromDatabase($username) {
     global $conn;
 
@@ -34,7 +35,7 @@ function getUserFromDatabase($username) {
 
     return null;
 }
-
+//fungsi untuk mengidentifikasi login berdasarkan privilege 'Admin' dan 'Pengguna'
 function isUserPage() {
     return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Pelanggan';
 }
@@ -43,6 +44,7 @@ function isAdminPage() {
     return isset($_SESSION['privilege']) && $_SESSION['privilege'] == 'Admin';
 }
 
+//fungsi untuk membuat chart penggunaan listrik
 function chartPenggunaanListrik() {
     global $conn;
 
@@ -57,6 +59,7 @@ function chartPenggunaanListrik() {
     return [];
 }
 
+ //fungsi untuk menampilkan penggunaan listrik
 function displayElectricityUsage($penggunaan_listrik) {
     if (empty($penggunaan_listrik)) {
         echo '<tr><td colspan="5">No data available</td></tr>';
@@ -120,7 +123,7 @@ function getTagihanListrik($user_id) {
         return mysqli_fetch_assoc($result);
     }
     
-    //tagihan
+    //fungsi untuk membuat tagihan tagihan
 
     function createTagihan($user_id) {
         global $conn;
@@ -167,7 +170,112 @@ function getTagihanListrik($user_id) {
         }
     }
 
+    // fungsi filtering berdasarkan status pembayaran
+    function getFilteredUsers($status)
+{
+    global $users;
+
+    if ($status === 'Sudah Bayar') {
+        return array_filter($users, function ($user) {
+            return getStatusPembayaran($user['user_id']) === 'Sudah Bayar';
+        });
+    } elseif ($status === 'Belum Bayar') {
+        return array_filter($users, function ($user) {
+            return getStatusPembayaran($user['user_id']) === 'Belum Bayar';
+        });
+    }
+
+    return $users; // Return all users by default
+}
+
+
+//untuk fetch post
+function getPostsFromDatabase() {
+    global $conn; // Assuming you already have a database connection
+
+    $query = "SELECT * FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if (!$result) {
+        die("Error fetching blog posts: " . mysqli_error($conn));
+    }
+
+    $posts = mysqli_fetch_all($result, MYSQLI_ASSOC);
+    return $posts;
+}
     
+
+function getBlogPostsFromDatabase() {
+    global $conn;
+    $query = "SELECT * FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        return mysqli_fetch_all($result, MYSQLI_ASSOC);
+    } else {
+        echo "Failed to fetch blog posts: " . mysqli_error($conn);
+        return [];
+    }
+}
+
+//BLOG SECTION
+// Fungsi untuk mendapatkan data postingan dari database berdasarkan ID
+function getBlogPostById($post_id) {
+    global $conn;
+    $query = "SELECT * FROM blog_posts WHERE id='$post_id'";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        return mysqli_fetch_assoc($result);
+    } else {
+        echo "Failed to fetch blog post: " . mysqli_error($conn);
+        return null;
+    }
+}
+
+// Fungsi untuk mendapatkan daftar postingan berdasarkan bulan dari database
+function getBlogPostsByMonth() {
+    global $conn;
+    $query = "SELECT id, title, created_at FROM blog_posts ORDER BY created_at DESC";
+    $result = mysqli_query($conn, $query);
+
+    if ($result) {
+        $blogPostsByMonth = array();
+        while ($row = mysqli_fetch_assoc($result)) {
+            $date = date_create($row['created_at']);
+            $monthYear = date_format($date, 'F Y');
+            $blogPostsByMonth[$monthYear][] = $row;
+        }
+        return $blogPostsByMonth;
+    } else {
+        echo "Failed to fetch blog posts: " . mysqli_error($conn);
+        return [];
+    }
+}
+
+//HALAMAN ADMIN
+function getAllUsers() {
+    global $conn;
+    $query = "SELECT * FROM users";
+    $result = mysqli_query($conn, $query);
+    return mysqli_fetch_all($result, MYSQLI_ASSOC);
+}
+
+function getTagihanTotal($user_id) {
+    global $conn;
+    $query = "SELECT SUM(total_tagihan) AS total FROM tagihan_listrik WHERE user_id='$user_id'";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['total'];
+}
+
+function getStatusPembayaran($user_id) {
+    global $conn;
+    $query = "SELECT status FROM tagihan_listrik WHERE user_id='$user_id' ORDER BY tahun DESC, bulan DESC LIMIT 1";
+    $result = mysqli_query($conn, $query);
+    $row = mysqli_fetch_assoc($result);
+    return $row['status'];
+}
     ?>
 
 

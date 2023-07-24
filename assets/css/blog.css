@@ -1,0 +1,26 @@
+.sidebar {
+    flex: 0 0 300px; /* Sidebar width */
+    max-width: 300px; /* Sidebar max width */
+    min-height: 100vh; /* Minimum height to cover the whole screen */
+}
+
+/* Add padding to the container to separate content from the sidebar */
+.container {
+    padding-left: 20px;
+    padding-right: 20px;
+}
+
+/* Ensure the content fills the available space */
+#blogPosts {
+    flex: 1;
+}
+
+.header img {
+    width: 100%;
+    height: auto;
+}
+
+/* Ensure the content fills the available space */
+.content {
+    flex: 1;
+}

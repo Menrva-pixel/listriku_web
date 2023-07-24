@@ -23,9 +23,8 @@ $tagihan_listrik = getTagihanListrik($user['user_id']);
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $alamat = $_POST['alamat'];
     $no_telp = $_POST['no_telp'];
-    $email = $_POST['email'];
 
-    $query = "UPDATE users SET alamat='$alamat', no_telp='$no_telp', email='$email' WHERE id='{$user['id']}'";
+    $query = "UPDATE users SET alamat='$alamat', no_telp='$no_telp' WHERE id='{$user['id']}'";
     mysqli_query($conn, $query);
 
     header('Location: user');
@@ -127,10 +126,10 @@ if ($result) {
                             </div>
                         </div>
                     <div class="mt-4 text-justify">
-                        <strong>Username:</strong> <p class="text-gray-400"><?php echo $user['username']; ?></p>
-                        <strong>Alamat:</strong> <p class="text-gray-400"><?php echo $user['alamat']; ?></p>
-                        <strong>No. Telp:</strong><p class="text-gray-400"><?php echo $user['no_telp']; ?></p>
-                        <strong>Email:</strong><p class="text-gray-400"><?php echo $user['email']; ?></p>
+                    <strong>Username:</strong> <p class="text-gray-400"><?php echo $user['username']; ?></p>
+                    <strong>Alamat:</strong> <p class="text-gray-400"><?php echo $user['alamat']; ?></p>
+                    <strong>No. Telp:</strong><p class="text-gray-400"><?php echo $user['no_telp']; ?></p>
+                    <strong>Email:</strong><p class="text-gray-400"><?php echo htmlspecialchars($user['email']); ?></p>
                     </div>
                     <div class="mt-8">
                         <h3 class="text-2xl">Payment Status - <?php echo date('F Y'); ?></h3>
@@ -142,19 +141,22 @@ if ($result) {
                 <div class="bg-white w-1/2 rounded-lg p-8">
                     <h3 class="text-xl font-semibold mb-4">Edit Profile</h3>
                     <form method="POST" action="../env/profile_update" class="mt-4">
+                        <!-- Bagian untuk mengedit alamat -->
                         <div class="mb-4">
                             <label for="alamat" class="block text-sm font-medium text-gray-700">Alamat:</label>
                             <input type="text" id="alamat" name="alamat" value="<?php echo $user['alamat']; ?>" required
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         </div>
+                        <!-- Bagian untuk mengedit nomor telepon -->
                         <div class="mb-4">
                             <label for="no_telp" class="block text-sm font-medium text-gray-700">No. Telp:</label>
                             <input type="text" id="no_telp" name="no_telp" value="<?php echo $user['no_telp']; ?>" required
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         </div>
+                        <!-- Bagian untuk menampilkan email (non-editable) -->
                         <div class="mb-4">
                             <label for="email" class="block text-sm font-medium text-gray-700">Email:</label>
-                            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" required
+                            <input type="email" id="email" name="email" value="<?php echo $user['email']; ?>" disabled
                                 class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
                         </div>
                         <div class="flex space-x-4">
@@ -164,18 +166,9 @@ if ($result) {
                                 class="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">Cancel</button>
                         </div>
                     </form>
-                    <form method="POST" action="../env/upload_gambar" enctype="multipart/form-data" class="mt-8">
-                        <div class="mb-4">
-                            <label for="photo" class="block text-sm font-medium text-gray-700">Upload Photo (JPG format, max
-                                2MB)</label>
-                            <input type="file" id="photo" name="photo" accept=".jpg" required>
-                        </div>
-                        <button type="submit"
-                            class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Update
-                            Profile</button>
-                    </form>
                 </div>
             </div>
+
 
             <!-- Additional Elements and Graphics -->
             <div class="container mx-auto mt-8">

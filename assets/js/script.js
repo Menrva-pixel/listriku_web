@@ -206,4 +206,72 @@ window.addEventListener('beforeinstallprompt', (e) => {
     });
   });
 });
+
+
+/* search and sorting */
+
+  document.addEventListener("DOMContentLoaded", function () {
+    // Elements
+    const searchInput = document.getElementById("simple-search");
+    const tableBody = document.querySelector("tbody");
+
+    // Function to filter rows based on search input
+    function filterRows() {
+      const searchText = searchInput.value.trim().toLowerCase();
+      const rows = tableBody.querySelectorAll("tr");
+
+      rows.forEach((row) => {
+        const usernameCell = row.querySelector("td:nth-child(2)");
+        const statusCell = row.querySelector("td:nth-child(4)");
+        const username = usernameCell.textContent.toLowerCase();
+        const status = statusCell.textContent.toLowerCase();
+
+        if (
+          username.includes(searchText) ||
+          status.includes(searchText)
+        ) {
+          row.style.display = "table-row";
+        } else {
+          row.style.display = "none";
+        }
+      });
+    }
+
+    // Event listener for search input
+    searchInput.addEventListener("input", filterRows);
+
+    // Function to sort rows based on status (Sudah Bayar / Belum Bayar)
+    function sortRows() {
+      const rows = Array.from(tableBody.querySelectorAll("tr"));
+
+      rows.sort((rowA, rowB) => {
+        const statusA = rowA.querySelector("td:nth-child(4)").textContent;
+        const statusB = rowB.querySelector("td:nth-child(4)").textContent;
+
+        if (statusA === "Sudah Bayar") {
+          return -1;
+        } else if (statusB === "Sudah Bayar") {
+          return 1;
+        } else {
+          return 0;
+        }
+      });
+
+      // Remove existing rows from the table
+      rows.forEach((row) => {
+        row.remove();
+      });
+
+      // Append sorted rows to the table
+      rows.forEach((row) => {
+        tableBody.appendChild(row);
+      });
+    }
+
+    // Call the sortRows function initially to sort the rows
+    sortRows();
+  });
+
+  
+
 /*----Barkah Herdyanto Sejati -----*/

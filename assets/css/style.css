@@ -16,8 +16,31 @@
         margin: 0;
         padding: 0;
         font-family: 'Dosis', sans-serif;
-        background: radial-gradient(circle at 1.8% 4.8%, rgb(17, 23, 58) 22%, rgb(43, 63, 110) 90%);
+        background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+        background-blend-mode: multiply;
     }
+
+      .blur-layer {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0.527);
+        filter:brightness(0.5);
+        z-index: 10;
+      }
+
+      .blur-layer2 {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0, 0, 0, 0);
+        filter:brightness(0.5);
+        z-index: 10;
+      }
   
     .navbar {
       transition: background-color 0.3s ease;
@@ -34,10 +57,6 @@
 
     .nav-title {
       font-family: 'Dosis', sans-serif;
-    }
-    .navbar.scrolled {
-      background-color: rgba(6, 6, 15, 0.432);
-      backdrop-filter: blur(2.5px);
     }
 
     .dropdown-menu {
@@ -195,9 +214,6 @@
 
   .parallax {
     height: 100%;
-    background-attachment: fixed;
-    background-position: center;
-    background-repeat: no-repeat;
     background-size: cover;
     opacity: 0.5; 
   }
@@ -318,7 +334,7 @@
 .copyright-container {
   text-align: center;
   padding: 10px;
-  background-color: rgba(0, 0, 0, 0.8); 
+  background-color: rgba(0, 0, 0, 0); 
 }
 
 .about img {
@@ -328,3 +344,82 @@
 }
 
 
+.main-container {
+  position: relative; /* Add relative positioning */
+}
+
+header {
+  z-index: 99;
+}
+
+.content-container {
+  margin-top: 600px;
+}
+
+/* blog detail */
+        /* Style untuk header gambar besar */
+        .header {
+          position: relative;
+      }
+      .header img {
+          width: 100%;
+          height: 400px;
+          object-fit: cover;
+      }
+      .header h1 {
+          position: absolute;
+          bottom: 1rem;
+          left: 1rem;
+          font-size: 2.5rem;
+          color: white;
+      }
+      .header p {
+          position: absolute;
+          bottom: 0.5rem;
+          left: 1rem;
+          font-size: 1.2rem;
+          color: white;
+      }
+
+      /* Style untuk sidebar */
+      .sidebar {
+          width: 300px;
+          padding: 1rem;
+          background-color: #f0f0f0;
+      }
+      .sidebar h3 {
+          font-size: 1.5rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+      }
+      .sidebar ul {
+          list-style-type: none;
+          padding: 0;
+          margin: 0;
+      }
+      .sidebar li {
+          margin-bottom: 0.5rem;
+      }
+      .sidebar a {
+          color: #333;
+          text-decoration: none;
+          transition: color 0.3s;
+      }
+      .sidebar a:hover {
+          color: #4CAF50;
+      }
+
+      /* Style untuk konten postingan */
+      .content {
+          max-width: 800px;
+          margin: 0 auto;
+          padding: 2rem;
+      }
+      .content h2 {
+          font-size: 2rem;
+          font-weight: bold;
+          margin-bottom: 1rem;
+      }
+      .content p {
+          line-height: 1.6;
+      }
