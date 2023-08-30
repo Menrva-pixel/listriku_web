@@ -1,5 +1,4 @@
 <?php
-// profile_update.php
 
 session_start();
 include 'config.php';

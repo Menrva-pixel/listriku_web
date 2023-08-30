@@ -40,7 +40,7 @@ if (move_uploaded_file($tmpName, $folderTujuan)) {
     $stmt = $conn->prepare($query);
     $stmt->bind_param("ss", $gambarBinary, $user_id);
 
-    $user_id = 1; // Ganti dengan ID pengguna yang sesuai
+    $user_id = 1; 
     if ($stmt->execute()) {
         echo "Gambar berhasil di-upload dan disimpan di database.";
     } else {

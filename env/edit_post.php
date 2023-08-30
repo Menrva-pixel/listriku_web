@@ -3,13 +3,11 @@ session_start();
 include 'config.php';
 include 'func.php';
 
-// Pastikan pengguna terautentikasi dan memiliki hak akses
 if (!isset($_SESSION['username']) || !isAdminPage()) {
     header('Location: ../auth/login');
     exit;
 }
 
-// Fungsi untuk mendapatkan data postingan dari database berdasarkan ID
 function getBlogPostById($post_id) {
     global $conn;
     $query = "SELECT * FROM blog_posts WHERE id='$post_id'";
@@ -29,7 +27,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $content = $_POST['content'];
     $category = $_POST['category'];
 
-    // Check if an image is uploaded
     if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $imageTmpPath = $_FILES['image']['tmp_name'];
         $base64Image = convertImageToBase64($imageTmpPath);

@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     if ($conn->query($sql_penggunaan) === TRUE) {
         // Insert data into tagihan_listrik table with status 'Belum Bayar'
         $jumlah_meter = $meter_akhir - $meter_awal;
-        $tarif_per_kwh = 2000; // Assuming the tariff is Rp 1,500 per kWh
+        $tarif_per_kwh = 2000; 
         $total_tagihan = $jumlah_meter * $tarif_per_kwh;
         $status = 'Belum Bayar';
 
@@ -33,7 +33,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             VALUES ('$user_id', '$bulan', '$tahun', '$jumlah_meter', '$tarif_per_kwh', '$total_tagihan', '$status')";
 
         if ($conn->query($sql_tagihan) === TRUE) {
-            // Redirect to user.php after successful registration
             header('Location: ../pages/user');
             exit();
         } else {

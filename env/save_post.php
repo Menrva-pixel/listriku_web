@@ -27,15 +27,14 @@ function saveImageToDirectory($imageTmpPath, $directoryPath, $fileName)
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $title = $_POST['title'];
     $content = $_POST['content'];
-    $author = $_POST['author']; // Get the author's name from the hidden input field
-    $category = $_POST['category']; // Get the selected category from the dropdown input field
+    $author = $_POST['author']; 
+    $category = $_POST['category']; 
 
     // Check if an image is uploaded
     if ($_FILES['image']['error'] === UPLOAD_ERR_OK) {
         $imageTmpPath = $_FILES['image']['tmp_name'];
         $base64Image = convertImageToBase64($imageTmpPath);
     } else {
-        // Set default image if no image is uploaded
         $base64Image = '';
     }
 
@@ -43,12 +42,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $imageTmpPath = $_FILES['image']['tmp_name'];
         $base64Image = convertImageToBase64($imageTmpPath);
     
-        // Simpan gambar ke direktori
         $imageFileName = $_FILES['image']['name'];
         $uploadDirectory = '../assets/images/blog';
         $savedImagePath = saveImageToDirectory($imageTmpPath, $uploadDirectory, $imageFileName);
     } else {
-        // Set default image if no image is uploaded
         $base64Image = '';
     }
 
@@ -57,7 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
               VALUES ('$title', '$content', '$author', '$category', '$savedImagePath', NOW())";
     mysqli_query($conn, $query);
 
-    header('Location:../pages/admin'); // Redirect back to the admin page
+    header('Location:../pages/admin'); 
     exit;
 }
 ?>
